@@ -1,4 +1,4 @@
 package com.solvd.library.dao;
 
-public interface IUserDAO {
+public interface IUserDAO extends IBooksDao {
 }
