@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface IWorkersDAO extends IBaseDAO{
+import com.solvd.library.classes.Workers;
+
+public interface IWorkersDAO extends IBaseDAO<Workers, Long> {
 }

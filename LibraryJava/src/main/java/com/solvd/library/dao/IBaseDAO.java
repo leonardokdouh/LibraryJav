@@ -1,10 +1,14 @@
 package com.solvd.library.dao;
 
-public interface IBaseDAO <T> {
+import java.util.List;
 
-    T getEntity (Long id);
+public interface IBaseDAO <T, K> {
+
+    T getEntity (K id);
     void saveEntity(T entity);
     void update (T entity);
-    void delete (Long id);
+    void delete (T id);
+
+    List<T> getAll();
 
 }

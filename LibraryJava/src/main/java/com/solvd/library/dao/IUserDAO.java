@@ -1,4 +1,7 @@
 package com.solvd.library.dao;
 
-public interface IUserDAO extends IBooksDao {
+
+import com.solvd.library.classes.Users;
+
+public interface IUserDAO extends IBaseDAO<Users, Long> {
 }

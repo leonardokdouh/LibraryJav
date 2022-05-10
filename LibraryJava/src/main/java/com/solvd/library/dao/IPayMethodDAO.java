@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface IPayMethodDAO extends IBaseDAO{
+import com.solvd.library.classes.PayMethod;
+
+public interface IPayMethodDAO extends IBaseDAO<PayMethod, Long> {
 }

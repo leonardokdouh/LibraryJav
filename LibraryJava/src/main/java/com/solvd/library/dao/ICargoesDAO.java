@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface ICargoesDAO extends IBaseDAO{
+import com.solvd.library.classes.Cargoes;
+
+public interface ICargoesDAO extends IBaseDAO<Cargoes, Long>{
 }

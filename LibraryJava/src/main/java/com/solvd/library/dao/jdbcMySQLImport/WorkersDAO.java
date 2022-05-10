@@ -1,25 +1,66 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
+import com.solvd.library.classes.Users;
+import com.solvd.library.classes.Workers;
 import com.solvd.library.dao.IWorkersDAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+
 public class WorkersDAO implements IWorkersDAO {
+    final String INSERT = "INSERT INTO Users (id, name, gender, shifts) VALUES (?, ?, ?, ?)";
+
+    private Connection conn;
+
+    public WorkersDAO(Connection conn){
+        this.conn=conn;
+    }
+
+
     @Override
-    public Object getEntity(Long id) {
+    public Workers getEntity(Long id) {
         return null;
     }
 
     @Override
-    public void saveEntity(Object entity) {
+    public void saveEntity(Workers u) {
+
+            PreparedStatement pt = null;
+            try {
+                pt = conn.prepareStatement(INSERT);
+                pt.setLong(1, u.getId());
+                pt.setString(2, u.getName());
+                pt.setString(3, u.getGender());
+                pt.setString(4, u.toString());
+                pt.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                if (pt != null) {
+                    try {
+                        pt.close();
+                    } catch (SQLException e) {
+                    }
+                }
+            }
+        }
+
+
+    @Override
+    public void update(Workers entity) {
 
     }
 
     @Override
-    public void update(Object entity) {
+    public void delete(Workers id) {
 
     }
 
     @Override
-    public void delete(Long id) {
-
+    public List<Workers> getAll() {
+        return null;
     }
 }

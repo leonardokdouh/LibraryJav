@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface ILendsDAO extends IBaseDAO{
+import com.solvd.library.classes.Lends;
+
+public interface ILendsDAO extends IBaseDAO<Lends, Long>{
 }

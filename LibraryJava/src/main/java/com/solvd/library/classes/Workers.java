@@ -1,5 +1,7 @@
 package com.solvd.library.classes;
 
+import java.util.Objects;
+
 public class Workers {
 
     private Long id = null;
@@ -15,6 +17,26 @@ public class Workers {
         this.name = name;
         this.gender = gender;
         this.shifts = shifts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Workers)) return false;
+        Workers workers = (Workers) o;
+        return shifts == workers.shifts && Objects.equals(id, workers.id) && Objects.equals(name, workers.name) && Objects.equals(gender, workers.gender);
+    }
+
+    @Override
+    public String toString() {
+        return "Workers{" +
+                "shifts=" + shifts +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, gender, shifts);
     }
 
     public Long getId() {

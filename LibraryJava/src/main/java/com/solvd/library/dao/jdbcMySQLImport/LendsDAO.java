@@ -1,25 +1,34 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
+import com.solvd.library.classes.Lends;
 import com.solvd.library.dao.ILendsDAO;
 
+import java.util.List;
+
 public class LendsDAO implements ILendsDAO {
+
     @Override
-    public Object getEntity(Long id) {
+    public Lends getEntity(Long id) {
         return null;
     }
 
     @Override
-    public void saveEntity(Object entity) {
+    public void saveEntity(Lends entity) {
 
     }
 
     @Override
-    public void update(Object entity) {
+    public void update(Lends entity) {
 
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Lends id) {
 
+    }
+
+    @Override
+    public List<Lends> getAll() {
+        return null;
     }
 }

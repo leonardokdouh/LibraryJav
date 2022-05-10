@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface IShippingTypeDAO extends IBaseDAO{
+import com.solvd.library.classes.ShippingType;
+
+public interface IShippingTypeDAO extends IBaseDAO<ShippingType, Long> {
 }

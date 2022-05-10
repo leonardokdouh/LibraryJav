@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface IBooksForLendDAO extends IBaseDAO{
+import com.solvd.library.classes.BooksForLend;
+
+public interface IBooksForLendDAO extends IBaseDAO<BooksForLend, Long>{
 }

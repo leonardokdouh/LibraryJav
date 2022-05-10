@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface IShiftsDAO extends IBaseDAO{
+import com.solvd.library.classes.Shifts;
+
+public interface IShiftsDAO extends IBaseDAO<Shifts, Long> {
 }

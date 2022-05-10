@@ -1,4 +1,6 @@
 package com.solvd.library.dao;
 
-public interface IOrdersDAO extends IBaseDAO{
+import com.solvd.library.classes.Orders;
+
+public interface IOrdersDAO extends IBaseDAO<Orders, Long> {
 }
