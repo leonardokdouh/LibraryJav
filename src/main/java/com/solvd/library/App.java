@@ -1,6 +1,6 @@
 package com.solvd.library;
 
-import com.solvd.library.Util.ConnectionPool;
+import com.solvd.library.util.ConnectionPool;
 import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.dao.jdbcMySQLImport.UsersDAO;
 
@@ -28,7 +28,6 @@ public class App {
 
             rs.close();
             state.close();
-            ConnectionPool.getInstance().closeConnection(c);
         }catch (SQLException e){
             e.printStackTrace();
         }

@@ -10,17 +10,18 @@ public class BooksForLend {
 
     private int esn;
 
+    private int days;
+
     private Long booksId;
 
-    private Long booksCargoesId;
 
-    public BooksForLend(Long id, String name, String editorial, int esn, Long booksId, Long booksCargoesId) {
+    public BooksForLend(Long id, String name, String editorial, int esn, int days, Long booksId) {
         this.id = id;
         this.name = name;
         this.editorial = editorial;
         this.esn = esn;
         this.booksId = booksId;
-        this.booksCargoesId = booksCargoesId;
+        this.days = days;
     }
 
     public Long getId() {
@@ -63,11 +64,11 @@ public class BooksForLend {
         this.booksId = booksId;
     }
 
-    public Long getBooksCargoesId() {
-        return booksCargoesId;
+    public int getDays() {
+        return days;
     }
 
-    public void setBooksCargoesId(Long booksCargoesId) {
-        this.booksCargoesId = booksCargoesId;
+    public void setDays(int days) {
+        this.days = days;
     }
 }

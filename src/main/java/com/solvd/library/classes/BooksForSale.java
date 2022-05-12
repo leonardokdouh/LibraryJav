@@ -2,25 +2,23 @@ package com.solvd.library.classes;
 
 public class BooksForSale {
 
-    private Long id=null;
+    private Long id = null;
 
     private String name;
 
     private String editorial;
 
-    private int type;
+    private int price;
 
     private Long booksId;
 
-    private Long booksCargoId;
 
-    public BooksForSale(Long id, String name, String editorial, int type, Long booksId, Long booksCargoId) {
+    public BooksForSale(Long id, String name, String editorial, int type, Long booksId) {
         this.id = id;
         this.name = name;
         this.editorial = editorial;
-        this.type = type;
+        this.price = type;
         this.booksId = booksId;
-        this.booksCargoId = booksCargoId;
     }
 
     public Long getId() {
@@ -47,12 +45,12 @@ public class BooksForSale {
         this.editorial = editorial;
     }
 
-    public int getType() {
-        return type;
+    public int getPrice() {
+        return price;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public Long getBooksId() {
@@ -62,12 +60,5 @@ public class BooksForSale {
     public void setBooksId(Long booksId) {
         this.booksId = booksId;
     }
-
-    public Long getBooksCargoId() {
-        return booksCargoId;
-    }
-
-    public void setBooksCargoId(Long booksCargoId) {
-        this.booksCargoId = booksCargoId;
-    }
 }
+
