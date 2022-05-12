@@ -6,13 +6,11 @@ public class Orders {
 
     private Long id;
 
-    private Date date;
 
     private Long customersId;
 
-    public Orders(Long id, Date date, Long customersId) {
+    public Orders(Long id, Long customersId) {
         this.id = id;
-        this.date = date;
         this.customersId = customersId;
     }
 
@@ -23,14 +21,6 @@ public class Orders {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Long getCustomersId() {

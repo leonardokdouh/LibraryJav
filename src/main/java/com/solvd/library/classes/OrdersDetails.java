@@ -1,14 +1,20 @@
 package com.solvd.library.classes;
 
+import java.util.Date;
+
 public class OrdersDetails {
 
     private Long id;
+
+    private  Date date;
 
     private Long ordersId;
 
     private Long booksForSaleId;
 
     private Long workersId;
+
+    private String address;
 
     private int shippingTypeId;
 
@@ -17,14 +23,32 @@ public class OrdersDetails {
     private int totalOrder;
 
     public OrdersDetails(Long id, Long ordersId, Long booksForSaleId,
-                         Long workersId, int shippingTypeId, int payMethodId, int totalOrder) {
+                         Long workersId, int shippingTypeId, int payMethodId, String address, Date date,  int totalOrder) {
         this.id = id;
+        this.date=date;
         this.ordersId = ordersId;
         this.booksForSaleId = booksForSaleId;
         this.workersId = workersId;
         this.shippingTypeId = shippingTypeId;
         this.payMethodId = payMethodId;
+        this.address=address;
         this.totalOrder = totalOrder;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Long getId() {
