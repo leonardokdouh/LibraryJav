@@ -35,8 +35,11 @@ public class App {
             }
             rs.close();
             state.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        finally {
         }
 
     }

@@ -1,5 +1,7 @@
 package com.solvd.library.bin;
 
+import java.util.Objects;
+
 public class Users {
 
     private Long id=null;
@@ -60,6 +62,27 @@ public class Users {
         this.age = age;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Users)) return false;
+        Users users = (Users) o;
+        return age == users.age && Objects.equals(id, users.id) && Objects.equals(name, users.name) && Objects.equals(email, users.email) && Objects.equals(address, users.address);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, address, age);
+    }
 
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

@@ -1,5 +1,7 @@
 package com.solvd.library.bin;
 
+import java.util.Objects;
+
 public class LendsDetail {
 
     private Long id=null;
@@ -36,5 +38,27 @@ public class LendsDetail {
 
     public void setWorkersId(Long workersId) {
         this.workersId = workersId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LendsDetail)) return false;
+        LendsDetail that = (LendsDetail) o;
+        return Objects.equals(id, that.id) && Objects.equals(lendsId, that.lendsId) && Objects.equals(workersId, that.workersId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lendsId, workersId);
+    }
+
+    @Override
+    public String toString() {
+        return "LendsDetail{" +
+                "id=" + id +
+                ", lendsId=" + lendsId +
+                ", workersId=" + workersId +
+                '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.solvd.library.bin;
 
+import java.util.Objects;
+
 public class Shifts {
 
     private Long id= null;
@@ -48,5 +50,28 @@ public class Shifts {
 
     public void setWorkersId(Long workersId) {
         this.workersId = workersId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Shifts)) return false;
+        Shifts shifts = (Shifts) o;
+        return hours == shifts.hours && Objects.equals(id, shifts.id) && Objects.equals(turns, shifts.turns) && Objects.equals(workersId, shifts.workersId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, turns, hours, workersId);
+    }
+
+    @Override
+    public String toString() {
+        return "Shifts{" +
+                "id=" + id +
+                ", turns='" + turns + '\'' +
+                ", hours=" + hours +
+                ", workersId=" + workersId +
+                '}';
     }
 }

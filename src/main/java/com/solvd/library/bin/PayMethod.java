@@ -1,5 +1,7 @@
 package com.solvd.library.bin;
 
+import java.util.Objects;
+
 public class PayMethod {
 
     private Long id;
@@ -25,5 +27,26 @@ public class PayMethod {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PayMethod)) return false;
+        PayMethod payMethod = (PayMethod) o;
+        return Objects.equals(id, payMethod.id) && Objects.equals(method, payMethod.method);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, method);
+    }
+
+    @Override
+    public String toString() {
+        return "PayMethod{" +
+                "id=" + id +
+                ", method='" + method + '\'' +
+                '}';
     }
 }

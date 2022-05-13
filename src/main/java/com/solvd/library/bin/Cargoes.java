@@ -1,6 +1,7 @@
 package com.solvd.library.bin;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Cargoes {
 
@@ -60,5 +61,29 @@ public class Cargoes {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cargoes)) return false;
+        Cargoes cargoes = (Cargoes) o;
+        return items == cargoes.items && weight == cargoes.weight && Objects.equals(id, cargoes.id) && Objects.equals(country, cargoes.country) && Objects.equals(date, cargoes.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, country, items, weight, date);
+    }
+
+    @Override
+    public String toString() {
+        return "Cargoes{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", items=" + items +
+                ", weight=" + weight +
+                ", date=" + date +
+                '}';
     }
 }

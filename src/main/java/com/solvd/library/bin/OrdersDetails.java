@@ -1,6 +1,7 @@
 package com.solvd.library.bin;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class OrdersDetails {
 
@@ -105,5 +106,33 @@ public class OrdersDetails {
 
     public void setTotalOrder(int totalOrder) {
         this.totalOrder = totalOrder;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrdersDetails)) return false;
+        OrdersDetails that = (OrdersDetails) o;
+        return shippingTypeId == that.shippingTypeId && payMethodId == that.payMethodId && totalOrder == that.totalOrder && Objects.equals(id, that.id) && Objects.equals(date, that.date) && Objects.equals(ordersId, that.ordersId) && Objects.equals(booksForSaleId, that.booksForSaleId) && Objects.equals(workersId, that.workersId) && Objects.equals(address, that.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, ordersId, booksForSaleId, workersId, address, shippingTypeId, payMethodId, totalOrder);
+    }
+
+    @Override
+    public String toString() {
+        return "OrdersDetails{" +
+                "id=" + id +
+                ", date=" + date +
+                ", ordersId=" + ordersId +
+                ", booksForSaleId=" + booksForSaleId +
+                ", workersId=" + workersId +
+                ", address='" + address + '\'' +
+                ", shippingTypeId=" + shippingTypeId +
+                ", payMethodId=" + payMethodId +
+                ", totalOrder=" + totalOrder +
+                '}';
     }
 }
