@@ -1,6 +1,6 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
-import com.solvd.library.classes.ShippingType;
+import com.solvd.library.bin.ShippingType;
 import com.solvd.library.dao.interfaces.IShippingTypeDAO;
 
 import java.util.List;

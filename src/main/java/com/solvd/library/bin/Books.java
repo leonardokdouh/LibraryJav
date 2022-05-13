@@ -1,4 +1,4 @@
-package com.solvd.library.classes;
+package com.solvd.library.bin;
 
 public class Books {
     private Long id = null;

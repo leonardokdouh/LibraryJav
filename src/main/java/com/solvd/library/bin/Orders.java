@@ -1,6 +1,4 @@
-package com.solvd.library.classes;
-
-import java.util.Date;
+package com.solvd.library.bin;
 
 public class Orders {
 

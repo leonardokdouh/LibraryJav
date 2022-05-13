@@ -1,7 +1,7 @@
 package com.solvd.library;
 
-import com.solvd.library.classes.Users;
-import com.solvd.library.util.ConnectionPool;
+import com.solvd.library.bin.Users;
+import com.solvd.library.service.ConnectionPool;
 import com.solvd.library.dao.interfaces.IUserDAO;
 import com.solvd.library.dao.jdbcMySQLImport.UsersDAO;
 

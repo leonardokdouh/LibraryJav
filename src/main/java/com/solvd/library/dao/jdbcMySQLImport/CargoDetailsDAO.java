@@ -1,6 +1,6 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
-import com.solvd.library.classes.CargoDetails;
+import com.solvd.library.bin.CargoDetails;
 import com.solvd.library.dao.interfaces.ICargoDetailsDAO;
 
 import java.util.List;

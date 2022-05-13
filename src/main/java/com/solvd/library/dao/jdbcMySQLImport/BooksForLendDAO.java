@@ -1,6 +1,6 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
-import com.solvd.library.classes.BooksForLend;
+import com.solvd.library.bin.BooksForLend;
 import com.solvd.library.dao.interfaces.IBooksForLendDAO;
 
 import java.util.List;

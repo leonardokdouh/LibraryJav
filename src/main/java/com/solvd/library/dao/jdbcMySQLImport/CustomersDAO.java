@@ -1,6 +1,6 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
-import com.solvd.library.classes.Customers;
+import com.solvd.library.bin.Customers;
 import com.solvd.library.dao.interfaces.ICustomersDAO;
 
 import java.util.List;

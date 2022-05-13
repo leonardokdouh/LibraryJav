@@ -1,4 +1,4 @@
-package com.solvd.library.util;
+package com.solvd.library.service;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 

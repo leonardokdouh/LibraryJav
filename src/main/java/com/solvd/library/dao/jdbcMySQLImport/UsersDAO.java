@@ -1,6 +1,6 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
-import com.solvd.library.classes.Users;
+import com.solvd.library.bin.Users;
 import com.solvd.library.dao.interfaces.IUserDAO;
 
 import java.sql.Connection;
@@ -86,10 +86,4 @@ public class UsersDAO implements IUserDAO {
         return null;
     }
 
-
-    public Users convert(ResultSet st) {
-        String nam
-
-
-    }
 }

@@ -1,4 +1,4 @@
-package com.solvd.library.util;
+package com.solvd.library.service;
 
 public class ConnectionException extends RuntimeException{
 

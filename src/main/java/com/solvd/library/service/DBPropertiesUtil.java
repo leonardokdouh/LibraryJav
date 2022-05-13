@@ -1,10 +1,8 @@
-package com.solvd.library.util;
+package com.solvd.library.service;
 
-import com.mysql.cj.conf.IntegerProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
