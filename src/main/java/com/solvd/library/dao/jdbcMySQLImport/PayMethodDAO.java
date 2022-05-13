@@ -1,7 +1,7 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
 import com.solvd.library.classes.PayMethod;
-import com.solvd.library.dao.IPayMethodDAO;
+import com.solvd.library.dao.interfaces.IPayMethodDAO;
 
 import java.util.List;
 

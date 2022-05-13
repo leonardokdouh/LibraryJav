@@ -1,8 +1,7 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
-import com.solvd.library.classes.Users;
 import com.solvd.library.classes.Workers;
-import com.solvd.library.dao.IWorkersDAO;
+import com.solvd.library.dao.interfaces.IWorkersDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,7 +1,7 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
 import com.solvd.library.classes.Shifts;
-import com.solvd.library.dao.IShiftsDAO;
+import com.solvd.library.dao.interfaces.IShiftsDAO;
 
 import java.util.List;
 

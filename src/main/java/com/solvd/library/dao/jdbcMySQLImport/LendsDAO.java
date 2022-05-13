@@ -1,7 +1,7 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
 import com.solvd.library.classes.Lends;
-import com.solvd.library.dao.ILendsDAO;
+import com.solvd.library.dao.interfaces.ILendsDAO;
 
 import java.util.List;
 

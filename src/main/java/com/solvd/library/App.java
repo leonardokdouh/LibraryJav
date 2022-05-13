@@ -1,13 +1,14 @@
 package com.solvd.library;
 
+import com.solvd.library.classes.Users;
 import com.solvd.library.util.ConnectionPool;
-import com.solvd.library.dao.IUserDAO;
+import com.solvd.library.dao.interfaces.IUserDAO;
 import com.solvd.library.dao.jdbcMySQLImport.UsersDAO;
 
 import java.sql.*;
 
 public class App {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         try (Connection c = ConnectionPool.getInstance().getConnection()) {
             Statement state = c.createStatement();
@@ -15,6 +16,8 @@ public class App {
             ResultSet rs = state.executeQuery("select * from users");
 
             IUserDAO dao = new UsersDAO(c);
+            Users newU = new Users(34L, "?", "?@gmail.com", "AV3  22", 1);
+            dao.saveEntity(newU);
 
             if (c != null) {
                 System.out.println("You are inside now");
@@ -28,16 +31,9 @@ public class App {
 
             rs.close();
             state.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
-    }
-
-  /*SAVE THIS TO introduce a new user!
-            Statement state = connection.createStatement();
-            Users newU = new Users(34L,"FEDE", "fede@f.com", "AV3  22", 40);
-            dao.saveEntity(newU);
-*/
-
+}

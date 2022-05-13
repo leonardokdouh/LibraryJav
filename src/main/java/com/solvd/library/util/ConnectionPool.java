@@ -19,7 +19,6 @@ public class ConnectionPool {
 
     private List<Connection> connectionList = new ArrayList<>(MAX_CONNECTIONS);
 
-
     private ConnectionPool() {
 //Singleton type pool
         basicDataSource = new BasicDataSource();
@@ -54,7 +53,6 @@ public class ConnectionPool {
             throw new ConnectionException("There is no place for you now");
         }
     }
-
 
     private Connection createConnection() {
         Connection conn = null;

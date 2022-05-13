@@ -26,7 +26,6 @@ public class DBPropertiesUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ;
     }
 
     public static String getString(String key) {

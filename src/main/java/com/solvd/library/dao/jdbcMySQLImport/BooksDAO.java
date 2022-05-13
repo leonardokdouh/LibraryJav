@@ -1,7 +1,7 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
 import com.solvd.library.classes.Books;
-import com.solvd.library.dao.IBooksDao;
+import com.solvd.library.dao.interfaces.IBooksDao;
 
 import java.util.List;
 

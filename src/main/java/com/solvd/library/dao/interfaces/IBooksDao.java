@@ -1,7 +1,6 @@
-package com.solvd.library.dao;
+package com.solvd.library.dao.interfaces;
 
 import com.solvd.library.classes.Books;
-import com.solvd.library.dao.jdbcMySQLImport.BooksDAO;
 
 public interface IBooksDao extends IBaseDAO<Books, Long> {
 

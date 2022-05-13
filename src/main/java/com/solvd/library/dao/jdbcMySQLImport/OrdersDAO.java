@@ -1,7 +1,7 @@
 package com.solvd.library.dao.jdbcMySQLImport;
 
 import com.solvd.library.classes.Orders;
-import com.solvd.library.dao.IOrdersDAO;
+import com.solvd.library.dao.interfaces.IOrdersDAO;
 
 import java.util.List;
 
