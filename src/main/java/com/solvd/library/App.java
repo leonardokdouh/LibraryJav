@@ -4,11 +4,16 @@ import com.solvd.library.bin.Users;
 import com.solvd.library.service.ConnectionPool;
 import com.solvd.library.dao.interfaces.IUserDAO;
 import com.solvd.library.dao.jdbcMySQLImport.UsersDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
 public class App {
+    private static final Logger LOG = LogManager.getLogger(App.class);
+
     public static void main(String[] args) {
+
 
         try (Connection c = ConnectionPool.getInstance().getConnection()) {
             Statement state = c.createStatement();
@@ -20,15 +25,14 @@ public class App {
             dao.saveEntity(newU);
 
             if (c != null) {
-                System.out.println("You are inside now");
+                LOG.info("You are inside now");
             } else {
-                System.out.println("You did not Connect to the server");
+                LOG.info("You did not Connect to the server");
             }
 
             while (rs.next()) {
-                System.out.println(rs.getString("name"));
+                LOG.info(rs.getString("name"));
             }
-
             rs.close();
             state.close();
         } catch (SQLException e) {
