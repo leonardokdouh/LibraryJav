@@ -3,6 +3,7 @@ package com.solvd.library.dao.impl;
 import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.util.ExceptionDAO;
+import com.solvd.library.util.OneStepCloser;
 
 import java.lang.reflect.GenericArrayType;
 import java.sql.Connection;
@@ -17,8 +18,8 @@ public class UsersDAO implements IUserDAO {
     final String INSERT = "INSERT INTO Users (id, name, email, address, age) VALUES (?, ?, ?, ?, ?)";
     final String UPDATE = "UPDATE Users SET name= ?, email= ?, address= ?, age=? WHERE id=?";
     final String DELETE = "DELETE from Users WHERE id=?";
-    final String GETALL = "SELECT id, name, email, address, age FROM Users";
     final String GETONE = "SELECT id, name, email, address, age FROM Users WHERE id=?";
+    final String GETALL = "SELECT id, name, email, address, age FROM Users";
 
     private Connection conn;
 
@@ -29,35 +30,32 @@ public class UsersDAO implements IUserDAO {
 
     @Override
     public void saveEntity(Users u) throws ExceptionDAO {
-        PreparedStatement pt = null;
-        try {
-            pt = conn.prepareStatement(INSERT);
-            pt.setLong(1, u.getId());
-            pt.setString(2, u.getName());
-            pt.setString(3, u.getEmail());
-            pt.setString(4, u.getAddress());
-            pt.setInt(5, u.getAge());
+        PreparedStatement ps = null;
+        OneStepCloser end = new OneStepCloser(null);
 
-            if (pt.executeUpdate() == 0) {
+        try {
+            ps = conn.prepareStatement(INSERT);
+            ps.setLong(1, u.getId());
+            ps.setString(2, u.getName());
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getAddress());
+            ps.setInt(5, u.getAge());
+
+            if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your users is not saved");
             }
 
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL sentence", e);
         } finally {
-            if (pt != null) {
-                try {
-                    pt.close();
-                } catch (SQLException e) {
-                    throw new ExceptionDAO("Error in SQL sentence", e);
-                }
-            }
+            end.theCloser(ps);
         }
     }
 
     @Override
     public void update(Users entity) throws ExceptionDAO {
         PreparedStatement ps = null;
+        OneStepCloser end = new OneStepCloser(null);
 
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -72,19 +70,10 @@ public class UsersDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL query", e);
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    throw new ExceptionDAO("Error in SQL query", e);
-                }
-
-            }
-
+            end.theCloser(ps);
         }
-
-
     }
+
 
     @Override
     public void delete(Users id) {
@@ -93,7 +82,7 @@ public class UsersDAO implements IUserDAO {
             ps = conn.prepareStatement(DELETE);
             ps.setLong(1, id.getId());
             if (ps.executeUpdate() == 0) {
-                throw new SQLException("Maybe the User has not been deleted");
+                throw new ExceptionDAO("Maybe the User has not been deleted");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,7 +105,6 @@ public class UsersDAO implements IUserDAO {
         int age = rs.getInt("age");
 
         Users user = new Users(id, name, email, address, age);
-        user.setId(rs.getLong("id"));
 
         return user;
     }
@@ -124,12 +112,14 @@ public class UsersDAO implements IUserDAO {
 
     @Override
     public Users getEntity(Long id) {
+        OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
         Users u = null;
+
         try {
             ps = conn.prepareStatement(GETONE);
-            rs =ps.executeQuery();
+            rs = ps.executeQuery();
             if (rs.next()) {
                 u = convert(rs);
             } else {
@@ -138,14 +128,8 @@ public class UsersDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL", e);
         } finally {
-            if (rs != null || ps != null) {
-                try {
-                    rs.close();
-                    ps.close();
-                } catch (SQLException e) {
-                    throw new ExceptionDAO("Error in SQL", e);
-                }
-            }
+            closer.twoCloser(ps, rs);
+
         }
         return u;
     }
@@ -153,8 +137,11 @@ public class UsersDAO implements IUserDAO {
 
     @Override
     public List<Users> getAll() {
+
+        OneStepCloser closer = new OneStepCloser(null, null);
+
         PreparedStatement ps = null;
-        ResultSet rs= null;
+        ResultSet rs = null;
         List<Users> users = new ArrayList<>();
         try {
             ps = conn.prepareStatement(GETALL);
@@ -165,14 +152,7 @@ public class UsersDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL", e);
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                    ps.close();
-                } catch (SQLException e) {
-                    throw new ExceptionDAO("Error in SQL", e);
-                }
-            }
+            closer.twoCloser(ps, rs);
         }
         return users;
     }

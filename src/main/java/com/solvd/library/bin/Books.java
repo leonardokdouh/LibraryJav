@@ -5,13 +5,15 @@ import java.util.Objects;
 public class Books {
     private Long id = null;
 
+    private String name;
+
     private String type;
 
     private Long cargoesId;
 
-
-    public Books(Long id, String type, Long cargoesId) {
+    public Books(Long id, String name, String type, Long cargoesId) {
         this.id = id;
+        this.name = name;
         this.type = type;
         this.cargoesId = cargoesId;
     }
@@ -22,6 +24,14 @@ public class Books {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -40,23 +50,25 @@ public class Books {
         this.cargoesId = cargoesId;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Books)) return false;
         Books books = (Books) o;
-        return Objects.equals(id, books.id) && Objects.equals(type, books.type) && Objects.equals(cargoesId, books.cargoesId);
+        return Objects.equals(id, books.id) && Objects.equals(name, books.name) && Objects.equals(type, books.type) && Objects.equals(cargoesId, books.cargoesId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, cargoesId);
+        return Objects.hash(id, name, type, cargoesId);
     }
 
     @Override
     public String toString() {
         return "Books{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", cargoesId=" + cargoesId +
                 '}';
