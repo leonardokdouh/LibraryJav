@@ -1,7 +1,6 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Books;
-import com.solvd.library.bin.Workers;
 import com.solvd.library.dao.IBooksDao;
 import com.solvd.library.util.ExceptionDAO;
 import com.solvd.library.util.ExceptionSQL;
@@ -79,7 +78,7 @@ public class BooksDAO implements IBooksDao {
     }
 
     @Override
-    public void delete(Books id) {
+    public void delete(Long id) {
 
         PreparedStatement ps = null;
 
@@ -87,7 +86,7 @@ public class BooksDAO implements IBooksDao {
 
         try {
             ps = conn.prepareStatement(DELETE);
-            ps.setLong(1, id.getId());
+            ps.setLong(1, id);
 
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Not deleted");
@@ -114,10 +113,10 @@ public class BooksDAO implements IBooksDao {
 
     @Override
     public Books getEntity(Long id) {
-        OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Books bok = null;
+
+        Books bok;
 
         try {
             ps = conn.prepareStatement(GETONE);
@@ -128,10 +127,12 @@ public class BooksDAO implements IBooksDao {
             } else {
                 throw new ExceptionDAO("Not work");
             }
+            System.out.println("Inside the try");
+
         } catch (SQLException e) {
-            throw new ExceptionDAO("Can't reach the Worker", e);
+            throw new ExceptionDAO("Can't reach the Book", e);
         } finally {
-            closer.twoCloser(ps, rs);
+            System.out.println("That's it");
         }
         return bok;
     }

@@ -24,15 +24,15 @@ public class DomParser {
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse("src/main/resources/orders.xml");
-            NodeList personList = doc.getElementsByTagName("order");
-            for (int i = 0; i < personList.getLength(); i++) {
-                Node p = personList.item(i);
+            NodeList ordersList = doc.getElementsByTagName("order");
+            for (int i = 0; i < ordersList.getLength(); i++) {
+                Node p = ordersList.item(i);
                 if (p.getNodeType() == Node.ELEMENT_NODE) {
                     Element order = (Element) p;
                     String id = order.getAttribute("id");
-                    NodeList notes = order.getChildNodes();
-                    for (int j = 0; j < notes.getLength(); j++) {
-                        Node n = notes.item(j);
+                    NodeList tables = order.getChildNodes();
+                    for (int j = 0; j < tables.getLength(); j++) {
+                        Node n = tables.item(j);
                         if (n.getNodeType() == Node.ELEMENT_NODE) {
                             Element name = (Element) n;
 

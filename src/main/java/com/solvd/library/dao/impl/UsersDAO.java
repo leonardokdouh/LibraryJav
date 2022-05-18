@@ -5,7 +5,6 @@ import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.util.ExceptionDAO;
 import com.solvd.library.util.OneStepCloser;
 
-import java.lang.reflect.GenericArrayType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,11 +75,11 @@ public class UsersDAO implements IUserDAO {
 
 
     @Override
-    public void delete(Users id) {
+    public void delete(Long id) {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(DELETE);
-            ps.setLong(1, id.getId());
+            ps.setLong(1, id);
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe the User has not been deleted");
             }
@@ -98,13 +97,13 @@ public class UsersDAO implements IUserDAO {
     }
 
     private Users convert(ResultSet rs) throws SQLException {
-        Long id = rs.getLong("id");
         String name = rs.getString("name");
         String email = rs.getString("email");
         String address = rs.getString("address");
         int age = rs.getInt("age");
 
-        Users user = new Users(id, name, email, address, age);
+        Users user = new Users(name, email, address, age);
+        user.setId(rs.getLong("id"));
 
         return user;
     }
@@ -119,6 +118,7 @@ public class UsersDAO implements IUserDAO {
 
         try {
             ps = conn.prepareStatement(GETONE);
+            ps.setLong(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
                 u = convert(rs);

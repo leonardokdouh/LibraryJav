@@ -20,10 +20,8 @@
     
 </order>
 
-<order id = "2">
-    
-    <id>3</id>
-    
+<order id = "3">
+
     <ordersid>2</ordersid>
     
     <booksForSaleId>5</booksForSaleId>

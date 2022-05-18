@@ -28,7 +28,7 @@ public class OneStepCloser {
         }
     }
     public void twoCloser(PreparedStatement ps, ResultSet rs){
-        if( rs != null || ps != null){
+        if( rs != null && ps != null){
             try{
                 ps.close();
                 rs.close();

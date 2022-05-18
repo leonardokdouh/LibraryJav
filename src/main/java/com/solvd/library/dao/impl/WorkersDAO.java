@@ -1,7 +1,6 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Workers;
-import com.solvd.library.dao.IWorkersDAO;
 import com.solvd.library.util.ExceptionDAO;
 import com.solvd.library.util.ExceptionSQL;
 import com.solvd.library.util.OneStepCloser;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkersDAO implements IWorkersDAO {
+public class WorkersDAO implements com.solvd.library.dao.IWorkersDAO {
     final String INSERT = "INSERT INTO Users (id, name, gender, shifts) VALUES (?, ?, ?, ?)";
     final String UPDATE = "UPDATE Workers SET name=?, gender=?, shifts=? WHERE id=?";
     final String DELETE = "DELETE from Workers WHERE id=?";
@@ -77,7 +76,7 @@ public class WorkersDAO implements IWorkersDAO {
     }
 
     @Override
-    public void delete(Workers id) {
+    public void delete(Long id) {
 
         PreparedStatement ps = null;
 
@@ -85,7 +84,7 @@ public class WorkersDAO implements IWorkersDAO {
 
         try {
             ps = conn.prepareStatement(DELETE);
-            ps.setLong(1, id.getId());
+            ps.setLong(1, id);
 
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Not deleted");

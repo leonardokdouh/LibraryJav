@@ -4,7 +4,7 @@ import com.solvd.library.util.ExceptionDAO;
 
 import java.util.List;
 
-public interface IBaseDAO<T, K> {
+public interface BaseDAO<T, K> {
 
     T getEntity(K id) throws ExceptionDAO;
 
@@ -12,7 +12,7 @@ public interface IBaseDAO<T, K> {
 
     void update(T entity) throws ExceptionDAO;
 
-    void delete(T id) throws ExceptionDAO;
+    void delete(K id) throws ExceptionDAO;
 
     List<T> getAll() throws ExceptionDAO;
 

@@ -1,7 +1,6 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Customers;
-import com.solvd.library.dao.ICustomersDAO;
 import com.solvd.library.util.ExceptionDAO;
 import com.solvd.library.util.OneStepCloser;
 
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomersDAO implements ICustomersDAO {
+public class CustomersDAO implements com.solvd.library.dao.ICustomersDAO {
 
     final String INSERT = "INSERT INTO Customers (id, name, email, age) VALUES (?,?,?,?)";
     final String UPDATE = "UPDATE Customers SET name=?, email =?, age=? WHERE id=?";
@@ -71,13 +70,13 @@ public class CustomersDAO implements ICustomersDAO {
     }
 
     @Override
-    public void delete(Customers id) throws ExceptionDAO {
+    public void delete(Long id) throws ExceptionDAO {
 
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
         try {
             ps = conn.prepareStatement(DELETE);
-            ps.setLong(1, id.getId());
+            ps.setLong(1, id);
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe the User has not been deleted");
             }
