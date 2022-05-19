@@ -1,4 +1,4 @@
-package com.solvd.library.service;
+package com.solvd.library.services;
 
 public interface CustomersService {
 }

@@ -1,9 +1,9 @@
-package com.solvd.library.service.impl;
+package com.solvd.library.services.impl;
 
 import com.solvd.library.bin.Books;
 import com.solvd.library.dao.IBooksDao;
 import com.solvd.library.dao.impl.BooksDAO;
-import com.solvd.library.service.BooksService;
+import com.solvd.library.services.BooksService;
 
 import java.sql.Connection;
 

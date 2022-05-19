@@ -18,6 +18,16 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
+-- Table `mydb`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+  `username` VARCHAR(16) NOT NULL,
+  `email` VARCHAR(255) NULL,
+  `password` VARCHAR(32) NOT NULL,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP);
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`workers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`workers` (
@@ -99,8 +109,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`booksForLend` (
   `name` VARCHAR(45) NOT NULL,
   `editorial` VARCHAR(45) NOT NULL,
   `ESN` INT NOT NULL,
-  `booksId` INT UNSIGNED NOT NULL,
-  `booksCargoesId` INT NOT NULL,
+  `type` INT NOT NULL,
+  `books_id` INT UNSIGNED NOT NULL,
+  `books_cargoes_id` INT NOT NULL,
   PRIMARY KEY (`id`, `books_id`, `books_cargoes_id`),
   UNIQUE INDEX `ESN_UNIQUE` (`ESN` ASC) VISIBLE,
   INDEX `fk_booksForLend_books1_idx` (`books_id` ASC, `books_cargoes_id` ASC) VISIBLE,
@@ -193,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ordersDetails` (
   `booksForSaleId` INT NOT NULL,
   `workersId` INT NOT NULL,
   `shippingTypeId` INT NOT NULL,
-  `payMethodId` INT NOT NULL,
+  `payMethodId`  NOT NULL,
   `adress` VARCHAR(45) NOT NULL,
   `totalOrder` INT NOT NULL,
   PRIMARY KEY (`id`, `ordersId`, `booksForSaleId`, `workersId`, `shippingTypeId`, `payMethodId`),
@@ -235,7 +246,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`lends` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `usersId` INT NOT NULL,
+  `users_idusers` INT NOT NULL,
   PRIMARY KEY (`id`, `users_idusers`),
   INDEX `fk_lends_users1_idx` (`users_idusers` ASC) VISIBLE,
   CONSTRAINT `fk_lends_users1`
@@ -276,6 +287,29 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `mydb`.`cargoesDetails`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`cargoesDetails` (
+  `idCargoDetail` INT NOT NULL AUTO_INCREMENT,
+  `workers_idWorkers` INT NOT NULL,
+  `` INT NOT NULL,
+  PRIMARY KEY (`idCargoDetail`, `workers_idWorkers`, ``),
+  INDEX `fk_cargoes_has_workers_workers1_idx` (`workers_idWorkers` ASC) VISIBLE,
+  INDEX `fk_cargoes_has_workers_cargoes1_idx` (`idCargoDetail` ASC) VISIBLE,
+  CONSTRAINT `fk_cargoes_has_workers_cargoes1`
+    FOREIGN KEY (`idCargoDetail`)
+    REFERENCES `mydb`.`cargoes` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cargoes_has_workers_workers1`
+    FOREIGN KEY (`workers_idWorkers`)
+    REFERENCES `mydb`.`workers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`cargoDetails`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`cargoDetails` (
@@ -301,3 +335,66 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+-- -----------------------------------------------------
+-- QUERIES TEST's
+-- -----------------------------------------------------
+INSERT INTO `mydb`.`books`
+VALUES (null,"Once upon a time","Hardcover",2);
+
+INSERT INTO `mydb`.`cargoes`
+(`id`,`country`,`items`,`weight`,`date`)
+VALUES (null, "Portugal", 100, 400, "2022-05-05");
+
+DELETE FROM `mydb`.`cargoes`
+WHERE id=5;
+
+
+-- SELECTING stuff
+-- select all from books table
+
+SELECT *
+from books
+
+-- select name from books table
+SELECT name
+FROM books
+
+-- select id and name from books table, but only whose id is greater than 3
+SELECT  id, name
+FROM books
+WHERE id>3
+
+-- finding a particular book using name column
+
+SELECT  id, name
+FROM books
+WHERE name="Venom"
+
+-- finding a particular book using id
+SELECT  id, name
+FROM books
+WHERE id=4
+
+
+-- INNER JOIN book's Names with id from cargoes.
+
+SELECT books.name, cargoes.id
+FROM books
+INNER JOIN cargoes ON books.cargoesId = cargoes.id
+
+
+-- trying having function
+
+SELECT books.id, books.name
+FROM books
+GROUP BY books.id, books.name
+HAVING books.id>2;
+
+
+
+
+
+
