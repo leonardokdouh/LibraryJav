@@ -6,10 +6,13 @@ import com.solvd.library.dao.impl.BooksDAO;
 import com.solvd.library.services.BooksService;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class BooksServiceImp implements BooksService {
 
     private Connection conn;
+
+    private IBooksDao boks = new BooksDAO(conn);
 
     public BooksServiceImp(Connection conn) {
         this.conn = conn;
@@ -17,13 +20,29 @@ public class BooksServiceImp implements BooksService {
 
     @Override
     public Books getBooks(Long id) {
+        Books book = boks.getEntity(id);
+        return book;
+    }
 
-        IBooksDao bokDao = new BooksDAO(conn);
+    @Override
+    public void delete(Long id) {
+        boks.delete(id);
+    }
 
-        Books boks = null;
+    @Override
+    public void update(Books u) {
+        boks.update(u);
+    }
 
-        boks = bokDao.getEntity(id);
+    @Override
+    public void create(Books u) {
+        boks.saveEntity(u);
+    }
 
-        return boks;
+    @Override
+    public List<Books> getallBooks() {
+
+        List<Books> booksList = boks.getAll();
+        return booksList;
     }
 }

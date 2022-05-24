@@ -17,8 +17,7 @@ public class DomParser {
 
     private static final Logger LOG = LogManager.getLogger(DomParser.class);
 
-    public static void main(String[] args) {
-
+    public void ordersXML(){
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         try {

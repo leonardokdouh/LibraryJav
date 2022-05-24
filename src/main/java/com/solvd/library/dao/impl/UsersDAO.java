@@ -2,7 +2,7 @@ package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
-import com.solvd.library.util.ExceptionDAO;
+import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.OneStepCloser;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UsersDAO implements IUserDAO {
 
-    final String INSERT = "INSERT INTO Users (id, name, email, address, age) VALUES (?, ?, ?, ?, ?)";
+    final String INSERT = "INSERT INTO Users (name, email, address, age) VALUES (?, ?, ?, ?)";
     final String UPDATE = "UPDATE Users SET name= ?, email= ?, address= ?, age=? WHERE id=?";
     final String DELETE = "DELETE from Users WHERE id=?";
     final String GETONE = "SELECT id, name, email, address, age FROM Users WHERE id=?";
@@ -34,18 +34,17 @@ public class UsersDAO implements IUserDAO {
 
         try {
             ps = conn.prepareStatement(INSERT);
-            ps.setLong(1, u.getId());
-            ps.setString(2, u.getName());
-            ps.setString(3, u.getEmail());
-            ps.setString(4, u.getAddress());
-            ps.setInt(5, u.getAge());
+            ps.setString(1, u.getName());
+            ps.setString(2, u.getEmail());
+            ps.setString(3, u.getAddress());
+            ps.setInt(4, u.getAge());
 
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your users is not saved");
             }
-
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL sentence", e);
+
         } finally {
             end.theCloser(ps);
         }

@@ -2,8 +2,8 @@ package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Books;
 import com.solvd.library.dao.IBooksDao;
-import com.solvd.library.util.ExceptionDAO;
-import com.solvd.library.util.ExceptionSQL;
+import com.solvd.library.util.exceptions.ExceptionDAO;
+import com.solvd.library.util.exceptions.ExceptionSQL;
 import com.solvd.library.util.OneStepCloser;
 
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import java.util.List;
 public class BooksDAO implements IBooksDao {
 //long id, name, type, Long cargoesID
 
-    final String INSERT = "INSERT INTO Books (id, name, type, cargoesId) VALUES (?,?,?,?)";
+    final String INSERT = "INSERT INTO Books (name, type, cargoesId) VALUES (?,?,?)";
     final String UPDATE = "UPDATE Books SET name =?, type=?, cargoesId= ?, WHERE id=?";
     final String DELETE = "DELETE from Books WHERE id=?";
     final String GETONE = "SELECT id, name, type, cargoesId, from Books WHERE id=?";
@@ -36,10 +36,9 @@ public class BooksDAO implements IBooksDao {
         PreparedStatement pt = null;
         try {
             pt = conn.prepareStatement(INSERT);
-            pt.setLong(1, u.getId());
-            pt.setString(2, u.getName());
-            pt.setString(3, u.getType());
-            pt.setLong(4, u.getCargoesId());
+            pt.setString(1, u.getName());
+            pt.setString(2, u.getType());
+            pt.setLong(3, u.getCargoesId());
             pt.executeUpdate();
 
         } catch (SQLException e) {
@@ -101,12 +100,12 @@ public class BooksDAO implements IBooksDao {
 
 
     private Books convert(ResultSet rs) throws SQLException {
-        Long id = rs.getLong("id");
         String name = rs.getString("name");
         String type = rs.getString("type");
         Long cargoesId = rs.getLong("cargoesId");
 
-        Books bok =new Books(id, name, type, cargoesId);
+        Books bok =new Books(name, type, cargoesId);
+        bok.setId(rs.getLong("id"));
 
         return bok;
     }

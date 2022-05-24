@@ -1,7 +1,7 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Customers;
-import com.solvd.library.util.ExceptionDAO;
+import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.OneStepCloser;
 
 import java.sql.Connection;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CustomersDAO implements com.solvd.library.dao.ICustomersDAO {
 
-    final String INSERT = "INSERT INTO Customers (id, name, email, age) VALUES (?,?,?,?)";
+    final String INSERT = "INSERT INTO Customers (name, email, age) VALUES (?,?,?)";
     final String UPDATE = "UPDATE Customers SET name=?, email =?, age=? WHERE id=?";
     final String DELETE = "DELETE Customers WHERE id=?";
     final String GETALL = "SELECT id, name, email, age FROM Customers";
@@ -90,12 +90,12 @@ public class CustomersDAO implements com.solvd.library.dao.ICustomersDAO {
 
     private Customers convert(ResultSet rs) throws SQLException {
 
-        Long id = rs.getLong("id");
         String name = rs.getString("name");
         String email = rs.getString("email");
         int age = rs.getInt("age");
 
-        Customers cust = new Customers(id, name, email, age);
+        Customers cust = new Customers( name, email, age);
+        cust.setId(rs.getLong("id"));
         return cust;
     }
 

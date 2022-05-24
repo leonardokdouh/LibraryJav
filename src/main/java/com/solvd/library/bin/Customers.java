@@ -12,8 +12,8 @@ public class Customers {
 
     private int age;
 
-    public Customers(Long id, String name, String email, int age) {
-        this.id = id;
+    public Customers( String name, String email, int age) {
+
         this.name = name;
         this.email = email;
         this.age = age;

@@ -1,4 +1,4 @@
-package com.solvd.library.util;
+package com.solvd.library.util.exceptions;
 
 public class ExceptionDAO extends RuntimeException{
     public ExceptionDAO() {

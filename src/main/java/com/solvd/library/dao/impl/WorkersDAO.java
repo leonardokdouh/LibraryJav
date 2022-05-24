@@ -1,8 +1,8 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Workers;
-import com.solvd.library.util.ExceptionDAO;
-import com.solvd.library.util.ExceptionSQL;
+import com.solvd.library.util.exceptions.ExceptionDAO;
+import com.solvd.library.util.exceptions.ExceptionSQL;
 import com.solvd.library.util.OneStepCloser;
 
 import java.sql.Connection;

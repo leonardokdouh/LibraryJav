@@ -1,5 +1,7 @@
 package com.solvd.library.util;
 
+import com.solvd.library.util.exceptions.ExceptionDAO;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

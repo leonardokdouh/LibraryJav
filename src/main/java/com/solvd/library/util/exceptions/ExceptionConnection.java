@@ -1,4 +1,4 @@
-package com.solvd.library.util;
+package com.solvd.library.util.exceptions;
 
 public class ExceptionConnection extends RuntimeException {
 

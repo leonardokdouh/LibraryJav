@@ -1,5 +1,6 @@
 package com.solvd.library.util;
 
+import com.solvd.library.util.exceptions.ExceptionConnection;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;

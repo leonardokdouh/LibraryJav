@@ -1,6 +1,6 @@
 package com.solvd.library.dao;
 
-import com.solvd.library.util.ExceptionDAO;
+import com.solvd.library.util.exceptions.ExceptionDAO;
 
 import java.util.List;
 

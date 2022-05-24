@@ -12,7 +12,6 @@ public class UserServicesImpl implements UsersService {
 
     private Connection conn;
 
-
     public UserServicesImpl(Connection conn) {
         this.conn = conn;
     }
