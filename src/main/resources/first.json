@@ -1,0 +1,18 @@
+[{
+  "id" : 1,
+
+  "origins": [
+    {
+      "city": "Mar del Plata",
+      "country": "Argentina"
+    },
+    {
+      "city": "Buenos Aires",
+      "country": "Argentina"
+    }
+  ],
+  "nOfItems": 10,
+  "totalWeight": 200,
+  "date": "02/02/2022"
+}
+]
