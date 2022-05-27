@@ -1,0 +1,28 @@
+<mapper namespace = "com.solvd.library.dao.IUserDAO">
+    <resultMap type = "com.solvd.library.bin.Users"
+               id= "UserResultMap"   autoMapping="false">
+        <result property = "id" column = "id"/>
+        <result property = "name" column = "name"/>
+        <result property = "email" column = "email"/>
+        <result property = "address" column = "address"/>
+        <result property = "age" column = "age"/>
+
+    </resultMap>
+        
+    
+    <select id = "getAll"  resulutMap = "UserResultMap">
+    
+            SELECT * FROM USERS
+    
+    </select>
+    
+    <delete id= "delete" >
+            
+            DELETE from Users WHERE id = #{id}
+     
+    </delete>
+    
+    
+</mapper>
+
+

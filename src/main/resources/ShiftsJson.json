@@ -1,0 +1,35 @@
+[
+  {
+  "id" : 1,
+  "Working turn": "Morning",
+  "Working hours": 6,
+  "workersId": 1
+},
+{
+  "id" : 2,
+  "Working turn": "Morning",
+  "Working hours": 4,
+  "workersId": 2
+},{
+  "id" : 3,
+  "Working turn": "Afternoon",
+  "Working hours": 6,
+  "workersId": 3
+},{
+  "id" : 4,
+  "Working turn": "Afternoon",
+  "Working hours": 4,
+  "workersId": 1
+},{
+  "id" : 5,
+  "Working turn": "LateNight",
+  "Working hours": 4,
+  "workersId": 5
+},{
+  "id" : 6,
+  "Working turn": "LateNight",
+  "Working hours": 6,
+  "workersId": 6
+}
+    
+]
