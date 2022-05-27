@@ -17,6 +17,10 @@ public class OriginsJson {
         this.country = country;
     }
 
+    public OriginsJson(){
+
+    }
+
     public String getCity() {
         return city;
     }

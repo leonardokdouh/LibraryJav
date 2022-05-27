@@ -1,15 +1,17 @@
 package com.solvd.library.bin;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class Shifts {
-
+    @JsonProperty
     private Long id= null;
-
+    @JsonProperty("Working turn")
     private String turns;
-
+    @JsonProperty("Working hours")
     private int hours;
-
+    @JsonProperty
     private Long workersId;
 
     public Shifts(Long id, String turns, int hours, Long workersId) {
@@ -19,6 +21,9 @@ public class Shifts {
         this.workersId = workersId;
     }
 
+    public Shifts(){
+
+    }
 
     public Long getId() {
         return id;

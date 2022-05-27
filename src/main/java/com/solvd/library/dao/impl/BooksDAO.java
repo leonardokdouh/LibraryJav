@@ -5,6 +5,8 @@ import com.solvd.library.dao.IBooksDao;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.exceptions.ExceptionSQL;
 import com.solvd.library.util.OneStepCloser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BooksDAO implements IBooksDao {
-//long id, name, type, Long cargoesID
 
     final String INSERT = "INSERT INTO Books (name, type, cargoesId) VALUES (?,?,?)";
     final String UPDATE = "UPDATE Books SET name =?, type=?, cargoesId= ?, WHERE id=?";
@@ -24,6 +25,9 @@ public class BooksDAO implements IBooksDao {
 
 
     private Connection conn;
+    private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
+
+
 
     public BooksDAO(Connection conn) {
         this.conn = conn;
@@ -104,7 +108,7 @@ public class BooksDAO implements IBooksDao {
         String type = rs.getString("type");
         Long cargoesId = rs.getLong("cargoesId");
 
-        Books bok =new Books(name, type, cargoesId);
+        Books bok = new Books(name, type, cargoesId);
         bok.setId(rs.getLong("id"));
 
         return bok;
@@ -126,12 +130,11 @@ public class BooksDAO implements IBooksDao {
             } else {
                 throw new ExceptionDAO("Not work");
             }
-            System.out.println("Inside the try");
 
         } catch (SQLException e) {
             throw new ExceptionDAO("Can't reach the Book", e);
         } finally {
-            System.out.println("That's it");
+            LOG.info("That's it");
         }
         return bok;
     }

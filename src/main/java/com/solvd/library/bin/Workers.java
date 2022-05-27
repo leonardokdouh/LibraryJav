@@ -12,8 +12,7 @@ public class Workers {
 
     private int shifts;
 
-    public Workers(Long id, String name, String gender, int shifts) {
-        this.id = id;
+    public Workers(String name, String gender, int shifts) {
         this.name = name;
         this.gender = gender;
         this.shifts = shifts;
@@ -30,7 +29,10 @@ public class Workers {
     @Override
     public String toString() {
         return "Workers{" +
-                "shifts=" + shifts +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", shifts=" + shifts +
                 '}';
     }
 

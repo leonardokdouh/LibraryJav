@@ -1,26 +1,13 @@
 package com.solvd.library;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.solvd.library.bin.Cargoes;
-import com.solvd.library.bin.Users;
-import com.solvd.library.services.UsersService;
-import com.solvd.library.services.impl.UserServicesImpl;
-import com.solvd.library.util.ConnectionPool;
-import com.solvd.library.util.NewUserBuilder;
-import com.solvd.library.util.exceptions.ExceptionMail;
+import com.solvd.library.dao.IUserDAO;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.sql.rowset.CachedRowSet;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.*;
-import java.util.List;
+import java.io.*;
 
 public class App {
     private static final Logger LOG = LogManager.getLogger(App.class);
@@ -29,19 +16,21 @@ public class App {
     public static void main(String[] args) throws IOException {
 
 
-        ObjectMapper om = new ObjectMapper();
+
+        Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
+        SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
+        IUserDAO userdao = sql.openSession().getMapper(IUserDAO.class);
 
 
-        try {
-            JavaType type = om.getTypeFactory().constructCollectionType(List.class, Cargoes.class);
-            LOG.info("HIIIII");
+/*
+        String resource = "mybatisConfig.xml";
+        System.out.println(resource);
 
-            Cargoes cargos = om.readValue(new File("src/main/resources/first.json"), type);
-            LOG.info(cargos);
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(inputStream);
+        List<Users> uses = sql.openSession().selectList("com.solvd.LibraryJav.dao.IUserDAO.getAll");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println(uses);*/
     }
 }
      /*
@@ -59,13 +48,13 @@ public class App {
             UsersService listUser = new UserServicesImpl(c);
             List <Users> thisList = listUser.getAllUsers();
             for (Users u : thisList){
-                System.out.println(u.toString());
+                LOG.info(u.toString());
             }
 
             // get 1 user method
             UsersService userGet = new UserServicesImpl(c);
             Users newUser = userGet.getUsers(3L);
-            System.out.println(newUser.toString());
+            LOG.info(newUser.toString());
 
             //Create user method
             UsersService up = new UserServicesImpl(c);

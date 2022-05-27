@@ -12,7 +12,6 @@ public class BooksServiceImp implements BooksService {
 
     private Connection conn;
 
-    private IBooksDao boks = new BooksDAO(conn);
 
     public BooksServiceImp(Connection conn) {
         this.conn = conn;
@@ -20,28 +19,32 @@ public class BooksServiceImp implements BooksService {
 
     @Override
     public Books getBooks(Long id) {
+        IBooksDao boks = new BooksDAO(conn);
         Books book = boks.getEntity(id);
         return book;
     }
 
     @Override
     public void delete(Long id) {
+        IBooksDao boks = new BooksDAO(conn);
         boks.delete(id);
     }
 
     @Override
     public void update(Books u) {
+        IBooksDao boks = new BooksDAO(conn);
         boks.update(u);
     }
 
     @Override
     public void create(Books u) {
+        IBooksDao boks = new BooksDAO(conn);
         boks.saveEntity(u);
     }
 
     @Override
     public List<Books> getallBooks() {
-
+        IBooksDao boks = new BooksDAO(conn);
         List<Books> booksList = boks.getAll();
         return booksList;
     }

@@ -10,8 +10,8 @@ import java.util.Objects;
 public class Cargoes {
     @JsonProperty
     private Long id = null;
-    @JsonProperty("origins")
-    private List<OriginsJson> origin;
+    @JsonProperty
+    private List<OriginsJson> origins;
     @JsonProperty("nOfItems")
     private int items;
     @JsonProperty("totalWeight")
@@ -20,27 +20,31 @@ public class Cargoes {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "mm/dd/yyyy")
     private Date date;  //CHECK this type because i never used it
 
-    public Cargoes(Long id, List<OriginsJson> origin, int items, int weight, Date date) {
+    public Cargoes(Long id, List<OriginsJson> origins, int items, int weight, Date date) {
         this.id = id;
-        this.origin = origin;
+        this.origins = origins;
         this.items = items;
         this.weight = weight;
         this.date = date;
     }
 
-    public Cargoes(List<OriginsJson> origin, int items, int weight, Date date) {
-        this.origin = origin;
+    public Cargoes(List<OriginsJson> origins, int items, int weight, Date date) {
+        this.origins = origins;
         this.items = items;
         this.weight = weight;
         this.date = date;
     }
 
-    public List<OriginsJson> getOrigin() {
-        return origin;
+    public Cargoes(){
+
     }
 
-    public void setOrigin(List<OriginsJson> origin) {
-        this.origin = origin;
+    public List<OriginsJson> getOrigins() {
+        return origins;
+    }
+
+    public void setOrigins(List<OriginsJson> origins) {
+        this.origins = origins;
     }
 
     public Long getId() {
@@ -80,19 +84,19 @@ public class Cargoes {
         if (this == o) return true;
         if (!(o instanceof Cargoes)) return false;
         Cargoes cargoes = (Cargoes) o;
-        return items == cargoes.items && weight == cargoes.weight && Objects.equals(id, cargoes.id) && origin.equals(cargoes.origin) && date.equals(cargoes.date);
+        return items == cargoes.items && weight == cargoes.weight && Objects.equals(id, cargoes.id) && origins.equals(cargoes.origins) && date.equals(cargoes.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, origin, items, weight, date);
+        return Objects.hash(id, origins, items, weight, date);
     }
 
     @Override
     public String toString() {
         return "Cargoes{" +
                 "id=" + id +
-                ", origin=" + origin +
+                ", origin=" + origins +
                 ", items=" + items +
                 ", weight=" + weight +
                 ", date=" + date +

@@ -18,7 +18,10 @@ public class UsersUtils {
     public int menu() {
         {
             int option = 1;
-            LOG.debug("\nChose the option below:\n" + "Opcion 1: BUY A BOOK\n" + "Option 2: LEND A BOOK \n" + "Option 3:REGISTRY USER\n" + "Option 4:REGISTRY CUSTOMER \n ");
+            LOG.debug("\nChose the option below:\n" + "Opcion 1: BUY A BOOK\n"
+                    + "Option 2: LEND A BOOK \n" + "Option 3:REGISTRY USER\n"
+                    + "Option 4:REGISTRY CUSTOMER \n "+ "Option 5:CHECK BOOKS FOR SALE \n "
+                    + "Option 6:CHECK BOOKS FOR LEND \n ");
 
             try {
                 option = scanner.nextInt();
@@ -26,7 +29,7 @@ public class UsersUtils {
             } catch (InputMismatchException e) {
                 LOG.debug("Dear User, i asume you want to buy a book");
             }
-            if (option > 4) {
+            if (option > 8) {
                 throw new ExceptionChoose("\n" + "You enter a invalid option. Come back later");
             }
             return option;

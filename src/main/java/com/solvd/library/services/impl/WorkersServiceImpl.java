@@ -12,7 +12,6 @@ public class WorkersServiceImpl implements WorkersService {
 
     private Connection conn;
 
-    private IWorkersDAO workersService = new WorkersDAO(conn);
 
 
     public WorkersServiceImpl(Connection conn){
@@ -21,29 +20,32 @@ public class WorkersServiceImpl implements WorkersService {
 
     @Override
     public void delete(Long id) {
+        IWorkersDAO workersService = new WorkersDAO(conn);
         workersService.delete(id);
     }
 
     @Override
     public void create(Workers u) {
+        IWorkersDAO workersService = new WorkersDAO(conn);
         workersService.saveEntity(u);
     }
 
     @Override
     public void update(Workers entity) {
+        IWorkersDAO workersService = new WorkersDAO(conn);
         workersService.update(entity);
     }
 
     @Override
     public Workers getWorker(Long id) {
-
+        IWorkersDAO workersService = new WorkersDAO(conn);
         Workers worker = workersService.getEntity(id);
-
         return worker;
     }
 
     @Override
     public List<Workers> getAllWorkers() {
+        IWorkersDAO workersService = new WorkersDAO(conn);
         List<Workers> workersList = workersService.getAll();
         return workersList;
     }

@@ -1,6 +1,7 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Workers;
+import com.solvd.library.dao.IWorkersDAO;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.exceptions.ExceptionSQL;
 import com.solvd.library.util.OneStepCloser;
@@ -12,12 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkersDAO implements com.solvd.library.dao.IWorkersDAO {
-    final String INSERT = "INSERT INTO Users (id, name, gender, shifts) VALUES (?, ?, ?, ?)";
+public class WorkersDAO implements IWorkersDAO {
+    final String INSERT = "INSERT INTO Workers (name, gender, shifts) VALUES (?, ?, ?)";
     final String UPDATE = "UPDATE Workers SET name=?, gender=?, shifts=? WHERE id=?";
     final String DELETE = "DELETE from Workers WHERE id=?";
-    final String GETONE = "SELECT id, name, gender, shifts FROM Customers WHERE id=?";
-    final String GETALL = "SELECT id, name, gender, shifts FROM Customers";
+    final String GETONE = "SELECT id, name, gender, shifts FROM Workers WHERE id=?";
+    final String GETALL = "SELECT id, name, gender, shifts FROM Workers";
 
 
     private Connection conn;
@@ -33,10 +34,9 @@ public class WorkersDAO implements com.solvd.library.dao.IWorkersDAO {
         PreparedStatement pt = null;
         try {
             pt = conn.prepareStatement(INSERT);
-            pt.setLong(1, u.getId());
-            pt.setString(2, u.getName());
-            pt.setString(3, u.getGender());
-            pt.setString(4, u.toString());
+            pt.setString(1, u.getName());
+            pt.setString(2, u.getGender());
+            pt.setInt(3, u.getShifts());
             pt.executeUpdate();
 
         } catch (SQLException e) {
@@ -104,7 +104,7 @@ public class WorkersDAO implements com.solvd.library.dao.IWorkersDAO {
         String gender = rs.getString("gender");
         int shifts = rs.getInt("shifts");
 
-        Workers wrk = new Workers(id, name, gender, shifts);
+        Workers wrk = new Workers(name, gender, shifts);
 
         return wrk;
     }
@@ -139,6 +139,7 @@ public class WorkersDAO implements com.solvd.library.dao.IWorkersDAO {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
+
         List<Workers> works = new ArrayList<>();
 
         try {

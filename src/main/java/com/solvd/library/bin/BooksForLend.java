@@ -17,8 +17,7 @@ public class BooksForLend {
     private Long booksId;
 
 
-    public BooksForLend(Long id, String name, String editorial, int esn, int days, Long booksId) {
-        this.id = id;
+    public BooksForLend(String name, String editorial, int esn, int days, Long booksId) {
         this.name = name;
         this.editorial = editorial;
         this.esn = esn;

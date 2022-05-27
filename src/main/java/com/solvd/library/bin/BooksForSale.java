@@ -15,8 +15,7 @@ public class BooksForSale {
     private Long booksId;
 
 
-    public BooksForSale(Long id, String name, String editorial, int type, Long booksId) {
-        this.id = id;
+    public BooksForSale( String name, String editorial, int type, Long booksId) {
         this.name = name;
         this.editorial = editorial;
         this.price = type;
