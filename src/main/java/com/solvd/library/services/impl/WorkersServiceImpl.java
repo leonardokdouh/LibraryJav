@@ -13,9 +13,8 @@ public class WorkersServiceImpl implements WorkersService {
     private Connection conn;
 
 
-
-    public WorkersServiceImpl(Connection conn){
-        this.conn=conn;
+    public WorkersServiceImpl(Connection conn) {
+        this.conn = conn;
     }
 
     @Override

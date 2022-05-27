@@ -7,7 +7,7 @@ public class OrdersDetails {
 
     private Long id;
 
-    private  Date date;
+    private Date date;
 
     private Long ordersId;
 
@@ -24,15 +24,15 @@ public class OrdersDetails {
     private int totalOrder;
 
     public OrdersDetails(Long id, Long ordersId, Long booksForSaleId,
-                         Long workersId, int shippingTypeId, int payMethodId, String address, Date date,  int totalOrder) {
+                         Long workersId, int shippingTypeId, int payMethodId, String address, Date date, int totalOrder) {
         this.id = id;
-        this.date=date;
+        this.date = date;
         this.ordersId = ordersId;
         this.booksForSaleId = booksForSaleId;
         this.workersId = workersId;
         this.shippingTypeId = shippingTypeId;
         this.payMethodId = payMethodId;
-        this.address=address;
+        this.address = address;
         this.totalOrder = totalOrder;
     }
 

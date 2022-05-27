@@ -42,7 +42,7 @@ public class UsersDAO implements IUserDAO {
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your users is not saved");
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL sentence", e);
 
         } finally {

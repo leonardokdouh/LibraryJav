@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class ShippingType {
 
-    private Long id= null;
+    private Long id = null;
 
     private String type;
 

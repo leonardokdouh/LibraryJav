@@ -94,7 +94,7 @@ public class CustomersDAO implements com.solvd.library.dao.ICustomersDAO {
         String email = rs.getString("email");
         int age = rs.getInt("age");
 
-        Customers cust = new Customers( name, email, age);
+        Customers cust = new Customers(name, email, age);
         cust.setId(rs.getLong("id"));
         return cust;
     }

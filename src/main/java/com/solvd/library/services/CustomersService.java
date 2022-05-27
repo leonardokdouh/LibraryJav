@@ -9,11 +9,11 @@ public interface CustomersService {
 
     void delete(Long id);
 
-    void create (Customers u);
+    void create(Customers u);
 
     void update(Customers entity);
 
-    Customers getCustomers (Long id);
+    Customers getCustomers(Long id);
 
     List<Customers> getAllCustomers();
 }

@@ -28,7 +28,6 @@ public class BooksDAO implements IBooksDao {
     private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
 
 
-
     public BooksDAO(Connection conn) {
         this.conn = conn;
     }

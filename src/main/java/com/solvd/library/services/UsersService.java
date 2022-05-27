@@ -8,11 +8,11 @@ public interface UsersService {
 
     void delete(Long id);
 
-    void create (Users u);
+    void create(Users u);
 
     void update(Users entity);
 
     Users getUsers(Long id);
 
-    List<Users> getAllUsers ();
+    List<Users> getAllUsers();
 }

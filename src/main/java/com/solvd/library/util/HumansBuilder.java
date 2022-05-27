@@ -51,27 +51,28 @@ public class HumansBuilder {
 
         }
     }
-        public void workerCreation() {
-            try (Connection c = ConnectionPool.getInstance().getConnection()) {
-                LOG.info("You are about to create a Worker. Enter the name");
-                name = scan.nextLine();
 
-                LOG.info("Enter gender");
-                 gender= scan.nextLine();
+    public void workerCreation() {
+        try (Connection c = ConnectionPool.getInstance().getConnection()) {
+            LOG.info("You are about to create a Worker. Enter the name");
+            name = scan.nextLine();
 
-                LOG.info("Enter the shift id");
-                shifts = scan.nextInt();
+            LOG.info("Enter gender");
+            gender = scan.nextLine();
 
-                WorkersService up = new WorkersServiceImpl(c);
-                Workers newW = new Workers(name, gender,shifts);
-                up.create(newW);
+            LOG.info("Enter the shift id");
+            shifts = scan.nextInt();
 
-                LOG.info(newW.toString());
+            WorkersService up = new WorkersServiceImpl(c);
+            Workers newW = new Workers(name, gender, shifts);
+            up.create(newW);
 
-            } catch (SQLException e) {
+            LOG.info(newW.toString());
 
-            }
+        } catch (SQLException e) {
 
-            }
+        }
+
     }
+}
 

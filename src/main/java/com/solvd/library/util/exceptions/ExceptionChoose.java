@@ -1,8 +1,8 @@
 package com.solvd.library.util.exceptions;
 
-public class ExceptionChoose extends RuntimeException{
+public class ExceptionChoose extends RuntimeException {
 
-    public ExceptionChoose(String message){
+    public ExceptionChoose(String message) {
         super(message);
     }
 }

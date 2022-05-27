@@ -25,11 +25,6 @@ public class Runner {
         DomParser domOrders = new DomParser();
         ObjectMapper om = new ObjectMapper();
 
-        ShippingType ships = new ShippingType(3L, "Flat Air");
-
-        LOG.info(ships);
-
-
         LOG.info("WELCOME TO THE LIBRARY APP" + "\n SELECT 1 for Worker" + "\n SELECT 2 for User/Customer");
 
         int selection = scan.nextInt();

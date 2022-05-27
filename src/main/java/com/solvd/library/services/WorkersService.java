@@ -9,11 +9,11 @@ public interface WorkersService {
 
     void delete(Long id);
 
-    void create (Workers u);
+    void create(Workers u);
 
     void update(Workers entity);
 
-    Workers getWorker (Long id);
+    Workers getWorker(Long id);
 
     List<Workers> getAllWorkers();
 

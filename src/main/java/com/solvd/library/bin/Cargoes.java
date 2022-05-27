@@ -17,7 +17,7 @@ public class Cargoes {
     @JsonProperty("totalWeight")
     private int weight;
     @JsonProperty
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "mm/dd/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "mm/dd/yyyy")
     private Date date;  //CHECK this type because i never used it
 
     public Cargoes(Long id, List<OriginsJson> origins, int items, int weight, Date date) {
@@ -35,7 +35,7 @@ public class Cargoes {
         this.date = date;
     }
 
-    public Cargoes(){
+    public Cargoes() {
 
     }
 

@@ -23,10 +23,9 @@ public class BooksforLendDAO implements IBooksForLend {
     private Connection conn;
     private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
 
-    public BooksforLendDAO(Connection conn){
-        this.conn=conn;
+    public BooksforLendDAO(Connection conn) {
+        this.conn = conn;
     }
-
 
 
     @Override
@@ -54,7 +53,7 @@ public class BooksforLendDAO implements IBooksForLend {
         String name = rs.getString("name");
         String editorial = rs.getString("editorial");
         int esn = rs.getInt("esn");
-        int days=rs.getInt("days");
+        int days = rs.getInt("days");
         Long booksId = rs.getLong("booksId");
 
         BooksForLend boks = new BooksForLend(name, editorial, esn, days, booksId);

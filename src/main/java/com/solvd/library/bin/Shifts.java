@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Shifts {
     @JsonProperty
-    private Long id= null;
+    private Long id = null;
     @JsonProperty("Working turn")
     private String turns;
     @JsonProperty("Working hours")
@@ -21,7 +21,7 @@ public class Shifts {
         this.workersId = workersId;
     }
 
-    public Shifts(){
+    public Shifts() {
 
     }
 

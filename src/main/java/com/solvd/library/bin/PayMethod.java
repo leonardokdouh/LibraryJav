@@ -13,8 +13,8 @@ public class PayMethod {
         this.method = method;
     }
 
-    public PayMethod(String method){
-        this.method=method;
+    public PayMethod(String method) {
+        this.method = method;
     }
 
     public Long getId() {

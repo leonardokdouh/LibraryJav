@@ -17,7 +17,7 @@ public class OriginsJson {
         this.country = country;
     }
 
-    public OriginsJson(){
+    public OriginsJson() {
 
     }
 

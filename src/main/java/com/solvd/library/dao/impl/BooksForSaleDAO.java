@@ -23,7 +23,7 @@ public class BooksForSaleDAO implements IBooksForSale {
     private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
 
     public BooksForSaleDAO(Connection conn) {
-        this.conn=conn;
+        this.conn = conn;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BooksForSaleDAO implements IBooksForSale {
     private BooksForSale convert(ResultSet rs) throws SQLException {
         String name = rs.getString("name");
         String editorial = rs.getString("editorial");
-        int price =rs.getInt("price");
+        int price = rs.getInt("price");
         Long booksId = rs.getLong("booksId");
 
         BooksForSale boks = new BooksForSale(name, editorial, price, booksId);

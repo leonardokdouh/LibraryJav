@@ -20,7 +20,7 @@ public class UsersUtils {
             int option = 1;
             LOG.debug("\nChose the option below:\n" + "Opcion 1: BUY A BOOK\n"
                     + "Option 2: LEND A BOOK \n" + "Option 3:REGISTRY USER\n"
-                    + "Option 4:REGISTRY CUSTOMER \n "+ "Option 5:CHECK BOOKS FOR SALE \n "
+                    + "Option 4:REGISTRY CUSTOMER \n " + "Option 5:CHECK BOOKS FOR SALE \n "
                     + "Option 6:CHECK BOOKS FOR LEND \n ");
 
             try {
@@ -37,31 +37,31 @@ public class UsersUtils {
         }
     }
 
-        public void checkMail(String mail) throws ExceptionMail {
-            AtomicInteger arroba = new AtomicInteger();
-            AtomicBoolean dot = new AtomicBoolean(false);
+    public void checkMail(String mail) throws ExceptionMail {
+        AtomicInteger arroba = new AtomicInteger();
+        AtomicBoolean dot = new AtomicBoolean(false);
 
 
-            if (mail.length() <= 2) {
-                throw new ExceptionMail("\n" + "You have to write better");
-            } else {
-                IntStream.range(0, mail.length()).forEach(p -> {
+        if (mail.length() <= 2) {
+            throw new ExceptionMail("\n" + "You have to write better");
+        } else {
+            IntStream.range(0, mail.length()).forEach(p -> {
 
-                    if (mail.charAt(p) == '@') {
-                        arroba.getAndIncrement();
-                    }
-                    if (mail.charAt(p) == '.') {
-                        dot.set(true);
-                    }
-                });
-            }
-            if (dot.get() && arroba.get() == 1) {
-                LOG.debug("Thank you sir for your email");
-            } else {
-                LOG.debug("That mail is incorrect. No problem.");
-            }
+                if (mail.charAt(p) == '@') {
+                    arroba.getAndIncrement();
+                }
+                if (mail.charAt(p) == '.') {
+                    dot.set(true);
+                }
+            });
         }
-
+        if (dot.get() && arroba.get() == 1) {
+            LOG.debug("Thank you sir for your email");
+        } else {
+            LOG.debug("That mail is incorrect. No problem.");
         }
+    }
+
+}
 
 

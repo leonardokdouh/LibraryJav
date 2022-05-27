@@ -12,8 +12,8 @@ public class BooksForSaleServiceImp implements BooksForSaleService {
 
     private Connection conn;
 
-    public BooksForSaleServiceImp(Connection conn){
-        this.conn=conn;
+    public BooksForSaleServiceImp(Connection conn) {
+        this.conn = conn;
     }
 
     @Override

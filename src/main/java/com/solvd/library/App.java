@@ -16,7 +16,6 @@ public class App {
     public static void main(String[] args) throws IOException {
 
 
-
         Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
         SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
         IUserDAO userdao = sql.openSession().getMapper(IUserDAO.class);

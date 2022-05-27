@@ -15,8 +15,8 @@ public class CustomersServiceImpl implements CustomersService {
     private ICustomersDAO custom = new CustomersDAO(conn);
 
 
-    public CustomersServiceImpl(Connection conn){
-        this.conn=conn;
+    public CustomersServiceImpl(Connection conn) {
+        this.conn = conn;
 
     }
 
@@ -38,14 +38,14 @@ public class CustomersServiceImpl implements CustomersService {
     }
 
     @Override
-    public Customers getCustomers (Long id) {
+    public Customers getCustomers(Long id) {
         Customers cust = custom.getEntity(id);
         return cust;
     }
 
     @Override
     public List<Customers> getAllCustomers() {
-    List<Customers> listCusto = custom.getAll();
-    return listCusto;
+        List<Customers> listCusto = custom.getAll();
+        return listCusto;
     }
 }
