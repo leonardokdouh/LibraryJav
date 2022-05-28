@@ -4,8 +4,8 @@ import com.solvd.library.bin.Users;
 import com.solvd.library.bin.Workers;
 import com.solvd.library.services.UsersService;
 import com.solvd.library.services.WorkersService;
-import com.solvd.library.services.impl.UserServicesImpl;
-import com.solvd.library.services.impl.WorkersServiceImpl;
+import com.solvd.library.services.jdbcImplem.UserServicesImpl;
+import com.solvd.library.services.jdbcImplem.WorkersServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

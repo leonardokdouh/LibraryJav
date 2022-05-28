@@ -1,4 +1,4 @@
-package com.solvd.library.services.impl;
+package com.solvd.library.services.jdbcImplem;
 
 import com.solvd.library.bin.BooksForSale;
 import com.solvd.library.dao.IBooksForSale;
