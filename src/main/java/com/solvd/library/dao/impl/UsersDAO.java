@@ -100,10 +100,8 @@ public class UsersDAO implements IUserDAO {
         String email = rs.getString("email");
         String address = rs.getString("address");
         int age = rs.getInt("age");
-
         Users user = new Users(name, email, address, age);
         user.setId(rs.getLong("id"));
-
         return user;
     }
 
@@ -113,14 +111,13 @@ public class UsersDAO implements IUserDAO {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Users u = null;
-
+        Users user = null;
         try {
             ps = conn.prepareStatement(GETONE);
             ps.setLong(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                u = convert(rs);
+                user = convert(rs);
             } else {
                 throw new ExceptionDAO("that id isn't in our registry");
             }
@@ -128,9 +125,8 @@ public class UsersDAO implements IUserDAO {
             throw new ExceptionDAO("Error in SQL", e);
         } finally {
             closer.twoCloser(ps, rs);
-
         }
-        return u;
+        return user;
     }
 
 

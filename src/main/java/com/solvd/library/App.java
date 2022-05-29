@@ -1,6 +1,11 @@
 package com.solvd.library;
 
+import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
+import com.solvd.library.services.UsersService;
+import com.solvd.library.services.jdbcImplem.UserServicesImpl;
+import com.solvd.library.services.myBatis.UserServiceImpl;
+import com.solvd.library.util.ConnectionPool;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -8,30 +13,46 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.sql.Connection;
+import java.util.List;
 
 public class App {
     private static final Logger LOG = LogManager.getLogger(App.class);
 
 
     public static void main(String[] args) throws IOException {
+        Connection c = ConnectionPool.getInstance().getConnection();
+
+        UsersService userJdbc = new UserServicesImpl(c);
+
+        LOG.info(userJdbc.getUsers(3L).toString());
+
+        LOG.info(userJdbc.getAllUsers());
 
 
-        Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
-        SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-        IUserDAO userdao = sql.openSession().getMapper(IUserDAO.class);
+        try {
+            UserServiceImpl userMyBatis = new UserServiceImpl();
+            LOG.error(userMyBatis.getUsers(3L).toString());
+            LOG.info(userMyBatis.getAllUsers());
+        }catch (Exception e){
+            LOG.error(e);
+        }
+
+        //user.getAllUsers();
 
 
-/*
-        String resource = "mybatisConfig.xml";
-        System.out.println(resource);
+        /*List <Users> theList = userDAO.getAll();
+        for (Users u : theList) {
+            LOG.info(u.toString());
+        }*
+           /*
+        List<Users> thisList = listUser.getAllUsers();
+        for (Users u : thisList){
+            LOG.info(u.toString());*/
 
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(inputStream);
-        List<Users> uses = sql.openSession().selectList("com.solvd.LibraryJav.dao.IUserDAO.getAll");
+        }
+ }
 
-        System.out.println(uses);*/
-    }
-}
      /*
         try (Connection c = ConnectionPool.getInstance().getConnection()) {
 

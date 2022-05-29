@@ -2,29 +2,35 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "com.solvd.library.dao.IUserDAO">
-    <resultMap type = "com.solvd.library.bin.Users"
-               id= "UserResultMap"   autoMapping="false">
-        <result property = "id" column = "id"/>
-        <result property = "name" column = "name"/>
-        <result property = "email" column = "email"/>
-        <result property = "address" column = "address"/>
-        <result property = "age" column = "age"/>
+<mapper namespace="com.solvd.library.dao.IUserDAO">
+    <resultMap type="com.solvd.library.bin.Users"
+               id="UserResultMap" autoMapping="false">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="address" property="address"/>
+        <result column="age" property="age"/>
 
     </resultMap>
-        
-    
-    <select id = "getAll"  resultMap = "UserResultMap">
-    
-            SELECT * FROM USERS
-    
+
+    <select id="getEntity" resultMap="UserResultMap">
+        <![CDATA[
+            Select * from Users where id=${id}
+        ]]>
     </select>
-    
-    <delete id= "delete" >
-            
-            DELETE from Users WHERE id = #{id}
-     
-    </delete>
+
+    <select id="getAll" resultMap="UserResultMap">
+        <![CDATA[
+            Select * from Users
+        ]]>
+    </select>
+
+    <insert id="saveEntity" useGeneratedKeys="true" keyProperty="true">
+        <![CDATA[
+            Insert into Users (name,email, address, age)
+             values (#{user.name},#{user.email},#{user.address},#{user.age})
+        ]]>
+    </insert>
 
 
-        </mapper>
+</mapper>

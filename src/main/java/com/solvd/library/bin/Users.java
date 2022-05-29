@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Users {
 
-    private Long id = null;
+    private Long id;
 
     private String name;
 
@@ -19,6 +19,10 @@ public class Users {
         this.email = email;
         this.address = address;
         this.age = age;
+    }
+
+    public Users(){
+
     }
 
     public Long getId() {
