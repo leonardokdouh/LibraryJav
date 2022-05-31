@@ -22,31 +22,60 @@ public class UserServiceImpl implements UsersService {
     @Override
     public void delete(Long id) {
 
+        try {
+            Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
+            SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
+            IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
+
+            userDAO.delete(id);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     @Override
     public void create(Users u) {
+        try {
+            Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
+            SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
+            IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
+
+            userDAO.saveEntity(u);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
     }
 
     @Override
     public void update(Users entity) {
+        try {
+            Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
+            SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
+            IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
+
+            userDAO.update(entity);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
     }
 
     @Override
     public Users getUsers(Long id) {
 
-        Reader e = null;
+        Users user = null;
         try {
-            e = Resources.getResourceAsReader("mybatisConfig.xml");
+            Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
+            SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
+            IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
+
+            user = userDAO.getEntity(id);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-        IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
 
-        Users user =userDAO.getEntity(id);
 
         return user;
     }

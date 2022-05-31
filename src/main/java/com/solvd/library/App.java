@@ -6,6 +6,7 @@ import com.solvd.library.services.UsersService;
 import com.solvd.library.services.jdbcImplem.UserServicesImpl;
 import com.solvd.library.services.myBatis.UserServiceImpl;
 import com.solvd.library.util.ConnectionPool;
+import com.solvd.library.util.exceptions.ExceptionSQL;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -25,18 +26,25 @@ public class App {
 
         UsersService userJdbc = new UserServicesImpl(c);
 
-        LOG.info(userJdbc.getUsers(3L).toString());
-
+        LOG.info(userJdbc.getUsers(4L).toString());
         LOG.info(userJdbc.getAllUsers());
-
+        //userJdbc.delete(3L);
 
         try {
+            Users u = new Users("Tarja", "asdasdtarke@gmail.com", "Lili 4th Ave.", 55);
             UserServiceImpl userMyBatis = new UserServiceImpl();
-            LOG.error(userMyBatis.getUsers(3L).toString());
-            LOG.info(userMyBatis.getAllUsers());
+            //LOG.error(userMyBatis.getUsers(4L).toString());
+            //LOG.info(userMyBatis.getAllUsers());
+                userMyBatis.create(u);
+                userMyBatis.delete(4L);
         }catch (Exception e){
             LOG.error(e);
         }
+
+        LOG.info(userJdbc.getUsers(4L).toString());
+        LOG.info(userJdbc.getAllUsers());
+
+
 
         //user.getAllUsers();
 
@@ -80,11 +88,10 @@ public class App {
             UsersService up = new UserServicesImpl(c);
             Users lili = new Users("Mery", "mery@gmail.com", "4th Av ", 55);
             up.create(lili);
-            LOG.info("THe new user was created with id: ");
 
             //Delete User
             UsersService down = new UserServicesImpl(c);
-           down.delete(14L);
+           //down.delete(L); add the id number inside the ()
 
 
         } catch (SQLException e) {

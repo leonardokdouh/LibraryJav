@@ -415,4 +415,8 @@ GROUP BY workers.name, shifts.turn, shifts.id
 HAVING shifts.id<2;
 
 
+--DELETE QUERIES
+
+DELETE FROM users WHERE id=1;
+DELETE FROM users WHERE name = "Morty";
 
