@@ -5,6 +5,7 @@ import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.dao.impl.UsersDAO;
 import com.solvd.library.services.UsersService;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -25,9 +26,11 @@ public class UserServiceImpl implements UsersService {
         try {
             Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
             SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-            IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
+            SqlSession session =sql.openSession();
+            IUserDAO userDAO = session.getMapper(IUserDAO.class);
 
             userDAO.delete(id);
+            session.commit();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -39,9 +42,11 @@ public class UserServiceImpl implements UsersService {
         try {
             Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
             SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-            IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
+            SqlSession session =sql.openSession();
+            IUserDAO userDAO = session.getMapper(IUserDAO.class);
 
             userDAO.saveEntity(u);
+            session.commit();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

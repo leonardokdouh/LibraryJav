@@ -35,7 +35,7 @@ public class App {
             UserServiceImpl userMyBatis = new UserServiceImpl();
             //LOG.error(userMyBatis.getUsers(4L).toString());
             //LOG.info(userMyBatis.getAllUsers());
-                userMyBatis.create(u);
+                //userMyBatis.create(u);
                 userMyBatis.delete(4L);
         }catch (Exception e){
             LOG.error(e);
