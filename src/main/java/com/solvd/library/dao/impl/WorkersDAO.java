@@ -13,25 +13,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkersDAO implements IWorkersDAO {
-    final String INSERT = "INSERT INTO Workers (name, gender, shifts) VALUES (?, ?, ?)";
-    final String UPDATE = "UPDATE Workers SET name=?, gender=?, shifts=? WHERE id=?";
-    final String DELETE = "DELETE from Workers WHERE id=?";
-    final String GETONE = "SELECT id, name, gender, shifts FROM Workers WHERE id=?";
-    final String GETALL = "SELECT id, name, gender, shifts FROM Workers";
-
-
-    private Connection conn;
-
-    public WorkersDAO(Connection conn) {
-        this.conn = conn;
-    }
+public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
+    private final String INSERT = "INSERT INTO Workers (name, gender, shifts) VALUES (?, ?, ?)";
+    private final String UPDATE = "UPDATE Workers SET name=?, gender=?, shifts=? WHERE id=?";
+    private final String DELETE = "DELETE from Workers WHERE id=?";
+    private final String GET_ONE = "SELECT id, name, gender, shifts FROM Workers WHERE id=?";
+    private final String GET_ALL = "SELECT id, name, gender, shifts FROM Workers";
 
 
     @Override
     public void saveEntity(Workers u) {
 
         PreparedStatement pt = null;
+        Connection conn = getConnect();
         try {
             pt = conn.prepareStatement(INSERT);
             pt.setString(1, u.getName());
@@ -42,6 +36,7 @@ public class WorkersDAO implements IWorkersDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            returnConnect(conn);
             if (pt != null) {
                 try {
                     pt.close();
@@ -54,9 +49,9 @@ public class WorkersDAO implements IWorkersDAO {
 
     @Override
     public void update(Workers entity) {
-
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
+        Connection conn = getConnect();
 
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -71,17 +66,16 @@ public class WorkersDAO implements IWorkersDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL", e);
         } finally {
+            returnConnect(conn);
             close.theCloser(ps);
         }
     }
 
     @Override
     public void delete(Long id) {
-
         PreparedStatement ps = null;
-
         OneStepCloser close = new OneStepCloser(ps);
-
+        Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(DELETE);
             ps.setLong(1, id);
@@ -93,6 +87,7 @@ public class WorkersDAO implements IWorkersDAO {
             e.printStackTrace();
             throw new ExceptionSQL("Error in SQL");
         } finally {
+            returnConnect(conn);
             close.theCloser(ps);
         }
     }
@@ -113,11 +108,12 @@ public class WorkersDAO implements IWorkersDAO {
     public Workers getEntity(Long id) {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
+        Connection conn = getConnect();
         ResultSet rs = null;
         Workers wrk = null;
 
         try {
-            ps = conn.prepareStatement(GETONE);
+            ps = conn.prepareStatement(GET_ONE);
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -128,6 +124,7 @@ public class WorkersDAO implements IWorkersDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Can't reach the Worker", e);
         } finally {
+            returnConnect(conn);
             closer.twoCloser(ps, rs);
         }
         return wrk;
@@ -139,11 +136,11 @@ public class WorkersDAO implements IWorkersDAO {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
-
+        Connection conn = getConnect();
         List<Workers> works = new ArrayList<>();
 
         try {
-            ps = conn.prepareStatement(GETALL);
+            ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 works.add(convert(rs));
@@ -151,6 +148,7 @@ public class WorkersDAO implements IWorkersDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Can't reach the Worker", e);
         } finally {
+            returnConnect(conn);
             closer.twoCloser(ps, rs);
         }
         return works;

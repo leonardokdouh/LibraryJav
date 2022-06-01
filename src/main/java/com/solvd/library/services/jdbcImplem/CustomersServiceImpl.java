@@ -10,41 +10,37 @@ import java.util.List;
 
 public class CustomersServiceImpl implements CustomersService {
 
-    private Connection conn;
-
-    private ICustomersDAO custom = new CustomersDAO(conn);
-
-
-    public CustomersServiceImpl(Connection conn) {
-        this.conn = conn;
-
-    }
 
     @Override
     public void delete(Long id) {
+        ICustomersDAO custom = new CustomersDAO();
         custom.delete(id);
-
     }
 
     @Override
     public void create(Customers u) {
+        ICustomersDAO custom = new CustomersDAO();
         custom.saveEntity(u);
 
     }
 
     @Override
     public void update(Customers entity) {
+        ICustomersDAO custom = new CustomersDAO();
         custom.update(entity);
     }
 
     @Override
     public Customers getCustomers(Long id) {
+        ICustomersDAO custom = new CustomersDAO();
         Customers cust = custom.getEntity(id);
         return cust;
     }
 
     @Override
     public List<Customers> getAllCustomers() {
+        ICustomersDAO custom = new CustomersDAO();
+
         List<Customers> listCusto = custom.getAll();
         return listCusto;
     }

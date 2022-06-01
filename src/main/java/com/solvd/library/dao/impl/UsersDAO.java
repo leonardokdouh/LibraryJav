@@ -12,25 +12,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersDAO implements IUserDAO {
+public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
 
-    final String INSERT = "INSERT INTO Users (name, email, address, age) VALUES (?, ?, ?, ?)";
-    final String UPDATE = "UPDATE Users SET name= ?, email= ?, address= ?, age=? WHERE id=?";
-    final String DELETE = "DELETE from Users WHERE id=?";
-    final String GETONE = "SELECT id, name, email, address, age FROM Users WHERE id=?";
-    final String GETALL = "SELECT id, name, email, address, age FROM Users";
-
-    private Connection conn;
-
-    public UsersDAO(Connection conn) {
-        this.conn = conn;
-    }
+    private final String INSERT = "INSERT INTO Users (name, email, address, age) VALUES (?, ?, ?, ?)";
+    private final String UPDATE = "UPDATE Users SET name= ?, email= ?, address= ?, age=? WHERE id=?";
+    private final String DELETE = "DELETE from Users WHERE id=?";
+    private final String GET_ONE = "SELECT id, name, email, address, age FROM Users WHERE id=?";
+    private final String GET_ALL = "SELECT id, name, email, address, age FROM Users";
 
 
     @Override
     public void saveEntity(Users u) throws ExceptionDAO {
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
+        Connection conn =getConnect();
 
         try {
             ps = conn.prepareStatement(INSERT);
@@ -46,6 +41,7 @@ public class UsersDAO implements IUserDAO {
             throw new ExceptionDAO("Error in SQL sentence", e);
 
         } finally {
+            returnConnect(conn);
             end.theCloser(ps);
         }
     }
@@ -54,6 +50,7 @@ public class UsersDAO implements IUserDAO {
     public void update(Users entity) throws ExceptionDAO {
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
+        Connection conn =getConnect();
 
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -68,6 +65,7 @@ public class UsersDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL query", e);
         } finally {
+            returnConnect(conn);
             end.theCloser(ps);
         }
     }
@@ -76,6 +74,8 @@ public class UsersDAO implements IUserDAO {
     @Override
     public void delete(Long id) {
         PreparedStatement ps = null;
+        Connection conn =getConnect();
+
         try {
             ps = conn.prepareStatement(DELETE);
             ps.setLong(1, id);
@@ -85,6 +85,7 @@ public class UsersDAO implements IUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            returnConnect(conn);
             if (ps != null) {
                 try {
                     ps.close();
@@ -111,9 +112,10 @@ public class UsersDAO implements IUserDAO {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Connection conn =getConnect();
         Users user = null;
         try {
-            ps = conn.prepareStatement(GETONE);
+            ps = conn.prepareStatement(GET_ONE);
             ps.setLong(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -124,6 +126,7 @@ public class UsersDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL", e);
         } finally {
+            returnConnect(conn);
             closer.twoCloser(ps, rs);
         }
         return user;
@@ -134,12 +137,13 @@ public class UsersDAO implements IUserDAO {
     public List<Users> getAll() {
 
         OneStepCloser closer = new OneStepCloser(null, null);
-
         PreparedStatement ps = null;
+        Connection conn =getConnect();
+
         ResultSet rs = null;
         List<Users> users = new ArrayList<>();
         try {
-            ps = conn.prepareStatement(GETALL);
+            ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 users.add(convert(rs));
@@ -147,6 +151,7 @@ public class UsersDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL", e);
         } finally {
+            returnConnect(conn);
             closer.twoCloser(ps, rs);
         }
         return users;

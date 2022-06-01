@@ -1,12 +1,9 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.BooksForLend;
-import com.solvd.library.bin.BooksForSale;
 import com.solvd.library.dao.IBooksForLend;
 import com.solvd.library.util.OneStepCloser;
 import com.solvd.library.util.exceptions.ExceptionDAO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,36 +12,31 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BooksforLendDAO implements IBooksForLend {
+public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLend {
 
-    final String GETALL = "SELECT id, name, editorial, ESN,  days, booksId FROM BooksForLend";
-
-
-    private Connection conn;
-    private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
-
-    public BooksforLendDAO(Connection conn) {
-        this.conn = conn;
-    }
+    private final String GET_ALL = "SELECT id, name, editorial, ESN,  days, booksId FROM BooksForLend";
 
 
     @Override
-    public BooksForLend getEntity(Long id) throws ExceptionDAO {
-        return null;
+    public BooksForLend getEntity(Long id) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void saveEntity(BooksForLend entity) throws ExceptionDAO {
+    public void saveEntity(BooksForLend entity) {
+        throw new UnsupportedOperationException();
 
     }
 
     @Override
-    public void update(BooksForLend entity) throws ExceptionDAO {
+    public void update(BooksForLend entity) {
+        throw new UnsupportedOperationException();
 
     }
 
     @Override
-    public void delete(Long id) throws ExceptionDAO {
+    public void delete(Long id) {
+        throw new UnsupportedOperationException();
 
     }
 
@@ -67,11 +59,12 @@ public class BooksforLendDAO implements IBooksForLend {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Connection conn = getConnect();
 
         List<BooksForLend> bookss = new ArrayList<>();
 
         try {
-            ps = conn.prepareStatement(GETALL);
+            ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 bookss.add(convert(rs));
@@ -80,6 +73,7 @@ public class BooksforLendDAO implements IBooksForLend {
             throw new ExceptionDAO("Can't reach the Worker", e);
         } finally {
             closer.twoCloser(ps, rs);
+            returnConnect(conn);
         }
         return bookss;
     }

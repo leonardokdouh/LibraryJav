@@ -37,7 +37,7 @@ public class Runner {
                 case 1:
                     LOG.info("This are the active users:");
                     try (Connection c = ConnectionPool.getInstance().getConnection()) {
-                        UsersService listUser = new UserServicesImpl(c);
+                        UsersService listUser = new UserServicesImpl();
                         List<Users> thisList = listUser.getAllUsers();
                         for (Users u : thisList) {
                             LOG.info(u.toString());
@@ -98,7 +98,7 @@ public class Runner {
 
                     LOG.info("This are the active Workers:");
                     try (Connection c = ConnectionPool.getInstance().getConnection()) {
-                        WorkersService listWorkers = new WorkersServiceImpl(c);
+                        WorkersService listWorkers = new WorkersServiceImpl();
                         List<Workers> thisList = listWorkers.getAllWorkers();
                         for (Workers u : thisList) {
                             LOG.info(u.toString());
@@ -114,58 +114,52 @@ public class Runner {
             switch (option) {
                 case 1:
                     LOG.info("This are the books available right now");
-                    try (Connection c = ConnectionPool.getInstance().getConnection()) {
-                        BooksService booksUser = new BooksServiceImp(c);
-                        List<Books> thisList = booksUser.getallBooks();
-                        for (Books u : thisList) {
-                            LOG.info(u.toString());
-                        }
-                    } catch (Exception e) {
+
+                    BooksService booksUser = new BooksServiceImp();
+                    List<Books> thisList = booksUser.getallBooks();
+                    for (Books u : thisList) {
+                        LOG.info(u.toString());
                     }
-                    break;
 
-                case 2:
-                    LOG.info("YOu enter 2");
-                    break;
+            break;
 
-                case 3:
-                    HumansBuilder newUser = new HumansBuilder();
-                    newUser.userCreation();
+            case 2:
+                LOG.info("YOu enter 2");
+                break;
 
-                    break;
+            case 3:
+                HumansBuilder newUser = new HumansBuilder();
+                newUser.userCreation();
 
-                case 4:
-                    LOG.info("YOu enter 4");
-                    break;
+                break;
+
+            case 4:
+                LOG.info("YOu enter 4");
+                break;
 
 
-                case 5:
-                    LOG.info("This are the books available for Sale");
-                    try (Connection c = ConnectionPool.getInstance().getConnection()) {
-                        BooksForSaleService booksSale = new BooksForSaleServiceImp(c);
-                        List<BooksForSale> thisList = booksSale.getAllBooks();
-                        for (BooksForSale u : thisList) {
-                            LOG.info(u.toString());
-                        }
-                    } catch (Exception e) {
+            case 5:
+                LOG.info("This are the books available for Sale");
+                    BooksForSaleService booksSale = new BooksForSaleServiceImp();
+                    List<BooksForSale> thisListSale = booksSale.getAllBooks();
+                    for (BooksForSale u : thisListSale) {
+                        LOG.info(u.toString());
                     }
-                    break;
 
-                case 6:
-                    LOG.info("This are the books available for Lends");
-                    try (Connection c = ConnectionPool.getInstance().getConnection()) {
-                        BooksForLendsService boksLends = new BooksForLendImpl(c);
-                        List<BooksForLend> thisList = boksLends.getAllBooks();
-                        for (BooksForLend u : thisList) {
-                            LOG.info(u.toString());
-                        }
-                    } catch (Exception e) {
+                break;
+
+            case 6:
+                LOG.info("This are the books available for Lends");
+                    BooksForLendsService boksLends = new BooksForLendImpl();
+                    List<BooksForLend> thisListLend = boksLends.getAllBooks();
+                    for (BooksForLend u : thisListLend) {
+                        LOG.info(u.toString());
                     }
-                    break;
-
-            }
-
+                break;
 
         }
+
+
     }
+}
 }

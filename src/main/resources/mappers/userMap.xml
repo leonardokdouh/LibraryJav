@@ -16,35 +16,25 @@
 
 
     <select id="getEntity" resultMap="UserResultMap">
-        <![CDATA[
-            Select * from Users where id=${}
-        ]]>
+            Select * from Users where id=${id}
     </select>
 
     <select id="getAll" resultMap="UserResultMap">
-        <![CDATA[
             Select * from Users
-        ]]>
     </select>
 
     <insert id="saveEntity" useGeneratedKeys="true">
-        <![CDATA[
             Insert into Users (name,email,address,age)
              values (#{name},#{email},#{address},#{age})
-        ]]>
     </insert>
 
     <delete id="delete" >
-        <![CDATA[
         Delete from Users where id=#{id}
-        ]]>
     </delete>
 
     <update id="update">
-        <![CDATA[
             Update Users set name=#{name},email=#{email},
             address=#{address},age=#{age} where id=#{id}
-        ]]>
     </update>
 
 </mapper>

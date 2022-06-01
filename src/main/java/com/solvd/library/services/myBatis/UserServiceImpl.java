@@ -2,8 +2,8 @@ package com.solvd.library.services.myBatis;
 
 import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
-import com.solvd.library.dao.impl.UsersDAO;
 import com.solvd.library.services.UsersService;
+import com.solvd.library.util.Constants;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-public class UserServiceImpl implements UsersService {
+public class UserServiceImpl extends AbsSqlSession implements UsersService {
 
     private final static Logger LOG = LogManager.getLogger(UserServiceImpl.class);
 
@@ -23,34 +23,19 @@ public class UserServiceImpl implements UsersService {
     @Override
     public void delete(Long id) {
 
-        try {
-            Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
-            SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-            SqlSession session =sql.openSession();
+            SqlSession session = sqlSession();
             IUserDAO userDAO = session.getMapper(IUserDAO.class);
-
             userDAO.delete(id);
             session.commit();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
     }
 
     @Override
     public void create(Users u) {
-        try {
-            Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
-            SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-            SqlSession session =sql.openSession();
-            IUserDAO userDAO = session.getMapper(IUserDAO.class);
 
+            SqlSession session = sqlSession();
+            IUserDAO userDAO = session.getMapper(IUserDAO.class);
             userDAO.saveEntity(u);
             session.commit();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
     }
 
     @Override
@@ -69,33 +54,19 @@ public class UserServiceImpl implements UsersService {
 
     @Override
     public Users getUsers(Long id) {
+        SqlSession session = sqlSession();
+        IUserDAO userDAO = session.getMapper(IUserDAO.class);
 
-        Users user = null;
-        try {
-            Reader e = Resources.getResourceAsReader("mybatisConfig.xml");
-            SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-            IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
-
-            user = userDAO.getEntity(id);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
+       Users user = userDAO.getEntity(id);
 
         return user;
     }
 
     @Override
     public List<Users> getAllUsers() {
+        SqlSession session = sqlSession();
 
-        Reader e = null;
-        try {
-            e = Resources.getResourceAsReader("mybatisConfig.xml");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-        IUserDAO userDAO = sql.openSession().getMapper(IUserDAO.class);
+        IUserDAO userDAO = session.getMapper(IUserDAO.class);
         List<Users> userList = userDAO.getAll();
 
         return userList;

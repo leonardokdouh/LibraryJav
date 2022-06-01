@@ -22,27 +22,27 @@ public class App {
 
 
     public static void main(String[] args) throws IOException {
-        Connection c = ConnectionPool.getInstance().getConnection();
 
-        UsersService userJdbc = new UserServicesImpl(c);
+        UsersService userJdbc = new UserServicesImpl();
 
-        LOG.info(userJdbc.getUsers(4L).toString());
+        LOG.info(userJdbc.getUsers(30L).toString());
         LOG.info(userJdbc.getAllUsers());
         //userJdbc.delete(3L);
 
-        try {
-            Users u = new Users("Tarja", "asdasdtarke@gmail.com", "Lili 4th Ave.", 55);
-            UserServiceImpl userMyBatis = new UserServiceImpl();
-            //LOG.error(userMyBatis.getUsers(4L).toString());
-            //LOG.info(userMyBatis.getAllUsers());
-                //userMyBatis.create(u);
-                userMyBatis.delete(4L);
-        }catch (Exception e){
-            LOG.error(e);
-        }
+//        try {
+//            Users u = new Users("Tarja", "asdasdtarke@gmail.com", "Lili 4th Ave.", 55);
+//
+//                //userMyBatis.create(u);
+//               //userMyBatis.delete(4L);
+//        }catch (Exception e){
+//            LOG.error(e);
+//        }
 
-        LOG.info(userJdbc.getUsers(4L).toString());
-        LOG.info(userJdbc.getAllUsers());
+        UserServiceImpl userMyBatis = new UserServiceImpl();
+
+        LOG.error(userMyBatis.getUsers(30L).toString());
+        LOG.info(userMyBatis.getAllUsers());
+
 
 
 

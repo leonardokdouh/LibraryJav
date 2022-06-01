@@ -14,30 +14,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BooksForSaleDAO implements IBooksForSale {
+public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSale {
 
-    final String GETALL = "SELECT id, name, editorial, price, booksId FROM BooksForSale";
+    private final String GET_ALL = "SELECT id, name, editorial, price, booksId FROM BooksForSale";
 
 
-    private Connection conn;
-    private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
 
-    public BooksForSaleDAO(Connection conn) {
-        this.conn = conn;
+    @Override
+    public BooksForSale getEntity(Long id)  {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public BooksForSale getEntity(Long id) throws ExceptionDAO {
-        return null;
-    }
-
-    @Override
-    public void saveEntity(BooksForSale entity) throws ExceptionDAO {
+    public void saveEntity(BooksForSale entity)   {
+        throw new UnsupportedOperationException();
 
     }
 
     @Override
-    public void update(BooksForSale entity) throws ExceptionDAO {
+    public void update(BooksForSale entity) {
+        throw new UnsupportedOperationException();
 
     }
 
@@ -54,7 +50,8 @@ public class BooksForSaleDAO implements IBooksForSale {
     }
 
     @Override
-    public void delete(Long id) throws ExceptionDAO {
+    public void delete(Long id)   {
+        throw new UnsupportedOperationException();
 
     }
 
@@ -63,10 +60,11 @@ public class BooksForSaleDAO implements IBooksForSale {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Connection conn= getConnect();
         List<BooksForSale> bookss = new ArrayList<>();
 
         try {
-            ps = conn.prepareStatement(GETALL);
+            ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 bookss.add(convert(rs));
@@ -74,6 +72,7 @@ public class BooksForSaleDAO implements IBooksForSale {
         } catch (SQLException e) {
             throw new ExceptionDAO("Can't reach the Worker", e);
         } finally {
+            returnConnect(conn);
             closer.twoCloser(ps, rs);
         }
         return bookss;

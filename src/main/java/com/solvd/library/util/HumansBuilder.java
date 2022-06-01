@@ -29,7 +29,6 @@ public class HumansBuilder {
     public void userCreation() {
         UsersUtils tool = new UsersUtils();
 
-        try (Connection c = ConnectionPool.getInstance().getConnection()) {
             LOG.info("So, you are a new user, please tell me your name");
             name = scan.nextLine();
 
@@ -43,17 +42,13 @@ public class HumansBuilder {
             LOG.info("And finally please tell me your age");
             age = scan.nextInt();
 
-            UsersService up = new UserServicesImpl(c);
+            UsersService up = new UserServicesImpl();
             Users newUser = new Users(name, email, address, age);
             up.create(newUser);
 
-        } catch (SQLException e) {
-
-        }
     }
 
     public void workerCreation() {
-        try (Connection c = ConnectionPool.getInstance().getConnection()) {
             LOG.info("You are about to create a Worker. Enter the name");
             name = scan.nextLine();
 
@@ -63,15 +58,11 @@ public class HumansBuilder {
             LOG.info("Enter the shift id");
             shifts = scan.nextInt();
 
-            WorkersService up = new WorkersServiceImpl(c);
+            WorkersService up = new WorkersServiceImpl();
             Workers newW = new Workers(name, gender, shifts);
             up.create(newW);
 
             LOG.info(newW.toString());
-
-        } catch (SQLException e) {
-
-        }
 
     }
 }

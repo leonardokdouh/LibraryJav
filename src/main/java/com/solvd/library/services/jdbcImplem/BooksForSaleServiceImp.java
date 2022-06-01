@@ -10,15 +10,9 @@ import java.util.List;
 
 public class BooksForSaleServiceImp implements BooksForSaleService {
 
-    private Connection conn;
-
-    public BooksForSaleServiceImp(Connection conn) {
-        this.conn = conn;
-    }
-
     @Override
     public List<BooksForSale> getAllBooks() {
-        IBooksForSale bookSale = new BooksForSaleDAO(conn);
+        IBooksForSale bookSale = new BooksForSaleDAO();
         List<BooksForSale> booksForSalesListService = bookSale.getAll();
         return booksForSalesListService;
 

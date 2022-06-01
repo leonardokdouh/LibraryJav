@@ -15,28 +15,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BooksDAO implements IBooksDao {
+public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
 
-    final String INSERT = "INSERT INTO Books (name, type, cargoesId) VALUES (?,?,?)";
-    final String UPDATE = "UPDATE Books SET name =?, type=?, cargoesId= ?, WHERE id=?";
-    final String DELETE = "DELETE from Books WHERE id=?";
-    final String GETONE = "SELECT id, name, type, cargoesId, from Books WHERE id=?";
-    final String GETALL = "SELECT id, name, type, cargoesId FROM Books";
-
-
-    private Connection conn;
-    private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
+    private final String INSERT = "INSERT INTO Books (name, type, cargoesId) VALUES (?,?,?)";
+    private final String UPDATE = "UPDATE Books SET name =?, type=?, cargoesId= ?, WHERE id=?";
+    private final String DELETE = "DELETE from Books WHERE id=?";
+    private final String GET_ONE = "SELECT id, name, type, cargoesId, from Books WHERE id=?";
+    private final String GET_ALL = "SELECT id, name, type, cargoesId FROM Books";
 
 
-    public BooksDAO(Connection conn) {
-        this.conn = conn;
-    }
-
+    private static final Logger LOG = LogManager.getLogger(BooksDAOAbs.class);
 
     @Override
     public void saveEntity(Books u) {
 
         PreparedStatement pt = null;
+        Connection conn = getConnect();
         try {
             pt = conn.prepareStatement(INSERT);
             pt.setString(1, u.getName());
@@ -47,6 +41,7 @@ public class BooksDAO implements IBooksDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            returnConnect(conn);
             if (pt != null) {
                 try {
                     pt.close();
@@ -61,6 +56,8 @@ public class BooksDAO implements IBooksDao {
     public void update(Books entity) {
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
+        Connection conn = getConnect();
+
 
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -75,6 +72,8 @@ public class BooksDAO implements IBooksDao {
         } catch (SQLException e) {
             throw new ExceptionDAO("Error in SQL", e);
         } finally {
+            returnConnect(conn);
+
             close.theCloser(ps);
         }
     }
@@ -83,8 +82,9 @@ public class BooksDAO implements IBooksDao {
     public void delete(Long id) {
 
         PreparedStatement ps = null;
-
         OneStepCloser close = new OneStepCloser(ps);
+        Connection conn = getConnect();
+
 
         try {
             ps = conn.prepareStatement(DELETE);
@@ -97,6 +97,8 @@ public class BooksDAO implements IBooksDao {
             e.printStackTrace();
             throw new ExceptionSQL("Error in SQL");
         } finally {
+            returnConnect(conn);
+
             close.theCloser(ps);
         }
     }
@@ -117,11 +119,12 @@ public class BooksDAO implements IBooksDao {
     public Books getEntity(Long id) {
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Connection conn = getConnect();
 
         Books bok;
 
         try {
-            ps = conn.prepareStatement(GETONE);
+            ps = conn.prepareStatement(GET_ONE);
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -133,7 +136,7 @@ public class BooksDAO implements IBooksDao {
         } catch (SQLException e) {
             throw new ExceptionDAO("Can't reach the Book", e);
         } finally {
-            LOG.info("That's it");
+            returnConnect(conn);
         }
         return bok;
     }
@@ -144,10 +147,11 @@ public class BooksDAO implements IBooksDao {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Connection conn = getConnect();
         List<Books> bookss = new ArrayList<>();
 
         try {
-            ps = conn.prepareStatement(GETALL);
+            ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 bookss.add(convert(rs));
@@ -155,6 +159,8 @@ public class BooksDAO implements IBooksDao {
         } catch (SQLException e) {
             throw new ExceptionDAO("Can't reach the Worker", e);
         } finally {
+            returnConnect(conn);
+
             closer.twoCloser(ps, rs);
         }
         return bookss;

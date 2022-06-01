@@ -10,36 +10,28 @@ import java.util.List;
 
 public class UserServicesImpl implements UsersService {
 
-    private Connection conn;
-
-    public UserServicesImpl(Connection conn) {
-        this.conn = conn;
-    }
-
-
     @Override
     public void delete(Long id) {
-        IUserDAO userDAo = new UsersDAO(conn);
+        IUserDAO userDAo = new UsersDAO();
         userDAo.delete(id);
     }
 
     @Override
     public void create(Users u) {
-        IUserDAO userDAo = new UsersDAO(conn);
+        IUserDAO userDAo = new UsersDAO();
         userDAo.saveEntity(u);
     }
 
     @Override
     public void update(Users entity) {
 
-        IUserDAO userDAo = new UsersDAO(conn);
+        IUserDAO userDAo = new UsersDAO();
         userDAo.update(entity);
     }
 
     @Override
     public Users getUsers(Long id) {
-
-        IUserDAO userDAo = new UsersDAO(conn);
+        IUserDAO userDAo = new UsersDAO();
         Users user = userDAo.getEntity(id);
 
         return user;
@@ -47,7 +39,7 @@ public class UserServicesImpl implements UsersService {
 
     @Override
     public List<Users> getAllUsers() {
-        IUserDAO list = new UsersDAO(conn);
+        IUserDAO list = new UsersDAO();
         List<Users> userList = list.getAll();
 
         return userList;

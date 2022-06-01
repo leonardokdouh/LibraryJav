@@ -10,5 +10,6 @@ public interface Constants {
 
     String PASSWORD = "db.pass";
 
+    String MY_BATIS_CONFIG = "mybatisConfig.xml";
 
 }
