@@ -1,7 +1,7 @@
-<ordersDetails>
-    
-<order id = "1">
-        
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<ordersDetails id = "1">
+
     <ordersid>1</ordersid>
     
     <booksForSaleId>2</booksForSaleId>
@@ -10,34 +10,12 @@
     
     <shippingTypeId>2</shippingTypeId>
     
-    <payMehtodId>1</payMehtodId>
+    <payMethodId>1</payMethodId>
     
     <address>"2442 4th Aveniu, Mar del Plata, Argentina"</address>
     
-    <date>"1111-11-11 00:00:00"</date>
+    <dateOfOrder>"20-11-2021 15:02:30"</dateOfOrder>
     
     <totalOrder>200</totalOrder>
-    
-</order>
-
-<order id = "3">
-
-    <ordersid>2</ordersid>
-    
-    <booksForSaleId>5</booksForSaleId>
-    
-    <workersId>1</workersId>
-    
-    <shippingTypeId>1</shippingTypeId>
-    
-    <payMehtodId>3</payMehtodId>
-    
-    <address>"22 2th Aveniu, Sarasota, USA"</address>
-    
-    <date>"1111-11-11 00:00:00"</date>
-    
-    <totalOrder>30</totalOrder>
-    
-</order>
 
 </ordersDetails>

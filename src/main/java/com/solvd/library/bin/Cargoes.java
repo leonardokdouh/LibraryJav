@@ -36,7 +36,6 @@ public class Cargoes {
     }
 
     public Cargoes() {
-
     }
 
     public List<OriginsJson> getOrigins() {

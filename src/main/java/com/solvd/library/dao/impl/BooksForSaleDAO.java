@@ -22,18 +22,18 @@ public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSal
 
     @Override
     public BooksForSale getEntity(Long id)  {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("No implementation yet");
     }
 
     @Override
     public void saveEntity(BooksForSale entity)   {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("No implementation yet");
 
     }
 
     @Override
     public void update(BooksForSale entity) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("No implementation yet");
 
     }
 
@@ -51,7 +51,7 @@ public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSal
 
     @Override
     public void delete(Long id)   {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("No implementation yet");
 
     }
 

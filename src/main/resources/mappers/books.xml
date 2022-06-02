@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.library.dao.IBooksDao">
+    <resultMap type="com.solvd.library.bin.Books"
+               id="BooksResultMap" autoMapping="false">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="cargoesId" property="cargoesId"/>
+
+    </resultMap>
+
+    <select id="getEntity" resultMap="BooksResultMap">
+        Select * from Books where id=${id}
+    </select>
+
+    <select id="getAll" resultMap="BooksResultMap">
+        Select * from Books
+    </select>
+
+    <insert id="saveEntity" useGeneratedKeys="true">
+        Insert into Books (name,type,cargoesId)
+        values (#{name},#{type},#{cargoesId})
+    </insert>
+
+    <delete id="delete" >
+        Delete from Books where id=#{id}
+    </delete>
+
+    <update id="update">
+        Update Books set name=#{name},type=#{type},
+        cargoesId=#{cargoesId} where id=#{id}
+    </update>
+
+</mapper>

@@ -1,26 +1,41 @@
 package com.solvd.library.bin;
 
+import com.solvd.library.services.jaxBParser.DateTimeAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 import java.util.Objects;
 
+@XmlRootElement(name = "ordersDetails")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class OrdersDetails {
-
+    @XmlAttribute(name = "id")
     private Long id;
 
-    private Date date;
-
+    @XmlElement(name = "ordersid")
     private Long ordersId;
 
+    @XmlElement(name = "booksForSaleId")
     private Long booksForSaleId;
 
+    @XmlElement(name = "workersId")
     private Long workersId;
 
-    private String address;
-
+    @XmlElement(name = "shippingTypeId")
     private int shippingTypeId;
 
+    @XmlElement(name = "payMethodId")
     private int payMethodId;
 
+    @XmlElement(name = "address")
+    private String address;
+
+    @XmlElement(name = "dateOfOrder")
+    @XmlJavaTypeAdapter(DateTimeAdapter.class)
+    private Date date;
+
+    @XmlElement(name = "totalOrder")
     private int totalOrder;
 
     public OrdersDetails(Long id, Long ordersId, Long booksForSaleId,
@@ -34,6 +49,10 @@ public class OrdersDetails {
         this.payMethodId = payMethodId;
         this.address = address;
         this.totalOrder = totalOrder;
+    }
+
+    public OrdersDetails() {
+
     }
 
     public String getAddress() {

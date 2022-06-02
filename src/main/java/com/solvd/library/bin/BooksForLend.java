@@ -25,6 +25,10 @@ public class BooksForLend {
         this.days = days;
     }
 
+    public BooksForLend() {
+
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,5 +1,6 @@
-package com.solvd.library.util;
+package com.solvd.library.services.domParser;
 
+import com.solvd.library.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
@@ -22,8 +23,8 @@ public class DomParser {
 
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse("src/main/resources/orders.xml");
-            NodeList ordersList = doc.getElementsByTagName("order");
+            Document doc = builder.parse(Constants.JAXB);
+            NodeList ordersList = doc.getElementsByTagName("ordersDetails");
             for (int i = 0; i < ordersList.getLength(); i++) {
                 Node p = ordersList.item(i);
                 if (p.getNodeType() == Node.ELEMENT_NODE) {

@@ -43,7 +43,7 @@ public class ConnectionPool {
         }
     }
 
-    public Connection getConnection() {
+    public synchronized Connection getConnection() {
 
         if (!connectionList.isEmpty()) {
             return connectionList.remove(0);

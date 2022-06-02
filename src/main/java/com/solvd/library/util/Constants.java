@@ -12,4 +12,12 @@ public interface Constants {
 
     String MY_BATIS_CONFIG = "mybatisConfig.xml";
 
+    String JSON_CERO = "src/main/resources/jsons/ordesJson.json";
+
+    String JSON_ONE = "src/main/resources/jsons/first.json";
+
+    String JSON_TWO = "src/main/resources/ShiftsJson.json";
+
+    String JAXB = "src/main/resources/orders.xml";
+
 }

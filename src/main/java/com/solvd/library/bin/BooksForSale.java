@@ -22,6 +22,10 @@ public class BooksForSale {
         this.booksId = booksId;
     }
 
+    public BooksForSale() {
+    }
+
+
     public Long getId() {
         return id;
     }

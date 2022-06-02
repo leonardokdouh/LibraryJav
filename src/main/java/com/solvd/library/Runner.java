@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.solvd.library.bin.*;
 import com.solvd.library.services.*;
+import com.solvd.library.services.domParser.DomParser;
 import com.solvd.library.services.jdbcImplem.*;
 import com.solvd.library.util.*;
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,13 +36,11 @@ public class Runner {
 
                 case 1:
                     LOG.info("This are the active users:");
-                    try (Connection c = ConnectionPool.getInstance().getConnection()) {
+
                         UsersService listUser = new UserServicesImpl();
                         List<Users> thisList = listUser.getAllUsers();
                         for (Users u : thisList) {
                             LOG.info(u.toString());
-                        }
-                    } catch (Exception e) {
                     }
                     break;
 
@@ -50,8 +48,7 @@ public class Runner {
                     LOG.info("This are the active orders");
                     try {
                         JavaType secodType = om.getTypeFactory().constructCollectionType(List.class, Orders.class);
-
-                        List orders = om.readValue(new File("src/main/resources/ordesJson.json"), secodType);
+                        List orders = om.readValue(new File(Constants.JSON_CERO), secodType);
                         LOG.info(orders);
                     } catch (IOException e) {
                         LOG.error("IOException", e);
@@ -59,7 +56,7 @@ public class Runner {
                     break;
 
                 case 3:
-                    LOG.info("This are the last orders");
+                    LOG.info("This is the last order");
                     domOrders.ordersXML();
                     break;
 
@@ -68,7 +65,7 @@ public class Runner {
                     try {
                         JavaType type = om.getTypeFactory().constructCollectionType(List.class, Cargoes.class);
 
-                        List cargos = om.readValue(new File("src/main/resources/first.json"), type);
+                        List cargos = om.readValue(new File(Constants.JSON_ONE), type);
                         LOG.info(cargos);
 
                     } catch (IOException e) {
@@ -81,7 +78,7 @@ public class Runner {
                     try {
                         JavaType thirdType = om.getTypeFactory().constructCollectionType(List.class, Shifts.class);
 
-                        List shifts = om.readValue(new File("src/main/resources/ShiftsJson.json"), thirdType);
+                        List shifts = om.readValue(new File(Constants.JSON_TWO), thirdType);
                         LOG.info(shifts);
 
                     } catch (IOException e) {
@@ -97,14 +94,12 @@ public class Runner {
                 case 7:
 
                     LOG.info("This are the active Workers:");
-                    try (Connection c = ConnectionPool.getInstance().getConnection()) {
+
                         WorkersService listWorkers = new WorkersServiceImpl();
-                        List<Workers> thisList = listWorkers.getAllWorkers();
-                        for (Workers u : thisList) {
+                        List<Workers> thisOtherList = listWorkers.getAllWorkers();
+                        for (Workers u : thisOtherList) {
                             LOG.info(u.toString());
                         }
-                    } catch (Exception e) {
-                    }
                     break;
             }
         }
@@ -113,7 +108,7 @@ public class Runner {
             int option = options.menu();
             switch (option) {
                 case 1:
-                    LOG.info("This are the books available right now");
+                    LOG.info("This are the books.xml available right now");
 
                     BooksService booksUser = new BooksServiceImp();
                     List<Books> thisList = booksUser.getallBooks();
@@ -139,7 +134,7 @@ public class Runner {
 
 
             case 5:
-                LOG.info("This are the books available for Sale");
+                LOG.info("This are the books.xml available for Sale");
                     BooksForSaleService booksSale = new BooksForSaleServiceImp();
                     List<BooksForSale> thisListSale = booksSale.getAllBooks();
                     for (BooksForSale u : thisListSale) {
@@ -149,7 +144,7 @@ public class Runner {
                 break;
 
             case 6:
-                LOG.info("This are the books available for Lends");
+                LOG.info("This are the books.xml available for Lends");
                     BooksForLendsService boksLends = new BooksForLendImpl();
                     List<BooksForLend> thisListLend = boksLends.getAllBooks();
                     for (BooksForLend u : thisListLend) {

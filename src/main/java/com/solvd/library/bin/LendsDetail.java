@@ -16,6 +16,9 @@ public class LendsDetail {
         this.workersId = workersId;
     }
 
+    public LendsDetail() {
+    }
+
     public Long getId() {
         return id;
     }

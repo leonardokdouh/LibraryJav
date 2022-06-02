@@ -14,6 +14,10 @@ public class ShippingType {
         this.type = type;
     }
 
+    public ShippingType() {
+
+    }
+
     public Long getId() {
         return id;
     }

@@ -24,19 +24,19 @@ public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLen
 
     @Override
     public void saveEntity(BooksForLend entity) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("No implementation yet");
 
     }
 
     @Override
     public void update(BooksForLend entity) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("No implementation yet");
 
     }
 
     @Override
     public void delete(Long id) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("No implementation yet");
 
     }
 

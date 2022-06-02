@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.library.dao.ICustomersDAO">
+    <resultMap type="com.solvd.library.bin.Customers"
+               id="CustomersResultMap" autoMapping="false">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="age" property="age"/>
+
+    </resultMap>
+
+    <select id="getEntity" resultMap="CustomersResultMap">
+        Select * from Customers where id=${id}
+    </select>
+
+    <select id="getAll" resultMap="CustomersResultMap">
+        Select * from Customers
+    </select>
+
+    <insert id="saveEntity" useGeneratedKeys="true">
+        Insert into Customers (name,email,age)
+        values (#{name},#{email},#{age})
+    </insert>
+
+    <delete id="delete" >
+        Delete from Customers where id=#{id}
+    </delete>
+
+    <update id="update">
+        Update Customers set name=#{name},email=#{email},
+        age=#{age} where id=#{id}
+    </update>
+
+</mapper>

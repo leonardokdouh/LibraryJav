@@ -1,6 +1,5 @@
 package com.solvd.library.bin;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -18,7 +17,6 @@ public class OriginsJson {
     }
 
     public OriginsJson() {
-
     }
 
     public String getCity() {

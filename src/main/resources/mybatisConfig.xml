@@ -14,6 +14,11 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mappers/userMap.xml"/>
+        <mapper resource="mappers/user.xml"/>
+        <mapper resource="mappers/workers.xml"/>
+        <mapper resource="mappers/customers.xml"/>
+        <mapper resource="mappers/books.xml"/>
+        <mapper resource="mappers/booksForSale.xml"/>
+        <mapper resource="mappers/booksLend.xml"/>
     </mappers>
 </configuration>

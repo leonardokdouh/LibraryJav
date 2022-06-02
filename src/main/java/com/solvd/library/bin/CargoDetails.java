@@ -17,6 +17,9 @@ public class CargoDetails {
         this.workersId = workersId;
     }
 
+    public CargoDetails() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,33 +1,56 @@
 package com.solvd.library;
 
-import com.solvd.library.bin.Users;
-import com.solvd.library.dao.IUserDAO;
+import com.solvd.library.bin.Customers;
+import com.solvd.library.bin.LendsDetail;
+import com.solvd.library.bin.OrdersDetails;
+import com.solvd.library.services.CustomersService;
 import com.solvd.library.services.UsersService;
+import com.solvd.library.services.WorkersService;
+import com.solvd.library.services.jaxBParser.JaxB;
 import com.solvd.library.services.jdbcImplem.UserServicesImpl;
-import com.solvd.library.services.myBatis.UserServiceImpl;
-import com.solvd.library.util.ConnectionPool;
-import com.solvd.library.util.exceptions.ExceptionSQL;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import com.solvd.library.services.myBatis.CustomersServiceImplementation;
+import com.solvd.library.services.myBatis.UserServiceImplementation;
+import com.solvd.library.services.myBatis.WorkersServiceImplementation;
+import com.solvd.library.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.sql.Connection;
-import java.util.List;
 
 public class App {
     private static final Logger LOG = LogManager.getLogger(App.class);
 
-
     public static void main(String[] args) throws IOException {
 
-        UsersService userJdbc = new UserServicesImpl();
 
-        LOG.info(userJdbc.getUsers(30L).toString());
-        LOG.info(userJdbc.getAllUsers());
+        JaxB service = new JaxB();
+        OrdersDetails orderS = service.unmarshall(Constants.JAXB);
+        LOG.info(orderS);
+
+
+        /*UsersService userJdbc = new UserServicesImpl();
+        WorkersService works = new WorkersServiceImplementation();
+        LOG.info(works.getAllWorkers());
+        LOG.info(works.getWorker(2L).getName());*/
+        //works.delete(2L);
+        //I can delete everyone who dont have a relation with other table
+        // For example : id 7L
+        //Cannot delete or update a parent row: a foreign key constraint fails
+        /*LOG.info(works.getAllWorkers());
+
+        LOG.info(userJdbc.getUsers(30L));
+        LOG.info(userJdbc.getAllUsers());*/
         //userJdbc.delete(3L);
+
+//        CustomersServiceImplementation customerMyBatis = new CustomersServiceImplementation();
+//        LOG.info(customerMyBatis.getAllCustomers());
+//        Customers newCustomer = new Customers("Leonel ", "leonel@gmail.com", 36);
+//        customerMyBatis.create(newCustomer);
+//        LOG.info(customerMyBatis.getAllCustomers());
+//        customerMyBatis.delete(7L); //since id has AI yo need to change the id to try it
+//        LOG.info(customerMyBatis.getAllCustomers());
+//
+
 
 //        try {
 //            Users u = new Users("Tarja", "asdasdtarke@gmail.com", "Lili 4th Ave.", 55);
@@ -38,12 +61,14 @@ public class App {
 //            LOG.error(e);
 //        }
 
-        UserServiceImpl userMyBatis = new UserServiceImpl();
+//        UserServiceImplementation userMyBatis = new UserServiceImplementation();
+//
+//        LOG.error(userMyBatis.getUsers(30L).toString());
+//        LOG.info(userMyBatis.getAllUsers());
 
-        LOG.error(userMyBatis.getUsers(30L).toString());
-        LOG.info(userMyBatis.getAllUsers());
 
-
+        //JaxB jaxbServ = new JaxB();
+        //LendsDetail jaxb = jaxbServ.unmarshall("C:\\User");
 
 
         //user.getAllUsers();

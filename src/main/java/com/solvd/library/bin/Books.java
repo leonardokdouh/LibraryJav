@@ -12,10 +12,13 @@ public class Books {
     private Long cargoesId;
 
     public Books(String name, String type, Long cargoesId) {
-
         this.name = name;
         this.type = type;
         this.cargoesId = cargoesId;
+    }
+
+    public Books() {
+
     }
 
 

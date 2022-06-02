@@ -13,6 +13,10 @@ public class Lends {
         this.usersId = usersId;
     }
 
+    public Lends() {
+
+    }
+
     public Long getId() {
         return id;
     }
