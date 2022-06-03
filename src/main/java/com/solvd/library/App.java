@@ -1,26 +1,20 @@
 package com.solvd.library;
 
 import com.solvd.library.bin.*;
-import com.solvd.library.services.CustomersService;
-import com.solvd.library.services.UsersService;
-import com.solvd.library.services.WorkersService;
+import com.solvd.library.services.*;
 import com.solvd.library.services.jaxBParser.JaxB;
-import com.solvd.library.services.jdbcImplem.CustomersServiceImpl;
-import com.solvd.library.services.jdbcImplem.UserServicesImpl;
-import com.solvd.library.services.jdbcImplem.WorkersServiceImpl;
-import com.solvd.library.services.myBatis.CustomersServiceImplementation;
-import com.solvd.library.services.myBatis.UserServiceImplementation;
-import com.solvd.library.services.myBatis.WorkersServiceImplementation;
+import com.solvd.library.services.jdbcImplem.*;
+import com.solvd.library.services.myBatis.*;
 import com.solvd.library.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.util.List;
 
 public class App {
     private static final Logger LOG = LogManager.getLogger(App.class);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         //Trying JaxB Unmarshall. Date problems.
 
@@ -39,7 +33,37 @@ public class App {
         newOrder.setPayMethodId(2);
         newOrder.setAddress("22 5th Aveniu, New York, USA");
         newOrder.setTotalOrder(120);
-        marshallLend.marshall(newOrder,"src/main/resources/newOrder.xml");
+        marshallLend.marshall(newOrder, "src/main/resources/newOrder.xml");
+
+
+        // BooksForLend myBatis and JDBC
+
+        BooksForLendsService jdbcLends = new BooksForLendServiceImpl();
+        List<BooksForLend> lendsList = jdbcLends.getAllBooks();
+        for (BooksForLend books : lendsList) {
+            LOG.info(books);
+        }
+
+        BooksForLendsService myBatisLends = new BooksForLendImplementation();
+        List<BooksForLend> lendLists = myBatisLends.getAllBooks();
+        for (BooksForLend books : lendLists) {
+            LOG.info(books);
+        }
+
+
+        //BooksForSale myBatis and JDBC
+        BooksForSaleService jdbcSale = new BooksForSaleServiceImp();
+        List<BooksForSale> saleList = jdbcSale.getAllBooks();
+        for (BooksForSale books : saleList) {
+            LOG.info(books);
+        }
+
+        BooksForSaleService myBatisSale = new BooksForSaleImplementation();
+        List<BooksForSale> saleLists = myBatisSale.getAllBooks();
+        for (BooksForSale books : saleLists) {
+            LOG.info(books);
+        }
+
 
         //JDBC WORKER CLASS
         //UPDATING A WORKER. Only run once. If you want to run again,
@@ -115,10 +139,6 @@ public class App {
         LOG.info(customerMyBatis.getAllCustomers());
         customerMyBatis.delete(7L); //since id has AI yo need to change the id to try it
         LOG.info(customerMyBatis.getAllCustomers());
-
-
-
-
 
 
     }

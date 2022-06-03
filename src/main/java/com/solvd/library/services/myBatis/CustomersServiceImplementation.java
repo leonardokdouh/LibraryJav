@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class CustomersServiceImplementation  extends AbsSqlSession implements CustomersService {
+public class CustomersServiceImplementation extends AbsSqlSession implements CustomersService {
 
     private static final Logger LOG = LogManager.getLogger(CustomersServiceImplementation.class);
 
@@ -32,6 +32,7 @@ public class CustomersServiceImplementation  extends AbsSqlSession implements Cu
 
         }
     }
+
     @Override
     public void update(Long id, Customers entity) {
         try (SqlSession session = sqlSession();) {

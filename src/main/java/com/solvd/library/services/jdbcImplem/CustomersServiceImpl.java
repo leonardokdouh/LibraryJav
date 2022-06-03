@@ -15,7 +15,6 @@ public class CustomersServiceImpl implements CustomersService {
     private static final Logger LOG = LogManager.getLogger(CustomersServiceImpl.class);
 
 
-
     @Override
     public void delete(Long id) {
         ICustomersDAO custom = new CustomersDAO();

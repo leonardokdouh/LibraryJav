@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ordersDetails>
-    <booksForSaleId>3</booksForSaleId>
-    <workersId>2</workersId>
-    <shippingTypeId>3</shippingTypeId>
-    <payMethodId>2</payMethodId>
-    <address>22 5th Aveniu, New York, USA</address>
-    <totalOrder>120</totalOrder>
-</ordersDetails>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><ordersDetails><booksForSaleId>3</booksForSaleId><workersId>2</workersId><shippingTypeId>3</shippingTypeId><payMethodId>2</payMethodId><address>22 5th Aveniu, New York, USA</address><totalOrder>120</totalOrder></ordersDetails>

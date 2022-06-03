@@ -30,7 +30,7 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
     public void saveEntity(Users u) throws ExceptionDAO {
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
-        Connection conn =getConnect();
+        Connection conn = getConnect();
 
         try {
             ps = conn.prepareStatement(INSERT);
@@ -57,7 +57,7 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
     public void update(Long id, Users entity) throws ExceptionDAO {
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
-        Connection conn =getConnect();
+        Connection conn = getConnect();
 
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -83,7 +83,7 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
     @Override
     public void delete(Long id) {
         PreparedStatement ps = null;
-        Connection conn =getConnect();
+        Connection conn = getConnect();
 
         try {
             ps = conn.prepareStatement(DELETE);
@@ -122,7 +122,7 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Connection conn =getConnect();
+        Connection conn = getConnect();
         Users user = null;
         try {
             ps = conn.prepareStatement(GET_ONE);
@@ -149,7 +149,7 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
 
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
-        Connection conn =getConnect();
+        Connection conn = getConnect();
 
         ResultSet rs = null;
         List<Users> users = new ArrayList<>();

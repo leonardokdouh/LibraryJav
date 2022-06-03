@@ -22,14 +22,13 @@ public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSal
     private final String GET_ALL = "SELECT id, name, editorial, price, booksId FROM BooksForSale";
 
 
-
     @Override
-    public BooksForSale getEntity(Long id)  {
+    public BooksForSale getEntity(Long id) {
         throw new UnsupportedOperationException("No implementation yet");
     }
 
     @Override
-    public void saveEntity(BooksForSale entity)   {
+    public void saveEntity(BooksForSale entity) {
         throw new UnsupportedOperationException("No implementation yet");
 
     }
@@ -53,7 +52,7 @@ public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSal
     }
 
     @Override
-    public void delete(Long id)   {
+    public void delete(Long id) {
         throw new UnsupportedOperationException("No implementation yet");
 
     }
@@ -63,7 +62,7 @@ public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSal
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Connection conn= getConnect();
+        Connection conn = getConnect();
         List<BooksForSale> bookss = new ArrayList<>();
 
         try {

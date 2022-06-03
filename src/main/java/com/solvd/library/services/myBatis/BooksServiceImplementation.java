@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class BooksServiceImplementation  extends AbsSqlSession implements BooksService {
+public class BooksServiceImplementation extends AbsSqlSession implements BooksService {
 
     private static final Logger LOG = LogManager.getLogger(BooksServiceImplementation.class);
 
@@ -19,7 +19,7 @@ public class BooksServiceImplementation  extends AbsSqlSession implements BooksS
         try (SqlSession session = sqlSession()) {
             IBooksDao books = session.getMapper(IBooksDao.class);
             Books newBook = books.getEntity(id);
-        return newBook;
+            return newBook;
         }
     }
 
@@ -40,7 +40,7 @@ public class BooksServiceImplementation  extends AbsSqlSession implements BooksS
             IBooksDao books = session.getMapper(IBooksDao.class);
             books.update(id, u);
             session.commit();
-    }
+        }
     }
 
     @Override

@@ -21,12 +21,10 @@ public class ConnectionPool {
     private List<Connection> connectionList = new ArrayList<>(MAX_CONNECTIONS);
 
     private ConnectionPool() {
-//Singleton type pool
         basicDataSource = new BasicDataSource();
         basicDataSource.setUsername(USER);
         basicDataSource.setPassword(PASS);
         basicDataSource.setUrl(URL);
-        //This setups minconnection, max, total active and inactive
         basicDataSource.setInitialSize(2);
         basicDataSource.setMinIdle(3);
         basicDataSource.setMaxIdle(20);

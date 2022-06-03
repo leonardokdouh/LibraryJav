@@ -15,15 +15,15 @@ public abstract class AbsSqlSession {
 
     private static final Logger LOG = LogManager.getLogger(AbsSqlSession.class);
 
-    public SqlSession sqlSession(){
+    public SqlSession sqlSession() {
         Reader e = null;
         try {
             e = Resources.getResourceAsReader(Constants.MY_BATIS_CONFIG);
         } catch (IOException ex) {
-           LOG.error("Cant open the session", ex);
+            LOG.error("Cant open the session", ex);
         }
         SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-        SqlSession session =sql.openSession();
+        SqlSession session = sql.openSession();
         return session;
 
 
