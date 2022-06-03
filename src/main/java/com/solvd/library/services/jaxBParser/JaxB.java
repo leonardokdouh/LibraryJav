@@ -28,12 +28,12 @@ public class JaxB {
         }
     }
 
-    public void marshall(LendsDetail lends, String path) {
+    public void marshall(OrdersDetails order, String path) {
         JAXBContext jaxB;
         try {
             jaxB = JAXBContext.newInstance(OrdersDetails.class);
             Marshaller marshaller = jaxB.createMarshaller();
-            marshaller.marshal(lends, new File(path));
+            marshaller.marshal(order, new File(path));
         } catch (JAXBException e) {
             LOGGER.error("Unable to create the objetct", e);
         }

@@ -20,30 +20,43 @@ import java.io.*;
 public class App {
     private static final Logger LOG = LogManager.getLogger(App.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
 
         //Trying JaxB Unmarshall. Date problems.
+
         JaxB service = new JaxB();
         OrdersDetails orderS = service.unmarshall(Constants.JAXB);
         LOG.info(orderS);
 
+
+        //Marshalling
+
+        JaxB marshallLend = new JaxB();
+        OrdersDetails newOrder = new OrdersDetails();
+        newOrder.setBooksForSaleId(3L);
+        newOrder.setWorkersId(2L);
+        newOrder.setShippingTypeId(3);
+        newOrder.setPayMethodId(2);
+        newOrder.setAddress("22 5th Aveniu, New York, USA");
+        newOrder.setTotalOrder(120);
+        marshallLend.marshall(newOrder,"src/main/resources/newOrder.xml");
 
         //JDBC WORKER CLASS
         //UPDATING A WORKER. Only run once. If you want to run again,
         //change the parameters of the Workers constructor.
         WorkersService work = new WorkersServiceImpl();
 
-        LOG.info("The name of the worker is:" + work.getWorker(7L).getName());
-        LOG.info("The gender of the worker is:" + work.getWorker(7L).getGender());
-        LOG.info("The shift of the worker is:" + work.getWorker(7L).getShifts());
+        LOG.info("The name of the worker is:" + work.getWorker(6L).getName());
+        LOG.info("The gender of the worker is:" + work.getWorker(6L).getGender());
+        LOG.info("The shift of the worker is:" + work.getWorker(6L).getShifts());
 
         LOG.info("Now lets apply the changes");
-        Workers newWork = new Workers("Frida", "Female", 3);
-        work.update(7L, newWork);
+        Workers newWork = new Workers("Gloria", "Female", 3);
+        work.update(6L, newWork);
 
-        LOG.info("The name of the worker is:" + work.getWorker(7L).getName());
-        LOG.info("The gender of the worker is:" + work.getWorker(7L).getGender());
-        LOG.info("The shift of the worker is:" + work.getWorker(7L).getShifts());
+        LOG.info("The name of the worker is:" + work.getWorker(6L).getName());
+        LOG.info("The gender of the worker is:" + work.getWorker(6L).getGender());
+        LOG.info("The shift of the worker is:" + work.getWorker(6L).getShifts());
 
         //GETTING ALL WORKERS
         LOG.info(work.getAllWorkers());
@@ -55,17 +68,17 @@ public class App {
         //MYBATIS WORKER CLASS
         //REPEATING SAME metologies
         WorkersService works = new WorkersServiceImplementation();
-        LOG.info("The name of the worker is:" + works.getWorker(7L).getName());
-        LOG.info("The gender of the worker is:" + works.getWorker(7L).getGender());
-        LOG.info("The shift of the worker is:" + works.getWorker(7L).getShifts());
+        LOG.info("The name of the worker is:" + works.getWorker(6L).getName());
+        LOG.info("The gender of the worker is:" + works.getWorker(6L).getGender());
+        LOG.info("The shift of the worker is:" + works.getWorker(6L).getShifts());
 
         LOG.info("Now lets apply the changes");
         Workers worker = new Workers("Gladys", "Female", 2);
-        works.update(7L, worker);
+        works.update(6L, worker);
 
-        LOG.info("The name of the worker is:" + works.getWorker(7L).getName());
-        LOG.info("The gender of the worker is:" + works.getWorker(7L).getGender());
-        LOG.info("The shift of the worker is:" + works.getWorker(7L).getShifts());
+        LOG.info("The name of the worker is:" + works.getWorker(6L).getName());
+        LOG.info("The gender of the worker is:" + works.getWorker(6L).getGender());
+        LOG.info("The shift of the worker is:" + works.getWorker(6L).getShifts());
 
         //GETTING ALL WORKERS
         LOG.info(works.getAllWorkers());
