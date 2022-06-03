@@ -5,6 +5,8 @@ import com.solvd.library.dao.IWorkersDAO;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.exceptions.ExceptionSQL;
 import com.solvd.library.util.OneStepCloser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
+    private static final Logger LOG = LogManager.getLogger(WorkersDAO.class);
+
+
     private final String INSERT = "INSERT INTO Workers (name, gender, shifts) VALUES (?, ?, ?)";
     private final String UPDATE = "UPDATE Workers SET name=?, gender=?, shifts=? WHERE id=?";
     private final String DELETE = "DELETE from Workers WHERE id=?";
@@ -34,7 +39,7 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
             pt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Error in SQL", e);
         } finally {
             returnConnect(conn);
             if (pt != null) {
@@ -48,7 +53,7 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
 
 
     @Override
-    public void update(Workers entity) {
+    public void update(Long id, Workers entity) {
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
@@ -59,12 +64,14 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getGender());
             ps.setInt(3, entity.getShifts());
+            ps.setLong(4, id);
 
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe the update did not save");
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
             close.theCloser(ps);
@@ -84,7 +91,7 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
                 throw new ExceptionDAO("Not deleted");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Error in SQL", e);
             throw new ExceptionSQL("Error in SQL");
         } finally {
             returnConnect(conn);
@@ -114,6 +121,7 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
 
         try {
             ps = conn.prepareStatement(GET_ONE);
+            ps.setLong(1, id);
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -122,7 +130,8 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
                 throw new ExceptionDAO("Not work");
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Can't reach the Worker", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Can't reach the Worker");
         } finally {
             returnConnect(conn);
             closer.twoCloser(ps, rs);
@@ -146,7 +155,8 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
                 works.add(convert(rs));
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Can't reach the Worker", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Can't reach the Worker");
         } finally {
             returnConnect(conn);
             closer.twoCloser(ps, rs);

@@ -4,10 +4,15 @@ import com.solvd.library.bin.Customers;
 import com.solvd.library.dao.ICustomersDAO;
 import com.solvd.library.services.CustomersService;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class CustomersServiceImplementation  extends AbsSqlSession implements CustomersService {
+
+    private static final Logger LOG = LogManager.getLogger(CustomersServiceImplementation.class);
+
     @Override
     public void delete(Long id) {
         try (SqlSession session = sqlSession();) {
@@ -27,12 +32,11 @@ public class CustomersServiceImplementation  extends AbsSqlSession implements Cu
 
         }
     }
-
     @Override
-    public void update(Customers entity) {
+    public void update(Long id, Customers entity) {
         try (SqlSession session = sqlSession();) {
             ICustomersDAO customers = session.getMapper(ICustomersDAO.class);
-            customers.update(entity);
+            customers.update(id, entity);
             session.commit();
         }
     }

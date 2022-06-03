@@ -6,4 +6,5 @@ import com.solvd.library.util.exceptions.ExceptionDAO;
 
 public interface IUserDAO extends BaseDAO<Users, Long> {
 
+
 }

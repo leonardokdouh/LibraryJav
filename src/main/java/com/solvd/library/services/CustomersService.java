@@ -11,7 +11,7 @@ public interface CustomersService {
 
     void create(Customers u);
 
-    void update(Customers entity);
+    void update(Long id, Customers entity);
 
     Customers getCustomers(Long id);
 

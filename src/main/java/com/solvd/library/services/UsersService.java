@@ -10,7 +10,7 @@ public interface UsersService {
 
     void create(Users u);
 
-    void update(Users entity);
+    void update(Long id, Users entity);
 
     Users getUsers(Long id);
 

@@ -1,11 +1,16 @@
 package com.solvd.library.util;
 
+import com.solvd.library.bin.BooksForLend;
+import com.solvd.library.bin.PayMethod;
+import com.solvd.library.bin.ShippingType;
 import com.solvd.library.util.exceptions.ExceptionChoose;
 import com.solvd.library.util.exceptions.ExceptionMail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,7 +25,7 @@ public class UsersUtils {
             int option = 1;
             LOG.debug("\nChose the option below:\n" + "Opcion 1: BUY A BOOK\n"
                     + "Option 2: LEND A BOOK \n" + "Option 3:REGISTRY USER\n"
-                    + "Option 4:REGISTRY CUSTOMER \n " + "Option 5:CHECK BOOKS FOR SALE \n "
+                    + "Option 4:CHECK Pay and Ship Methods \n " + "Option 5:CHECK BOOKS FOR SALE \n "
                     + "Option 6:CHECK BOOKS FOR LEND \n ");
 
             try {
@@ -59,6 +64,33 @@ public class UsersUtils {
             LOG.debug("Thank you sir for your email");
         } else {
             LOG.debug("That mail is incorrect. No problem.");
+        }
+    }
+
+    public void payAndShips() {
+        PayMethod cash = new PayMethod(1L, "Cash");
+        PayMethod debit = new PayMethod(2L, "Debit");
+        PayMethod credit = new PayMethod(3L, "Credit");
+        List<PayMethod> payMethods = new ArrayList<>();
+        payMethods.add(cash);
+        payMethods.add(debit);
+        payMethods.add(credit);
+
+        ShippingType firstShip = new ShippingType(1L, "Air");
+        ShippingType secondShip = new ShippingType(2L, "Boat");
+        ShippingType thirdShip = new ShippingType(3L, "Drone");
+        List<ShippingType> typeShipping = new ArrayList<>();
+        typeShipping.add(firstShip);
+        typeShipping.add(secondShip);
+        typeShipping.add(thirdShip);
+
+        for (ShippingType ship: typeShipping){
+            LOG.info(ship.toString());
+        }
+        for (PayMethod u : payMethods) {
+            LOG.info(u.toString());
+
+
         }
     }
 

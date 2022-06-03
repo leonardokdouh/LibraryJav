@@ -46,6 +46,7 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
                 try {
                     pt.close();
                 } catch (SQLException e) {
+                    LOG.error("Error in SQL", e);
                 }
             }
         }
@@ -53,7 +54,7 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
 
 
     @Override
-    public void update(Books entity) {
+    public void update(Long id, Books entity) {
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
@@ -65,12 +66,15 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getType());
             ps.setLong(3, entity.getCargoesId());
+            ps.setLong(4, id);
 
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe the update did not save");
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL");
+
         } finally {
             returnConnect(conn);
 
@@ -94,7 +98,7 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
                 throw new ExceptionDAO("Not deleted");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Error in SQL", e);
             throw new ExceptionSQL("Error in SQL");
         } finally {
             returnConnect(conn);
@@ -134,7 +138,8 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
             }
 
         } catch (SQLException e) {
-            throw new ExceptionDAO("Can't reach the Book", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Can't reach the Book");
         } finally {
             returnConnect(conn);
         }
@@ -157,7 +162,8 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
                 bookss.add(convert(rs));
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Can't reach the Worker", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Can't reach the Worker");
         } finally {
             returnConnect(conn);
 

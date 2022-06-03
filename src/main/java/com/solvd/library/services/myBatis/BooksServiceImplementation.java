@@ -4,10 +4,16 @@ import com.solvd.library.bin.Books;
 import com.solvd.library.dao.IBooksDao;
 import com.solvd.library.services.BooksService;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class BooksServiceImplementation  extends AbsSqlSession implements BooksService {
+
+    private static final Logger LOG = LogManager.getLogger(BooksServiceImplementation.class);
+
+
     @Override
     public Books getBooks(Long id) {
         try (SqlSession session = sqlSession()) {
@@ -29,12 +35,12 @@ public class BooksServiceImplementation  extends AbsSqlSession implements BooksS
     }
 
     @Override
-    public void update(Books u) {
+    public void update(Long id, Books u) {
         try (SqlSession session = sqlSession()) {
             IBooksDao books = session.getMapper(IBooksDao.class);
-            books.update(u);
+            books.update(id, u);
             session.commit();
-        }
+    }
     }
 
     @Override

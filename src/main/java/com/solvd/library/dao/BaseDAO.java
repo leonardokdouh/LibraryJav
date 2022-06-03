@@ -10,7 +10,7 @@ public interface BaseDAO<T, K> {
 
     void saveEntity(T entity) throws ExceptionDAO;
 
-    void update(T entity) throws ExceptionDAO;
+    void update(K id, T entity) throws ExceptionDAO;
 
     void delete(K id) throws ExceptionDAO;
 

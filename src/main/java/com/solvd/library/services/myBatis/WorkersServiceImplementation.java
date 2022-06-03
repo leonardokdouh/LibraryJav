@@ -4,10 +4,15 @@ import com.solvd.library.bin.Workers;
 import com.solvd.library.dao.IWorkersDAO;
 import com.solvd.library.services.WorkersService;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class WorkersServiceImplementation extends AbsSqlSession implements WorkersService {
+
+    private static final Logger LOG = LogManager.getLogger(WorkersServiceImplementation.class);
+
     @Override
     public void delete(Long id) {
         try (SqlSession session = sqlSession()) {
@@ -27,10 +32,10 @@ public class WorkersServiceImplementation extends AbsSqlSession implements Worke
     }
 
     @Override
-    public void update(Workers entity) {
+    public void update(Long id, Workers entity) {
         try (SqlSession session = sqlSession()) {
             IWorkersDAO workersDAO = session.getMapper(IWorkersDAO.class);
-            workersDAO.update(entity);
+            workersDAO.update(id, entity);
             session.commit();
         }
     }

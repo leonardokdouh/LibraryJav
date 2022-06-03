@@ -4,6 +4,8 @@ import com.solvd.library.bin.Customers;
 import com.solvd.library.util.ConnectionPool;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.OneStepCloser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.library.dao.ICustomersDAO {
+    private static final Logger LOG = LogManager.getLogger(Customers.class);
+
 
     private final String INSERT = "INSERT INTO Customers (name, email, age) VALUES (?,?,?)";
     private final String UPDATE = "UPDATE Customers SET name=?, email =?, age=? WHERE id=?";
@@ -38,7 +42,8 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             }
 
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL sentence", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL sentence");
         } finally {
             returnConnect(conn);
             close.theCloser(ps);
@@ -46,7 +51,7 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
     }
 
     @Override
-    public void update(Customers entity) throws ExceptionDAO {
+    public void update(Long id, Customers entity) throws ExceptionDAO {
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
@@ -56,11 +61,13 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getEmail());
             ps.setInt(3, entity.getAge());
+            ps.setLong(4, id);
 
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your changes may not be saved");
             }
         } catch (SQLException e) {
+            LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Maybe your changes may not be saved");
         } finally {
             returnConnect(conn);
@@ -83,7 +90,8 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             }
 
         } catch (SQLException e) {
-            throw new ExceptionDAO("Maybe its not deleted", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Maybe its not deleted");
         } finally {
             returnConnect(conn);
             end.theCloser(ps);
@@ -121,7 +129,8 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
                 throw new ExceptionDAO("The id is not in the database");
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
             close.twoCloser(ps, rs);
@@ -139,14 +148,15 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
         List<Customers> cuList = new ArrayList<>();
 
         try {
-            ps = conn.prepareStatement(GET_ONE);
+            ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 cuList.add(convert(rs));
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
             close.twoCloser(ps, rs);

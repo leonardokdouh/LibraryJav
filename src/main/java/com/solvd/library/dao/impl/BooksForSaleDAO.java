@@ -16,6 +16,9 @@ import java.util.List;
 
 public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSale {
 
+    private static final Logger LOG = LogManager.getLogger(BooksForSaleDAO.class);
+
+
     private final String GET_ALL = "SELECT id, name, editorial, price, booksId FROM BooksForSale";
 
 
@@ -32,7 +35,7 @@ public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSal
     }
 
     @Override
-    public void update(BooksForSale entity) {
+    public void update(Long id, BooksForSale entity) {
         throw new UnsupportedOperationException("No implementation yet");
 
     }
@@ -70,6 +73,7 @@ public class BooksForSaleDAO extends AbsConnectionForDAO implements IBooksForSal
                 bookss.add(convert(rs));
             }
         } catch (SQLException e) {
+            LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Can't reach the Worker", e);
         } finally {
             returnConnect(conn);

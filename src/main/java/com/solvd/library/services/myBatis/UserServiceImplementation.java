@@ -38,10 +38,10 @@ public class UserServiceImplementation extends AbsSqlSession implements UsersSer
     }
 
     @Override
-    public void update(Users entity) {
+    public void update(Long id, Users entity) {
         try (SqlSession session = sqlSession()) {
             IUserDAO userDAO = session.getMapper(IUserDAO.class);
-            userDAO.update(entity);
+            userDAO.update(id, entity);
             session.commit();
         }
     }

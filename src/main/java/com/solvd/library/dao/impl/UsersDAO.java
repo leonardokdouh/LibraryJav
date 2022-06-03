@@ -1,9 +1,12 @@
 package com.solvd.library.dao.impl;
 
+import com.solvd.library.bin.Customers;
 import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.OneStepCloser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
+    private static final Logger LOG = LogManager.getLogger(UsersDAO.class);
+
 
     private final String INSERT = "INSERT INTO Users (name, email, address, age) VALUES (?, ?, ?, ?)";
     private final String UPDATE = "UPDATE Users SET name= ?, email= ?, address= ?, age=? WHERE id=?";
@@ -38,7 +43,8 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
                 throw new ExceptionDAO("Maybe your users is not saved");
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL sentence", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL sentence");
 
         } finally {
             returnConnect(conn);
@@ -46,8 +52,9 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
         }
     }
 
+
     @Override
-    public void update(Users entity) throws ExceptionDAO {
+    public void update(Long id, Users entity) throws ExceptionDAO {
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
         Connection conn =getConnect();
@@ -58,12 +65,14 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
             ps.setString(2, entity.getEmail());
             ps.setString(3, entity.getAddress());
             ps.setInt(4, entity.getAge());
+            ps.setLong(5, id);
 
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your changes may not be saved");
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL query", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL query");
         } finally {
             returnConnect(conn);
             end.theCloser(ps);
@@ -90,7 +99,8 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    throw new ExceptionDAO("Error in SQL", e);
+                    LOG.error("Error in SQL", e);
+                    throw new ExceptionDAO("Error in SQL");
                 }
             }
         }
@@ -124,7 +134,8 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
                 throw new ExceptionDAO("that id isn't in our registry");
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
             closer.twoCloser(ps, rs);
@@ -149,7 +160,8 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
                 users.add(convert(rs));
             }
         } catch (SQLException e) {
-            throw new ExceptionDAO("Error in SQL", e);
+            LOG.error("Error in SQL", e);
+            throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
             closer.twoCloser(ps, rs);

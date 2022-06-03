@@ -4,11 +4,16 @@ import com.solvd.library.bin.Customers;
 import com.solvd.library.dao.ICustomersDAO;
 import com.solvd.library.dao.impl.CustomersDAO;
 import com.solvd.library.services.CustomersService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
 
 public class CustomersServiceImpl implements CustomersService {
+
+    private static final Logger LOG = LogManager.getLogger(CustomersServiceImpl.class);
+
 
 
     @Override
@@ -25,9 +30,9 @@ public class CustomersServiceImpl implements CustomersService {
     }
 
     @Override
-    public void update(Customers entity) {
+    public void update(Long id, Customers entity) {
         ICustomersDAO custom = new CustomersDAO();
-        custom.update(entity);
+        custom.update(id, entity);
     }
 
     @Override

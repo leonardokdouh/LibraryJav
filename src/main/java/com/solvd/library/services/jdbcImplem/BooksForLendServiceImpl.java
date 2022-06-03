@@ -4,12 +4,14 @@ import com.solvd.library.bin.BooksForLend;
 import com.solvd.library.dao.IBooksForLend;
 import com.solvd.library.dao.impl.BooksForLendDAO;
 import com.solvd.library.services.BooksForLendsService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class BooksForLendImpl implements BooksForLendsService {
+public class BooksForLendServiceImpl implements BooksForLendsService {
 
+    private static final Logger LOG = LogManager.getLogger(BooksForLendServiceImpl.class);
 
 
     @Override

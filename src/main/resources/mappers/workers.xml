@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.library.dao.IWorkersDAO">
+    <resultMap type="com.solvd.library.bin.Workers"
+               id="WorkersResultMap" autoMapping="false">
+
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="shifts" property="shifts"/>
+
+    </resultMap>
+
+    <select id="getEntity" resultMap="WorkersResultMap">
+        Select * from Workers where id=${id}
+    </select>
+
+    <select id="getAll" resultMap="WorkersResultMap">
+            Select * from Workers
+    </select>
+
+    <insert id="saveEntity" useGeneratedKeys="true">
+        Insert into Workers (name,gender,shifts)
+        values (#{name},#{gender},#{shifts})
+    </insert>
+
+    <delete id="delete" >
+        Delete from Workers where id=#{id}
+    </delete>
+
+    <update id="update">
+        Update Workers set name=#{name},gender=#{gender},shifts=#{shifts} where id=#{id}
+    </update>
+
+</mapper>

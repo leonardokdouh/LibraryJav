@@ -4,11 +4,16 @@ import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.dao.impl.UsersDAO;
 import com.solvd.library.services.UsersService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
 
 public class UserServicesImpl implements UsersService {
+
+    private static final Logger LOG = LogManager.getLogger(UserServicesImpl.class);
+
 
     @Override
     public void delete(Long id) {
@@ -23,10 +28,9 @@ public class UserServicesImpl implements UsersService {
     }
 
     @Override
-    public void update(Users entity) {
-
+    public void update(Long id, Users entity) {
         IUserDAO userDAo = new UsersDAO();
-        userDAo.update(entity);
+        userDAo.update(id, entity);
     }
 
     @Override

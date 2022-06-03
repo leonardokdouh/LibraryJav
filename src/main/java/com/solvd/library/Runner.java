@@ -36,11 +36,10 @@ public class Runner {
 
                 case 1:
                     LOG.info("This are the active users:");
-
-                        UsersService listUser = new UserServicesImpl();
-                        List<Users> thisList = listUser.getAllUsers();
-                        for (Users u : thisList) {
-                            LOG.info(u.toString());
+                    UsersService listUser = new UserServicesImpl();
+                    List<Users> thisList = listUser.getAllUsers();
+                    for (Users u : thisList) {
+                        LOG.info(u.toString());
                     }
                     break;
 
@@ -69,7 +68,7 @@ public class Runner {
                         LOG.info(cargos);
 
                     } catch (IOException e) {
-                        LOG.error("IOException", e);
+                        LOG.error("There was a problem in: ", e);
                     }
                     break;
 
@@ -77,10 +76,8 @@ public class Runner {
                     LOG.info("This are the actual shifts");
                     try {
                         JavaType thirdType = om.getTypeFactory().constructCollectionType(List.class, Shifts.class);
-
                         List shifts = om.readValue(new File(Constants.JSON_TWO), thirdType);
                         LOG.info(shifts);
-
                     } catch (IOException e) {
                         LOG.error("IOException", e);
                     }
@@ -92,14 +89,12 @@ public class Runner {
                     break;
 
                 case 7:
-
                     LOG.info("This are the active Workers:");
-
-                        WorkersService listWorkers = new WorkersServiceImpl();
-                        List<Workers> thisOtherList = listWorkers.getAllWorkers();
-                        for (Workers u : thisOtherList) {
-                            LOG.info(u.toString());
-                        }
+                    WorkersService listWorkers = new WorkersServiceImpl();
+                    List<Workers> thisOtherList = listWorkers.getAllWorkers();
+                    for (Workers u : thisOtherList) {
+                        LOG.info(u.toString());
+                    }
                     break;
             }
         }
@@ -108,53 +103,50 @@ public class Runner {
             int option = options.menu();
             switch (option) {
                 case 1:
-                    LOG.info("This are the books.xml available right now");
-
+                    LOG.info("This are the books available right now");
                     BooksService booksUser = new BooksServiceImp();
                     List<Books> thisList = booksUser.getallBooks();
                     for (Books u : thisList) {
                         LOG.info(u.toString());
                     }
+                    break;
 
-            break;
+                case 2:
+                    LOG.info("This are the books to Lend right now: ");
+                    break;
 
-            case 2:
-                LOG.info("YOu enter 2");
-                break;
+                case 3:
+                    HumansBuilder newUser = new HumansBuilder();
+                    newUser.userCreation();
+                    break;
 
-            case 3:
-                HumansBuilder newUser = new HumansBuilder();
-                newUser.userCreation();
+                case 4:
+                    LOG.info("This are the payment Methods and Shipping Types");
+                    UsersUtils pays = new UsersUtils();
+                    pays.payAndShips();
 
-                break;
-
-            case 4:
-                LOG.info("YOu enter 4");
-                break;
-
-
-            case 5:
-                LOG.info("This are the books.xml available for Sale");
+                    break;
+                case 5:
+                    LOG.info("This are the books available for Sale");
                     BooksForSaleService booksSale = new BooksForSaleServiceImp();
                     List<BooksForSale> thisListSale = booksSale.getAllBooks();
                     for (BooksForSale u : thisListSale) {
                         LOG.info(u.toString());
                     }
+                    break;
 
-                break;
-
-            case 6:
-                LOG.info("This are the books.xml available for Lends");
-                    BooksForLendsService boksLends = new BooksForLendImpl();
+                case 6:
+                    LOG.info("This are the books available for Lends");
+                    BooksForLendsService boksLends = new BooksForLendServiceImpl();
                     List<BooksForLend> thisListLend = boksLends.getAllBooks();
                     for (BooksForLend u : thisListLend) {
                         LOG.info(u.toString());
                     }
-                break;
+                    break;
+
+            }
+
 
         }
-
-
     }
-}
 }

@@ -11,7 +11,7 @@ public interface WorkersService {
 
     void create(Workers u);
 
-    void update(Workers entity);
+    void update(Long id, Workers entity);
 
     Workers getWorker(Long id);
 

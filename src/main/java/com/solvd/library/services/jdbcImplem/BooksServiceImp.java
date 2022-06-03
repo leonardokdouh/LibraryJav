@@ -4,10 +4,15 @@ import com.solvd.library.bin.Books;
 import com.solvd.library.dao.IBooksDao;
 import com.solvd.library.dao.impl.BooksDAOAbs;
 import com.solvd.library.services.BooksService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class BooksServiceImp implements BooksService {
+
+    private static final Logger LOG = LogManager.getLogger(BooksServiceImp.class);
+
 
     @Override
     public Books getBooks(Long id) {
@@ -23,9 +28,9 @@ public class BooksServiceImp implements BooksService {
     }
 
     @Override
-    public void update(Books u) {
+    public void update(Long id, Books u) {
         IBooksDao boks = new BooksDAOAbs();
-        boks.update(u);
+        boks.update(id, u);
     }
 
     @Override
