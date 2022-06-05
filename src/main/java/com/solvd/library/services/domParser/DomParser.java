@@ -20,7 +20,6 @@ public class DomParser {
 
     public void ordersXML() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(Constants.JAXB);
@@ -35,7 +34,6 @@ public class DomParser {
                         Node n = tables.item(j);
                         if (n.getNodeType() == Node.ELEMENT_NODE) {
                             Element name = (Element) n;
-
                             LOG.info("Order " + id + ":" +
                                     name.getTagName() + "=" + name.getTextContent());
                         }

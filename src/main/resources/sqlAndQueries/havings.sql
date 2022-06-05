@@ -32,7 +32,22 @@ HAVING shifts.id<2;
 
 
 -- INNER JOIN book's Names with id from cargoes.
-SELECT books.name, cargoes.id
-FROM books
+SELECT books.name, cargoes.id FROM books
 INNER JOIN cargoes ON books.cargoesId = cargoes.id
+
+
+SELECT * FROM ordersDetails LEFT JOIN payMethod
+ON payMethod.id=ordersDetails.payMethodid;
+
+SELECT * FROM ordersDetails LEFT JOIN payMethod
+ON payMethod.id=1;
+
+SELECT * FROM ordersDetails RIGHT JOIN orders ON orders.id=1;
+
+SELECT * FROM ordersDetails RIGHT JOIN orders ON orders.customersId>1;
+
+SELECT ordersDetails.id, orders.customersId FROM ordersDetails RIGHT JOIN orders ON orders.customersId>1;
+
+
+
 

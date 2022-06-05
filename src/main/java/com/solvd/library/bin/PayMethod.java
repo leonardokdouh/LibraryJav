@@ -5,20 +5,17 @@ import java.util.Objects;
 public class PayMethod {
 
     private Long id;
-
     private String method;
 
     public PayMethod(Long id, String method) {
         this.id = id;
         this.method = method;
     }
-
     public PayMethod(String method) {
         this.method = method;
     }
 
     public PayMethod() {
-
     }
 
     public Long getId() {

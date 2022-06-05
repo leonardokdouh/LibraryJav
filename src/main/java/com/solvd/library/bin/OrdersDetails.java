@@ -10,6 +10,7 @@ import java.util.Objects;
 @XmlRootElement(name = "ordersDetails")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrdersDetails {
+
     @XmlAttribute(name = "id")
     private Long id;
 
@@ -52,7 +53,6 @@ public class OrdersDetails {
     }
 
     public OrdersDetails() {
-
     }
 
     public String getAddress() {

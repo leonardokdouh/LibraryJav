@@ -7,18 +7,20 @@ import java.util.Date;
 
 public class DateTimeAdapter extends XmlAdapter<String, Date> {
 
-    private final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     @Override
-    public Date unmarshal(String xml) throws Exception {
-        return dateFormat.parse(xml);
+    public String marshal(Date v) throws Exception {
+        synchronized (dateFormat) {
+            return dateFormat.format(v);
+        }
     }
 
     @Override
-    public String marshal(Date object) throws Exception {
-        return dateFormat.format(object);
+    public Date unmarshal(String v) throws Exception {
+        synchronized (dateFormat) {
+            return dateFormat.parse(v);
+        }
     }
-
-
 }
 

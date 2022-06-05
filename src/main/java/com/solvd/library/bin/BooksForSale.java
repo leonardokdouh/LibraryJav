@@ -5,15 +5,10 @@ import java.util.Objects;
 public class BooksForSale {
 
     private Long id = null;
-
     private String name;
-
     private String editorial;
-
     private int price;
-
     private Long booksId;
-
 
     public BooksForSale(String name, String editorial, int type, Long booksId) {
         this.name = name;

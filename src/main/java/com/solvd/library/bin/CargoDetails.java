@@ -5,11 +5,8 @@ import java.util.Objects;
 public class CargoDetails {
 
     private Long id = null;
-
     private Long cargoesId;
-
     private Long workersId;
-
 
     public CargoDetails(Long id, Long cargoesId, Long workersId) {
         this.id = id;

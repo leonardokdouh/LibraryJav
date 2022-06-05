@@ -5,9 +5,7 @@ import java.util.Objects;
 public class LendsDetail {
 
     private Long id = null;
-
     private Long lendsId;
-
     private Long workersId;
 
     public LendsDetail(Long id, Long lendsId, Long workersId) {

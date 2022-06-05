@@ -5,11 +5,8 @@ import java.util.Objects;
 public class Workers {
 
     private Long id;
-
     private String name;
-
     private String gender;
-
     private int shifts;
 
     public Workers(String name, String gender, int shifts) {

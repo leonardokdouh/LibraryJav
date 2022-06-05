@@ -1,6 +1,5 @@
 package com.solvd.library.dao.impl;
 
-import com.solvd.library.bin.Customers;
 import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.util.exceptions.ExceptionDAO;
@@ -18,9 +17,8 @@ import java.util.List;
 public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
     private static final Logger LOG = LogManager.getLogger(UsersDAO.class);
 
-
     private final String INSERT = "INSERT INTO Users (name, email, address, age) VALUES (?, ?, ?, ?)";
-    private final String UPDATE = "UPDATE Users SET name= ?, email= ?, address= ?, age=? WHERE id=?";
+    private final String UPDATE = "UPDATE Users SET name=?, email=?, address=?, age=? WHERE id=?";
     private final String DELETE = "DELETE from Users WHERE id=?";
     private final String GET_ONE = "SELECT id, name, email, address, age FROM Users WHERE id=?";
     private final String GET_ALL = "SELECT id, name, email, address, age FROM Users";
@@ -31,34 +29,29 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
         Connection conn = getConnect();
-
         try {
             ps = conn.prepareStatement(INSERT);
             ps.setString(1, u.getName());
             ps.setString(2, u.getEmail());
             ps.setString(3, u.getAddress());
             ps.setInt(4, u.getAge());
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your users is not saved");
             }
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Error in SQL sentence");
-
         } finally {
             returnConnect(conn);
             end.theCloser(ps);
         }
     }
 
-
     @Override
     public void update(Long id, Users entity) throws ExceptionDAO {
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
         Connection conn = getConnect();
-
         try {
             ps = conn.prepareStatement(UPDATE);
             ps.setString(1, entity.getName());
@@ -66,7 +59,6 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
             ps.setString(3, entity.getAddress());
             ps.setInt(4, entity.getAge());
             ps.setLong(5, id);
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your changes may not be saved");
             }
@@ -84,7 +76,6 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
     public void delete(Long id) {
         PreparedStatement ps = null;
         Connection conn = getConnect();
-
         try {
             ps = conn.prepareStatement(DELETE);
             ps.setLong(1, id);
@@ -100,7 +91,6 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
                     ps.close();
                 } catch (SQLException e) {
                     LOG.error("Error in SQL", e);
-                    throw new ExceptionDAO("Error in SQL");
                 }
             }
         }
@@ -116,14 +106,13 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
         return user;
     }
 
-
     @Override
     public Users getEntity(Long id) {
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
-        Users user = null;
+        Users user;
         try {
             ps = conn.prepareStatement(GET_ONE);
             ps.setLong(1, id);
@@ -143,14 +132,11 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
         return user;
     }
 
-
     @Override
     public List<Users> getAll() {
-
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         Connection conn = getConnect();
-
         ResultSet rs = null;
         List<Users> users = new ArrayList<>();
         try {

@@ -26,7 +26,6 @@ public class Shifts {
     }
 
     public Shifts() {
-
     }
 
     public Long getId() {

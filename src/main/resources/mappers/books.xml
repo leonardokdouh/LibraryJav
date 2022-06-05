@@ -29,9 +29,9 @@
         Delete from Books where id=#{id}
     </delete>
 
-    <update id="update">
-        Update Books set name=#{name},type=#{type},
-        cargoesId=#{cargoesId} where id=#{id}
+    <update id="update" useGeneratedKeys="true" keyProperty="id, ent" >
+        Update Books set name=#{ent.name},type=#{ent.type},cargoesId=#{ent.cargoesId}
+        where id=#{id}
     </update>
 
 </mapper>

@@ -15,20 +15,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
+public class BooksDAO extends AbsConnectionForDAO implements IBooksDao {
 
     private final String INSERT = "INSERT INTO Books (name, type, cargoesId) VALUES (?,?,?)";
-    private final String UPDATE = "UPDATE Books SET name =?, type=?, cargoesId= ?, WHERE id=?";
+    private final String UPDATE = "UPDATE Books SET name =?, type=?, cargoesId= ? WHERE id=?";
     private final String DELETE = "DELETE from Books WHERE id=?";
-    private final String GET_ONE = "SELECT id, name, type, cargoesId, from Books WHERE id=?";
+    private final String GET_ONE = "SELECT id, name, type, cargoesId from Books WHERE id=?";
     private final String GET_ALL = "SELECT id, name, type, cargoesId FROM Books";
 
-
-    private static final Logger LOG = LogManager.getLogger(BooksDAOAbs.class);
+    private static final Logger LOG = LogManager.getLogger(BooksDAO.class);
 
     @Override
     public void saveEntity(Books u) {
-
         PreparedStatement pt = null;
         Connection conn = getConnect();
         try {
@@ -37,7 +35,6 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
             pt.setString(2, u.getType());
             pt.setLong(3, u.getCargoesId());
             pt.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -52,48 +49,37 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
         }
     }
 
-
     @Override
     public void update(Long id, Books entity) {
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
-
-
         try {
             ps = conn.prepareStatement(UPDATE);
-
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getType());
             ps.setLong(3, entity.getCargoesId());
             ps.setLong(4, id);
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe the update did not save");
             }
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Error in SQL");
-
         } finally {
             returnConnect(conn);
-
             close.theCloser(ps);
         }
     }
 
     @Override
     public void delete(Long id) {
-
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(ps);
         Connection conn = getConnect();
-
-
         try {
             ps = conn.prepareStatement(DELETE);
             ps.setLong(1, id);
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Not deleted");
             }
@@ -102,20 +88,16 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
             throw new ExceptionSQL("Error in SQL");
         } finally {
             returnConnect(conn);
-
             close.theCloser(ps);
         }
     }
-
 
     private Books convert(ResultSet rs) throws SQLException {
         String name = rs.getString("name");
         String type = rs.getString("type");
         Long cargoesId = rs.getLong("cargoesId");
-
         Books bok = new Books(name, type, cargoesId);
         bok.setId(rs.getLong("id"));
-
         return bok;
     }
 
@@ -124,51 +106,45 @@ public class BooksDAOAbs extends AbsConnectionForDAO implements IBooksDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
-
-        Books bok;
-
+        Books books;
         try {
             ps = conn.prepareStatement(GET_ONE);
+            ps.setLong(1, id);
             rs = ps.executeQuery();
-
             if (rs.next()) {
-                bok = convert(rs);
+                books = convert(rs);
             } else {
                 throw new ExceptionDAO("Not work");
             }
-
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Can't reach the Book");
         } finally {
             returnConnect(conn);
         }
-        return bok;
+        return books;
     }
 
     @Override
     public List<Books> getAll() {
-
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
-        List<Books> bookss = new ArrayList<>();
-
+        List<Books> listOfBooks = new ArrayList<>();
         try {
             ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
             while (rs.next()) {
-                bookss.add(convert(rs));
+                listOfBooks.add(convert(rs));
             }
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Can't reach the Worker");
         } finally {
             returnConnect(conn);
-
             closer.twoCloser(ps, rs);
         }
-        return bookss;
+        return listOfBooks;
     }
 }

@@ -29,9 +29,9 @@
         Delete from Customers where id=#{id}
     </delete>
 
-    <update id="update">
-        Update Customers set name=#{name},email=#{email},
-        age=#{age} where id=#{id}
+    <update id="update" useGeneratedKeys="true" keyProperty="id, ent">
+        Update Customers set name=#{ent.name},email=#{ent.email},
+        age=#{ent.age} where id=#{id}
     </update>
 
 </mapper>

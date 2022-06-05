@@ -32,9 +32,9 @@
         Delete from Users where id=#{id}
     </delete>
 
-    <update id="update">
-            Update Users set name=#{name},email=#{email},
-            address=#{address},age=#{age} where id=#{id}
+    <update id="update" useGeneratedKeys="true" keyProperty="id, ent">
+            Update Users SET name=#{ent.name},email=#{ent.email},
+            address=#{ent.address},age=#{ent.age} WHERE id=#{id}
     </update>
 
 </mapper>

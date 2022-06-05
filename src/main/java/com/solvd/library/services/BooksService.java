@@ -1,6 +1,5 @@
 package com.solvd.library.services;
 
-
 import com.solvd.library.bin.Books;
 
 import java.util.List;
@@ -15,6 +14,6 @@ public interface BooksService {
 
     void create(Books u);
 
-    List<Books> getallBooks();
+    List<Books> getAllBooks();
 
 }

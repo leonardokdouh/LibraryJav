@@ -4,21 +4,17 @@ import com.solvd.library.bin.BooksForLend;
 import com.solvd.library.dao.IBooksForLend;
 import com.solvd.library.services.BooksForLendsService;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 import java.util.List;
 
-public class BooksForLendImplementation extends AbsSqlSession implements BooksForLendsService {
-
-    private static final Logger LOG = LogManager.getLogger(BooksForLendImplementation.class);
+public class BooksForLendServiceImpl extends AbsSqlSession implements BooksForLendsService {
 
     @Override
     public List<BooksForLend> getAllBooks() {
         try (SqlSession session = sqlSession()) {
             IBooksForLend booksForLend = session.getMapper(IBooksForLend.class);
-            List<BooksForLend> book = booksForLend.getAll();
-            return book;
+            return booksForLend.getAll();
         }
     }
 }

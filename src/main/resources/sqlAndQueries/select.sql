@@ -1,13 +1,3 @@
--- -----------------------------------------------------
--- QUERIES TEST's
--- -----------------------------------------------------
-INSERT INTO books
-VALUES (null,"Once upon a time","Hardcover",2);
-
-INSERT INTO cargoes
-(`id`,`country`,`items`,`weight`,`date`)
-VALUES (null, "Portugal", 100, 400, "2022-05-05");
-
 
 -- SELECTING stuff
 -- select all from different table
@@ -39,14 +29,3 @@ SELECT  id, name FROM books WHERE name="Venom"
 
 -- finding a particular book using id
 SELECT  id, name FROM books WHERE id=4
-
-
---DELETING stuff
-
-DELETE FROM `mydb`.`cargoes`
-WHERE id=5;
-
-DELETE FROM users WHERE id=1;
-DELETE FROM users WHERE name = "Morty";
-
-

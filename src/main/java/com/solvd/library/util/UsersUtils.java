@@ -1,6 +1,5 @@
 package com.solvd.library.util;
 
-import com.solvd.library.bin.BooksForLend;
 import com.solvd.library.bin.PayMethod;
 import com.solvd.library.bin.ShippingType;
 import com.solvd.library.util.exceptions.ExceptionChoose;
@@ -24,9 +23,9 @@ public class UsersUtils {
         {
             int option = 1;
             LOG.debug("\nChose the option below:\n" + "Opcion 1: BUY A BOOK\n"
-                    + "Option 2: LEND A BOOK \n" + "Option 3:REGISTRY USER\n"
-                    + "Option 4:CHECK Pay and Ship Methods \n " + "Option 5:CHECK BOOKS FOR SALE \n "
-                    + "Option 6:CHECK BOOKS FOR LEND \n ");
+                    + "Option 2:REGISTRY USER\n"
+                    + "Option 3:CHECK Pay and Ship Methods \n " + "Option 4:CHECK BOOKS FOR SALE \n "
+                    + "Option 5:CHECK BOOKS FOR LEND \n ");
 
             try {
                 option = scanner.nextInt();
@@ -84,7 +83,7 @@ public class UsersUtils {
         typeShipping.add(secondShip);
         typeShipping.add(thirdShip);
 
-        for (ShippingType ship: typeShipping){
+        for (ShippingType ship : typeShipping) {
             LOG.info(ship.toString());
         }
         for (PayMethod u : payMethods) {

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.solvd.library.bin.*;
 import com.solvd.library.services.*;
 import com.solvd.library.services.domParser.DomParser;
-import com.solvd.library.services.jdbcImplem.*;
+import com.solvd.library.services.myBatis.*;
 import com.solvd.library.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,7 +36,7 @@ public class Runner {
 
                 case 1:
                     LOG.info("This are the active users:");
-                    UsersService listUser = new UserServicesImpl();
+                    UsersService listUser = new UserServiceImpl();
                     List<Users> thisList = listUser.getAllUsers();
                     for (Users u : thisList) {
                         LOG.info(u.toString());
@@ -103,30 +103,26 @@ public class Runner {
             int option = options.menu();
             switch (option) {
                 case 1:
-                    LOG.info("This are the books available right now");
-                    BooksService booksUser = new BooksServiceImp();
-                    List<Books> thisList = booksUser.getallBooks();
+                    LOG.info("This are all the books available right now");
+                    BooksService booksUser = new BooksServiceImpl();
+                    List<Books> thisList = booksUser.getAllBooks();
                     for (Books u : thisList) {
                         LOG.info(u.toString());
                     }
                     break;
 
                 case 2:
-                    LOG.info("This are the books to Lend right now: ");
-                    break;
-
-                case 3:
                     HumansBuilder newUser = new HumansBuilder();
                     newUser.userCreation();
                     break;
 
-                case 4:
+                case 3:
                     LOG.info("This are the payment Methods and Shipping Types");
                     UsersUtils pays = new UsersUtils();
                     pays.payAndShips();
 
                     break;
-                case 5:
+                case 4:
                     LOG.info("This are the books available for Sale");
                     BooksForSaleService booksSale = new BooksForSaleServiceImp();
                     List<BooksForSale> thisListSale = booksSale.getAllBooks();
@@ -135,7 +131,7 @@ public class Runner {
                     }
                     break;
 
-                case 6:
+                case 5:
                     LOG.info("This are the books available for Lends");
                     BooksForLendsService boksLends = new BooksForLendServiceImpl();
                     List<BooksForLend> thisListLend = boksLends.getAllBooks();

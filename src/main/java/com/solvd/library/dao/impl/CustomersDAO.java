@@ -1,7 +1,6 @@
 package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Customers;
-import com.solvd.library.util.ConnectionPool;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.OneStepCloser;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +15,6 @@ import java.util.List;
 
 public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.library.dao.ICustomersDAO {
     private static final Logger LOG = LogManager.getLogger(Customers.class);
-
 
     private final String INSERT = "INSERT INTO Customers (name, email, age) VALUES (?,?,?)";
     private final String UPDATE = "UPDATE Customers SET name=?, email =?, age=? WHERE id=?";
@@ -36,11 +34,9 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             ps.setString(2, entity.getName());
             ps.setString(3, entity.getEmail());
             ps.setInt(4, entity.getAge());
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("I think that the customer did not saved");
             }
-
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Error in SQL sentence");
@@ -55,14 +51,12 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
-
         try {
             ps = conn.prepareStatement(UPDATE);
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getEmail());
             ps.setInt(3, entity.getAge());
             ps.setLong(4, id);
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe your changes may not be saved");
             }
@@ -77,18 +71,15 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
 
     @Override
     public void delete(Long id) throws ExceptionDAO {
-
         PreparedStatement ps = null;
         OneStepCloser end = new OneStepCloser(null);
         Connection conn = getConnect();
-
         try {
             ps = conn.prepareStatement(DELETE);
             ps.setLong(1, id);
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe the User has not been deleted");
             }
-
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Maybe its not deleted");
@@ -99,32 +90,27 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
     }
 
     private Customers convert(ResultSet rs) throws SQLException {
-
         String name = rs.getString("name");
         String email = rs.getString("email");
         int age = rs.getInt("age");
-
-        Customers cust = new Customers(name, email, age);
-        cust.setId(rs.getLong("id"));
-        return cust;
+        Customers newCustomer = new Customers(name, email, age);
+        newCustomer.setId(rs.getLong("id"));
+        return newCustomer;
     }
-
 
     @Override
     public Customers getEntity(Long id) throws ExceptionDAO {
         OneStepCloser close = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         Connection conn = getConnect();
-
         ResultSet rs = null;
-        Customers cu = null;
-
+        Customers customer = null;
         try {
             ps = conn.prepareStatement(GET_ONE);
+            ps.setLong(1, id);
             rs = ps.executeQuery();
-
             if (rs.next()) {
-                cu = convert(rs);
+                customer = convert(rs);
             } else {
                 throw new ExceptionDAO("The id is not in the database");
             }
@@ -135,7 +121,7 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             returnConnect(conn);
             close.twoCloser(ps, rs);
         }
-        return cu;
+        return customer;
     }
 
     @Override
@@ -143,14 +129,11 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
         OneStepCloser close = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         Connection conn = getConnect();
-
         ResultSet rs = null;
         List<Customers> cuList = new ArrayList<>();
-
         try {
             ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
-
             while (rs.next()) {
                 cuList.add(convert(rs));
             }

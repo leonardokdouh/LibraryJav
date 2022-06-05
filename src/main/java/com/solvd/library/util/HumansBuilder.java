@@ -4,13 +4,11 @@ import com.solvd.library.bin.Users;
 import com.solvd.library.bin.Workers;
 import com.solvd.library.services.UsersService;
 import com.solvd.library.services.WorkersService;
-import com.solvd.library.services.jdbcImplem.UserServicesImpl;
+import com.solvd.library.services.jdbcImplem.UserServiceImpl;
 import com.solvd.library.services.jdbcImplem.WorkersServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 
@@ -24,8 +22,7 @@ public class HumansBuilder {
     private String address;
     private String gender;
     private int shifts;
-
-
+    
     public void userCreation() {
         UsersUtils tool = new UsersUtils();
 
@@ -42,7 +39,7 @@ public class HumansBuilder {
             LOG.info("And finally please tell me your age");
             age = scan.nextInt();
 
-            UsersService up = new UserServicesImpl();
+            UsersService up = new UserServiceImpl();
             Users newUser = new Users(name, email, address, age);
             up.create(newUser);
 

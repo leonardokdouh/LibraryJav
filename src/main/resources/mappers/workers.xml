@@ -30,8 +30,8 @@
         Delete from Workers where id=#{id}
     </delete>
 
-    <update id="update">
-        Update Workers set name=#{name},gender=#{gender},shifts=#{shifts} where id=#{id}
+    <update id="update" useGeneratedKeys="true" keyProperty="id, ent">
+        Update Workers set name=#{ent.name},gender=#{ent.gender},shifts=#{ent.shifts} where id=#{id}
     </update>
 
 </mapper>

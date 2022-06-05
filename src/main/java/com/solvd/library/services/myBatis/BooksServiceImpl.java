@@ -4,22 +4,16 @@ import com.solvd.library.bin.Books;
 import com.solvd.library.dao.IBooksDao;
 import com.solvd.library.services.BooksService;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class BooksServiceImplementation extends AbsSqlSession implements BooksService {
-
-    private static final Logger LOG = LogManager.getLogger(BooksServiceImplementation.class);
-
+public class BooksServiceImpl extends AbsSqlSession implements BooksService {
 
     @Override
     public Books getBooks(Long id) {
         try (SqlSession session = sqlSession()) {
             IBooksDao books = session.getMapper(IBooksDao.class);
-            Books newBook = books.getEntity(id);
-            return newBook;
+            return books.getEntity(id);
         }
     }
 
@@ -29,8 +23,6 @@ public class BooksServiceImplementation extends AbsSqlSession implements BooksSe
             IBooksDao books = session.getMapper(IBooksDao.class);
             books.delete(id);
             session.commit();
-
-
         }
     }
 
@@ -49,17 +41,14 @@ public class BooksServiceImplementation extends AbsSqlSession implements BooksSe
             IBooksDao books = session.getMapper(IBooksDao.class);
             books.saveEntity(u);
             session.commit();
-
         }
     }
 
     @Override
-    public List<Books> getallBooks() {
+    public List<Books> getAllBooks() {
         try (SqlSession session = sqlSession()) {
             IBooksDao books = session.getMapper(IBooksDao.class);
-            List<Books> listBooks = books.getAll();
-
-            return listBooks;
+            return books.getAll();
         }
     }
 }

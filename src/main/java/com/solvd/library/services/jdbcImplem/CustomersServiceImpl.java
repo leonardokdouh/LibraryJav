@@ -4,16 +4,10 @@ import com.solvd.library.bin.Customers;
 import com.solvd.library.dao.ICustomersDAO;
 import com.solvd.library.dao.impl.CustomersDAO;
 import com.solvd.library.services.CustomersService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class CustomersServiceImpl implements CustomersService {
-
-    private static final Logger LOG = LogManager.getLogger(CustomersServiceImpl.class);
-
 
     @Override
     public void delete(Long id) {
@@ -25,7 +19,6 @@ public class CustomersServiceImpl implements CustomersService {
     public void create(Customers u) {
         ICustomersDAO custom = new CustomersDAO();
         custom.saveEntity(u);
-
     }
 
     @Override
@@ -37,15 +30,12 @@ public class CustomersServiceImpl implements CustomersService {
     @Override
     public Customers getCustomers(Long id) {
         ICustomersDAO custom = new CustomersDAO();
-        Customers cust = custom.getEntity(id);
-        return cust;
+        return custom.getEntity(id);
     }
 
     @Override
     public List<Customers> getAllCustomers() {
         ICustomersDAO custom = new CustomersDAO();
-
-        List<Customers> listCusto = custom.getAll();
-        return listCusto;
+        return custom.getAll();
     }
 }

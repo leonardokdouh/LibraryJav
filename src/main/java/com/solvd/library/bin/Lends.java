@@ -5,7 +5,6 @@ import java.util.Objects;
 public class Lends {
 
     private Long id = null;
-
     private Long usersId;
 
     public Lends(Long id, Long usersId) {
@@ -14,7 +13,6 @@ public class Lends {
     }
 
     public Lends() {
-
     }
 
     public Long getId() {

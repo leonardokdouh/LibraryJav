@@ -4,16 +4,10 @@ import com.solvd.library.bin.Workers;
 import com.solvd.library.dao.IWorkersDAO;
 import com.solvd.library.dao.impl.WorkersDAO;
 import com.solvd.library.services.WorkersService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class WorkersServiceImpl implements WorkersService {
-
-    private static final Logger LOG = LogManager.getLogger(WorkersServiceImpl.class);
-
 
     @Override
     public void delete(Long id) {
@@ -36,14 +30,12 @@ public class WorkersServiceImpl implements WorkersService {
     @Override
     public Workers getWorker(Long id) {
         IWorkersDAO workersService = new WorkersDAO();
-        Workers worker = workersService.getEntity(id);
-        return worker;
+        return workersService.getEntity(id);
     }
 
     @Override
     public List<Workers> getAllWorkers() {
         IWorkersDAO workersService = new WorkersDAO();
-        List<Workers> workersList = workersService.getAll();
-        return workersList;
+        return workersService.getAll();
     }
 }

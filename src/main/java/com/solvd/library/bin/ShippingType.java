@@ -5,9 +5,7 @@ import java.util.Objects;
 public class ShippingType {
 
     private Long id = null;
-
     private String type;
-
 
     public ShippingType(Long id, String type) {
         this.id = id;
@@ -15,7 +13,6 @@ public class ShippingType {
     }
 
     public ShippingType() {
-
     }
 
     public Long getId() {

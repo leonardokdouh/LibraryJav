@@ -17,9 +17,7 @@ import java.util.List;
 public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLend {
     private static final Logger LOG = LogManager.getLogger(BooksForLendDAO.class);
 
-
     private final String GET_ALL = "SELECT id, name, editorial, ESN,  days, booksId FROM BooksForLend";
-
 
     @Override
     public BooksForLend getEntity(Long id) {
@@ -29,19 +27,16 @@ public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLen
     @Override
     public void saveEntity(BooksForLend entity) {
         throw new UnsupportedOperationException("No implementation yet");
-
     }
 
     @Override
     public void update(Long id, BooksForLend entity) {
         throw new UnsupportedOperationException("No implementation yet");
-
     }
 
     @Override
     public void delete(Long id) {
         throw new UnsupportedOperationException("No implementation yet");
-
     }
 
 
@@ -52,10 +47,9 @@ public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLen
         int days = rs.getInt("days");
         Long booksId = rs.getLong("booksId");
 
-        BooksForLend boks = new BooksForLend(name, editorial, esn, days, booksId);
-        boks.setId(rs.getLong("id"));
-
-        return boks;
+        BooksForLend books = new BooksForLend(name, editorial, esn, days, booksId);
+        books.setId(rs.getLong("id"));
+        return books;
     }
 
     @Override
@@ -64,14 +58,12 @@ public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLen
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
-
-        List<BooksForLend> bookss = new ArrayList<>();
-
+        List<BooksForLend> booksList = new ArrayList<>();
         try {
             ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();
             while (rs.next()) {
-                bookss.add(convert(rs));
+                booksList.add(convert(rs));
             }
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
@@ -80,6 +72,6 @@ public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLen
             closer.twoCloser(ps, rs);
             returnConnect(conn);
         }
-        return bookss;
+        return booksList;
     }
 }

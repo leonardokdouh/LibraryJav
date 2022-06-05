@@ -5,17 +5,11 @@ import java.util.Objects;
 public class BooksForLend {
 
     private Long id = null;
-
     private String name;
-
     private String editorial;
-
     private int esn;
-
     private int days;
-
     private Long booksId;
-
 
     public BooksForLend(String name, String editorial, int esn, int days, Long booksId) {
         this.name = name;
@@ -26,7 +20,6 @@ public class BooksForLend {
     }
 
     public BooksForLend() {
-
     }
 
     public Long getId() {

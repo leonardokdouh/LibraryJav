@@ -23,9 +23,6 @@ public abstract class AbsSqlSession {
             LOG.error("Cant open the session", ex);
         }
         SqlSessionFactory sql = new SqlSessionFactoryBuilder().build(e);
-        SqlSession session = sql.openSession();
-        return session;
-
-
+        return sql.openSession();
     }
 }

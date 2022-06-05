@@ -5,22 +5,17 @@ import java.util.Objects;
 public class Customers {
 
     private Long id = null;
-
     private String name;
-
     private String email;
-
     private int age;
 
     public Customers(String name, String email, int age) {
-
         this.name = name;
         this.email = email;
         this.age = age;
     }
 
     public Customers() {
-
     }
 
     public Long getId() {

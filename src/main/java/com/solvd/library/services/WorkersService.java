@@ -1,6 +1,5 @@
 package com.solvd.library.services;
 
-import com.solvd.library.bin.Users;
 import com.solvd.library.bin.Workers;
 
 import java.util.List;

@@ -18,17 +18,14 @@ import java.util.List;
 public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
     private static final Logger LOG = LogManager.getLogger(WorkersDAO.class);
 
-
     private final String INSERT = "INSERT INTO Workers (name, gender, shifts) VALUES (?, ?, ?)";
     private final String UPDATE = "UPDATE Workers SET name=?, gender=?, shifts=? WHERE id=?";
     private final String DELETE = "DELETE from Workers WHERE id=?";
     private final String GET_ONE = "SELECT id, name, gender, shifts FROM Workers WHERE id=?";
     private final String GET_ALL = "SELECT id, name, gender, shifts FROM Workers";
 
-
     @Override
     public void saveEntity(Workers u) {
-
         PreparedStatement pt = null;
         Connection conn = getConnect();
         try {
@@ -37,7 +34,6 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
             pt.setString(2, u.getGender());
             pt.setInt(3, u.getShifts());
             pt.executeUpdate();
-
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
         } finally {
@@ -46,26 +42,23 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
                 try {
                     pt.close();
                 } catch (SQLException e) {
+                    LOG.error("There was an error", e);
                 }
             }
         }
     }
-
 
     @Override
     public void update(Long id, Workers entity) {
         PreparedStatement ps = null;
         OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
-
         try {
             ps = conn.prepareStatement(UPDATE);
-
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getGender());
             ps.setInt(3, entity.getShifts());
             ps.setLong(4, id);
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Maybe the update did not save");
             }
@@ -86,29 +79,25 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
         try {
             ps = conn.prepareStatement(DELETE);
             ps.setLong(1, id);
-
             if (ps.executeUpdate() == 0) {
                 throw new ExceptionDAO("Not deleted");
             }
         } catch (SQLException e) {
             LOG.error("Error in SQL", e);
-            throw new ExceptionSQL("Error in SQL");
+            throw new ExceptionSQL("Error in the query");
         } finally {
             returnConnect(conn);
             close.theCloser(ps);
         }
     }
 
-
     private Workers convert(ResultSet rs) throws SQLException {
         Long id = rs.getLong("id");
         String name = rs.getString("name");
         String gender = rs.getString("gender");
         int shifts = rs.getInt("shifts");
-
-        Workers wrk = new Workers(name, gender, shifts);
-
-        return wrk;
+        Workers workers = new Workers(name, gender, shifts);
+        return workers;
     }
 
     @Override
@@ -117,15 +106,13 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
         PreparedStatement ps = null;
         Connection conn = getConnect();
         ResultSet rs = null;
-        Workers wrk = null;
-
+        Workers worker;
         try {
             ps = conn.prepareStatement(GET_ONE);
             ps.setLong(1, id);
             rs = ps.executeQuery();
-
             if (rs.next()) {
-                wrk = convert(rs);
+                worker = convert(rs);
             } else {
                 throw new ExceptionDAO("Not work");
             }
@@ -136,18 +123,16 @@ public class WorkersDAO extends AbsConnectionForDAO implements IWorkersDAO {
             returnConnect(conn);
             closer.twoCloser(ps, rs);
         }
-        return wrk;
+        return worker;
     }
 
     @Override
     public List<Workers> getAll() {
-
         OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
         List<Workers> works = new ArrayList<>();
-
         try {
             ps = conn.prepareStatement(GET_ALL);
             rs = ps.executeQuery();

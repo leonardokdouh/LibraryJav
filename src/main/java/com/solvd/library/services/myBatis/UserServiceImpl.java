@@ -3,20 +3,11 @@ package com.solvd.library.services.myBatis;
 import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.services.UsersService;
-import com.solvd.library.util.exceptions.ExceptionSQL;
 import org.apache.ibatis.session.SqlSession;
-
-import org.apache.ibatis.session.SqlSessionException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 
 import java.util.List;
 
-public class UserServiceImplementation extends AbsSqlSession implements UsersService {
-
-    private final static Logger LOG = LogManager.getLogger(UserServiceImplementation.class);
-
+public class UserServiceImpl extends AbsSqlSession implements UsersService {
 
     @Override
     public void delete(Long id) {
@@ -25,7 +16,6 @@ public class UserServiceImplementation extends AbsSqlSession implements UsersSer
             userDAO.delete(id);
             session.commit();
         }
-
     }
 
     @Override
@@ -50,8 +40,7 @@ public class UserServiceImplementation extends AbsSqlSession implements UsersSer
     public Users getUsers(Long id) {
         try (SqlSession session = sqlSession()) {
             IUserDAO userDAO = session.getMapper(IUserDAO.class);
-            Users user = userDAO.getEntity(id);
-            return user;
+            return userDAO.getEntity(id);
         }
     }
 
@@ -59,8 +48,7 @@ public class UserServiceImplementation extends AbsSqlSession implements UsersSer
     public List<Users> getAllUsers() {
         try (SqlSession session = sqlSession()) {
             IUserDAO userDAO = session.getMapper(IUserDAO.class);
-            List<Users> userList = userDAO.getAll();
-            return userList;
+            return userDAO.getAll();
         }
     }
 }

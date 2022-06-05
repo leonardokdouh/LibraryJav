@@ -3,8 +3,9 @@ package com.solvd.library;
 import com.solvd.library.bin.*;
 import com.solvd.library.services.*;
 import com.solvd.library.services.jaxBParser.JaxB;
-import com.solvd.library.services.jdbcImplem.*;
+
 import com.solvd.library.services.myBatis.*;
+
 import com.solvd.library.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,15 +17,12 @@ public class App {
 
     public static void main(String[] args) {
 
-        //Trying JaxB Unmarshall. Date problems.
-
+        //Trying JaxB Unmarshall.
         JaxB service = new JaxB();
         OrdersDetails orderS = service.unmarshall(Constants.JAXB);
         LOG.info(orderS);
 
-
         //Marshalling
-
         JaxB marshallLend = new JaxB();
         OrdersDetails newOrder = new OrdersDetails();
         newOrder.setBooksForSaleId(3L);
@@ -35,110 +33,120 @@ public class App {
         newOrder.setTotalOrder(120);
         marshallLend.marshall(newOrder, "src/main/resources/newOrder.xml");
 
-
-        // BooksForLend myBatis and JDBC
-
-        BooksForLendsService jdbcLends = new BooksForLendServiceImpl();
-        List<BooksForLend> lendsList = jdbcLends.getAllBooks();
-        for (BooksForLend books : lendsList) {
-            LOG.info(books);
-        }
-
-        BooksForLendsService myBatisLends = new BooksForLendImplementation();
-        List<BooksForLend> lendLists = myBatisLends.getAllBooks();
+        // BooksForLend Services
+        BooksForLendsService myLends = new BooksForLendServiceImpl();
+        List<BooksForLend> lendLists = myLends.getAllBooks();
         for (BooksForLend books : lendLists) {
             LOG.info(books);
         }
 
-
-        //BooksForSale myBatis and JDBC
-        BooksForSaleService jdbcSale = new BooksForSaleServiceImp();
-        List<BooksForSale> saleList = jdbcSale.getAllBooks();
+        //BooksForSale services
+        BooksForSaleService booksForSales = new BooksForSaleServiceImp();
+        List<BooksForSale> saleList = booksForSales.getAllBooks();
         for (BooksForSale books : saleList) {
             LOG.info(books);
         }
 
-        BooksForSaleService myBatisSale = new BooksForSaleImplementation();
-        List<BooksForSale> saleLists = myBatisSale.getAllBooks();
-        for (BooksForSale books : saleLists) {
-            LOG.info(books);
-        }
 
-
-        //JDBC WORKER CLASS
-        //UPDATING A WORKER. Only run once. If you want to run again,
-        //change the parameters of the Workers constructor.
+        //WORKER CLASS
+        //UPDATING A WORKER. If you want to update,
+        //change the parameters of the Workers constructor and
+        //and run all to see changes before and after
         WorkersService work = new WorkersServiceImpl();
-
         LOG.info("The name of the worker is:" + work.getWorker(6L).getName());
         LOG.info("The gender of the worker is:" + work.getWorker(6L).getGender());
         LOG.info("The shift of the worker is:" + work.getWorker(6L).getShifts());
 
         LOG.info("Now lets apply the changes");
-        Workers newWork = new Workers("Gloria", "Female", 3);
+        Workers newWork = new Workers("Frodo", "Male", 3);
         work.update(6L, newWork);
 
-        LOG.info("The name of the worker is:" + work.getWorker(6L).getName());
-        LOG.info("The gender of the worker is:" + work.getWorker(6L).getGender());
-        LOG.info("The shift of the worker is:" + work.getWorker(6L).getShifts());
+        LOG.info("The new name of the worker is:" + work.getWorker(6L).getName());
+        LOG.info("The new gender of the worker is:" + work.getWorker(6L).getGender());
+        LOG.info("The new shift of the worker is:" + work.getWorker(6L).getShifts());
 
         //GETTING ALL WORKERS
-        LOG.info(work.getAllWorkers());
+        List<Workers> workersList = work.getAllWorkers();
+        for (Workers allWorkers : workersList) {
+            LOG.info(allWorkers);
+        }
 
-        //DELETING A WORKER
-        work.delete(7L);
+//       //DELETING A WORKER
+//        work.delete(7L);
 
+        //GETTING AND TWO WAYS TO CREATE A USER
+        //To create a new user, just change the email because it has Unique Property
+//        UsersService newUser = new UserServiceImpl();
+//        Users jesus = new Users("Jesus C.", "jesus@gmail.com", "Heaven Av. ", 89);
+//        newUser.create(jesus);
 
-        //MYBATIS WORKER CLASS
-        //REPEATING SAME metologies
-        WorkersService works = new WorkersServiceImplementation();
-        LOG.info("The name of the worker is:" + works.getWorker(6L).getName());
-        LOG.info("The gender of the worker is:" + works.getWorker(6L).getGender());
-        LOG.info("The shift of the worker is:" + works.getWorker(6L).getShifts());
+//        UPDATING USER
 
-        LOG.info("Now lets apply the changes");
-        Workers worker = new Workers("Gladys", "Female", 2);
-        works.update(6L, worker);
+        UsersService userNew = new UserServiceImpl();
 
-        LOG.info("The name of the worker is:" + works.getWorker(6L).getName());
-        LOG.info("The gender of the worker is:" + works.getWorker(6L).getGender());
-        LOG.info("The shift of the worker is:" + works.getWorker(6L).getShifts());
+        LOG.info("The name of the user is ", userNew.getUsers(30L).getName());
+        LOG.info("The address of the user is ", userNew.getUsers(30L).getAddress());
+        LOG.info("The email of the user is ", userNew.getUsers(30L).getEmail());
+        LOG.info("The age of the user is ", userNew.getUsers(30L).getAge());
 
-        //GETTING ALL WORKERS
-        LOG.info(works.getAllWorkers());
-
-
-        //GETTING AND CREATING USER WITH JDBC AND myBATIS
-
-        UsersService upJdbc = new UserServicesImpl();
-        Users jesus = new Users("Jesus C.", "jesus@gmail.com", "Heaven Av. ", 89);
-        upJdbc.create(jesus);
-
-
-        UsersService userJdbc = new UserServicesImpl();
-        UsersService userBatis = new UserServiceImplementation();
-        LOG.info(userJdbc.getUsers(30L));
         Users newUser = new Users();
-        newUser.setName("Carlos");
-        newUser.setAddress("Five Street 369");
-        newUser.setEmail("carlos@gmail.com");
-        newUser.setAge(33);
-        userJdbc.update(30L, newUser);
+        newUser.setName("Ramon");
+        newUser.setAddress("Forth st 369");
+        newUser.setEmail("ramon@gmail.com");
+        newUser.setAge(32);
+        userNew.update(30L, newUser);
+        LOG.info("The new name of the user is ", userNew.getUsers(30L).getName());
+        LOG.info("The new address of the user is ", userNew.getUsers(30L).getAddress());
+        LOG.info("The new email of the user is ", userNew.getUsers(30L).getEmail());
+        LOG.info("The new age of the user is ", userNew.getUsers(30L).getAge());
 
-        LOG.info(userBatis.getUsers(30L));
-        Users batisUser = new Users("Jamal", "jamal@gmail.com", "Json Street 233", 14);
-        userBatis.create(batisUser);
-        LOG.info(userBatis.getAllUsers());
+        LOG.info(userNew.getAllUsers());
+        List<Users> userList = userNew.getAllUsers();
+        for (Users users : userList) {
+            LOG.info(users);
+        }
 
+        //CREATING CUSTOMER & DELETE THEM
 
-        CustomersService customerMyBatis = new CustomersServiceImplementation();
-        CustomersService customerJdbc = new CustomersServiceImpl();
-        LOG.info(customerMyBatis.getAllCustomers());
+        CustomersService customer = new CustomersServiceImpl();
+        LOG.info(customer.getAllCustomers());
+        List<Customers> customersList = customer.getAllCustomers();
+        for (Customers customers : customersList) {
+            LOG.info(customers);
+        }
+
+        //TO CREATE Just change email since it has UNIQUE Property
         Customers newCustomer = new Customers("Leonel ", "leonel@gmail.com", 36);
-        customerMyBatis.create(newCustomer);
-        LOG.info(customerMyBatis.getAllCustomers());
-        customerMyBatis.delete(7L); //since id has AI yo need to change the id to try it
-        LOG.info(customerMyBatis.getAllCustomers());
+//      customer.create(newCustomer);
+        List<Customers> customerList = customer.getAllCustomers();
+        for (Customers customers : customerList) {
+            LOG.info(customers);
+        }
+
+        LOG.info("The name of the customer is:" + customer.getCustomers(3L).getName());
+        LOG.info("The email of the customer is:" + customer.getCustomers(3L).getEmail());
+        LOG.info("The age of the customer is:" + customer.getCustomers(3L).getAge());
+
+//        customer.delete(7L); //since id has AI yo need to change the id to try it
+
+
+        //BOOKS SERVICES GETTING ONE, UPDATING AND GETTING AGAIN
+
+        BooksService newBook = new BooksServiceImpl();
+        LOG.info("The Book name is: " + newBook.getBooks(3L).getName());
+        LOG.info("The Book type is: " + newBook.getBooks(3L).getType());
+        LOG.info("The Book cargoesId is: " + newBook.getBooks(3L).getCargoesId());
+        //change something to apply an update
+        Books newsBook = new Books();
+        newsBook.setType("paperback");
+        newsBook.setName("Last Order");
+        newsBook.setCargoesId(2L);
+        newBook.update(3L, newsBook);
+        LOG.info(newBook.getBooks(3L));
+
+        LOG.info("The Book new name is: " + newBook.getBooks(3L).getName());
+        LOG.info("The Book new type is: " + newBook.getBooks(3L).getType());
+        LOG.info("The Book new cargoesId is: " + newBook.getBooks(3L).getCargoesId());
 
 
     }

@@ -5,13 +5,9 @@ import java.util.Objects;
 public class Users {
 
     private Long id;
-
     private String name;
-
     private String email;
-
     private String address;
-
     private int age;
 
     public Users(String name, String email, String address, int age) {
@@ -22,7 +18,6 @@ public class Users {
     }
 
     public Users() {
-
     }
 
     public Long getId() {

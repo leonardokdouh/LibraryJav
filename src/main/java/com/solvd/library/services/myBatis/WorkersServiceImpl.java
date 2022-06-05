@@ -4,14 +4,10 @@ import com.solvd.library.bin.Workers;
 import com.solvd.library.dao.IWorkersDAO;
 import com.solvd.library.services.WorkersService;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class WorkersServiceImplementation extends AbsSqlSession implements WorkersService {
-
-    private static final Logger LOG = LogManager.getLogger(WorkersServiceImplementation.class);
+public class WorkersServiceImpl extends AbsSqlSession implements WorkersService {
 
     @Override
     public void delete(Long id) {
@@ -44,8 +40,7 @@ public class WorkersServiceImplementation extends AbsSqlSession implements Worke
     public Workers getWorker(Long id) {
         try (SqlSession session = sqlSession()) {
             IWorkersDAO workersDAO = session.getMapper(IWorkersDAO.class);
-            Workers worker = workersDAO.getEntity(id);
-            return worker;
+            return workersDAO.getEntity(id);
         }
     }
 
@@ -53,9 +48,7 @@ public class WorkersServiceImplementation extends AbsSqlSession implements Worke
     public List<Workers> getAllWorkers() {
         try (SqlSession session = sqlSession()) {
             IWorkersDAO workersDAO = session.getMapper(IWorkersDAO.class);
-
-            List<Workers> workers = workersDAO.getAll();
-            return workers;
+            return workersDAO.getAll();
         }
     }
 }

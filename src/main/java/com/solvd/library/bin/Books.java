@@ -4,11 +4,8 @@ import java.util.Objects;
 
 public class Books {
     private Long id = null;
-
     private String name;
-
     private String type;
-
     private Long cargoesId;
 
     public Books(String name, String type, Long cargoesId) {
@@ -18,7 +15,6 @@ public class Books {
     }
 
     public Books() {
-
     }
 
 
