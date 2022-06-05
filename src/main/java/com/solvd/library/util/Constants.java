@@ -16,7 +16,7 @@ public interface Constants {
 
     String JSON_ONE = "src/main/resources/jsons/first.json";
 
-    String JSON_TWO = "src/main/resources/ShiftsJson.json";
+    String JSON_TWO = "src/main/resources/jsons/ShiftsJson.json";
 
     String JAXB = "src/main/resources/orders.xml";
 
