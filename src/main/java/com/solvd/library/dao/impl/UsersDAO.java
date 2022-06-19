@@ -3,7 +3,6 @@ package com.solvd.library.dao.impl;
 import com.solvd.library.bin.Users;
 import com.solvd.library.dao.IUserDAO;
 import com.solvd.library.util.exceptions.ExceptionDAO;
-import com.solvd.library.util.OneStepCloser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,9 +24,8 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
 
 
     @Override
-    public void saveEntity(Users u) throws ExceptionDAO {
+    public void saveEntity(Users u) {
         PreparedStatement ps = null;
-        OneStepCloser end = new OneStepCloser(null);
         Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(INSERT);
@@ -43,14 +41,13 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
             throw new ExceptionDAO("Error in SQL sentence");
         } finally {
             returnConnect(conn);
-            end.theCloser(ps);
+            closeAllResources(ps);
         }
     }
 
     @Override
-    public void update(Long id, Users entity) throws ExceptionDAO {
+    public void update(Long id, Users entity) {
         PreparedStatement ps = null;
-        OneStepCloser end = new OneStepCloser(null);
         Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -67,7 +64,7 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
             throw new ExceptionDAO("Error in SQL query");
         } finally {
             returnConnect(conn);
-            end.theCloser(ps);
+            closeAllResources(ps);
         }
     }
 
@@ -108,7 +105,6 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
 
     @Override
     public Users getEntity(Long id) {
-        OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
@@ -127,14 +123,13 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
             throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
-            closer.twoCloser(ps, rs);
+            closeAllResources(ps, rs);
         }
         return user;
     }
 
     @Override
     public List<Users> getAll() {
-        OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         Connection conn = getConnect();
         ResultSet rs = null;
@@ -150,7 +145,7 @@ public class UsersDAO extends AbsConnectionForDAO implements IUserDAO {
             throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
-            closer.twoCloser(ps, rs);
+            closeAllResources(ps, rs);
         }
         return users;
     }

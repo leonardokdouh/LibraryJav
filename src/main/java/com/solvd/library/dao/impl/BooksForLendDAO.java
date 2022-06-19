@@ -2,7 +2,6 @@ package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.BooksForLend;
 import com.solvd.library.dao.IBooksForLend;
-import com.solvd.library.util.OneStepCloser;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,8 +52,7 @@ public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLen
     }
 
     @Override
-    public List<BooksForLend> getAll() throws ExceptionDAO {
-        OneStepCloser closer = new OneStepCloser(null, null);
+    public List<BooksForLend> getAll() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
@@ -69,7 +67,7 @@ public class BooksForLendDAO extends AbsConnectionForDAO implements IBooksForLen
             LOG.error("Error in SQL", e);
             throw new ExceptionDAO("Can't reach the Worker");
         } finally {
-            closer.twoCloser(ps, rs);
+            closeAllResources(ps, rs);
             returnConnect(conn);
         }
         return booksList;

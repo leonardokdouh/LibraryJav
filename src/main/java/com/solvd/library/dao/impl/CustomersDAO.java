@@ -2,7 +2,6 @@ package com.solvd.library.dao.impl;
 
 import com.solvd.library.bin.Customers;
 import com.solvd.library.util.exceptions.ExceptionDAO;
-import com.solvd.library.util.OneStepCloser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +23,8 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
 
 
     @Override
-    public void saveEntity(Customers entity) throws ExceptionDAO {
+    public void saveEntity(Customers entity){
         PreparedStatement ps = null;
-        OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(INSERT);
@@ -42,14 +40,13 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             throw new ExceptionDAO("Error in SQL sentence");
         } finally {
             returnConnect(conn);
-            close.theCloser(ps);
+            closeAllResources(ps);
         }
     }
 
     @Override
-    public void update(Long id, Customers entity) throws ExceptionDAO {
+    public void update(Long id, Customers entity){
         PreparedStatement ps = null;
-        OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -65,14 +62,13 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             throw new ExceptionDAO("Maybe your changes may not be saved");
         } finally {
             returnConnect(conn);
-            close.theCloser(ps);
+            closeAllResources(ps);
         }
     }
 
     @Override
-    public void delete(Long id) throws ExceptionDAO {
+    public void delete(Long id){
         PreparedStatement ps = null;
-        OneStepCloser end = new OneStepCloser(null);
         Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(DELETE);
@@ -85,7 +81,7 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             throw new ExceptionDAO("Maybe its not deleted");
         } finally {
             returnConnect(conn);
-            end.theCloser(ps);
+            closeAllResources(ps);
         }
     }
 
@@ -99,8 +95,7 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
     }
 
     @Override
-    public Customers getEntity(Long id) throws ExceptionDAO {
-        OneStepCloser close = new OneStepCloser(null, null);
+    public Customers getEntity(Long id){
         PreparedStatement ps = null;
         Connection conn = getConnect();
         ResultSet rs = null;
@@ -119,14 +114,13 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
-            close.twoCloser(ps, rs);
+            closeAllResources(ps, rs);
         }
         return customer;
     }
 
     @Override
-    public List<Customers> getAll() throws ExceptionDAO {
-        OneStepCloser close = new OneStepCloser(null, null);
+    public List<Customers> getAll(){
         PreparedStatement ps = null;
         Connection conn = getConnect();
         ResultSet rs = null;
@@ -142,7 +136,7 @@ public class CustomersDAO extends AbsConnectionForDAO implements com.solvd.libra
             throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
-            close.twoCloser(ps, rs);
+            closeAllResources(ps, rs);
         }
         return cuList;
     }

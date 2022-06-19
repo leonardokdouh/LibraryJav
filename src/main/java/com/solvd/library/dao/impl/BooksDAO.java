@@ -4,7 +4,6 @@ import com.solvd.library.bin.Books;
 import com.solvd.library.dao.IBooksDao;
 import com.solvd.library.util.exceptions.ExceptionDAO;
 import com.solvd.library.util.exceptions.ExceptionSQL;
-import com.solvd.library.util.OneStepCloser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,7 +51,6 @@ public class BooksDAO extends AbsConnectionForDAO implements IBooksDao {
     @Override
     public void update(Long id, Books entity) {
         PreparedStatement ps = null;
-        OneStepCloser close = new OneStepCloser(null);
         Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(UPDATE);
@@ -68,14 +66,13 @@ public class BooksDAO extends AbsConnectionForDAO implements IBooksDao {
             throw new ExceptionDAO("Error in SQL");
         } finally {
             returnConnect(conn);
-            close.theCloser(ps);
+            closeAllResources(ps);
         }
     }
 
     @Override
     public void delete(Long id) {
         PreparedStatement ps = null;
-        OneStepCloser close = new OneStepCloser(ps);
         Connection conn = getConnect();
         try {
             ps = conn.prepareStatement(DELETE);
@@ -88,7 +85,7 @@ public class BooksDAO extends AbsConnectionForDAO implements IBooksDao {
             throw new ExceptionSQL("Error in SQL");
         } finally {
             returnConnect(conn);
-            close.theCloser(ps);
+            closeAllResources(ps);
         }
     }
 
@@ -127,7 +124,6 @@ public class BooksDAO extends AbsConnectionForDAO implements IBooksDao {
 
     @Override
     public List<Books> getAll() {
-        OneStepCloser closer = new OneStepCloser(null, null);
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnect();
@@ -143,7 +139,7 @@ public class BooksDAO extends AbsConnectionForDAO implements IBooksDao {
             throw new ExceptionDAO("Can't reach the Worker");
         } finally {
             returnConnect(conn);
-            closer.twoCloser(ps, rs);
+            closeAllResources(ps, rs);
         }
         return listOfBooks;
     }
